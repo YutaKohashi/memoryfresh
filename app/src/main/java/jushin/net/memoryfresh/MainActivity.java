@@ -23,11 +23,17 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> process_names;
     ListView listView;
+    Button startButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // ツールバーをアクションバーとしてセット
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
 
         listView = (ListView)findViewById(R.id.listview);
         List<AndroidAppProcess> processes = ProcessManager.getRunningAppProcesses();
