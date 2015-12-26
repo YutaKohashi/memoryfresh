@@ -12,77 +12,49 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by Yuta on 2015/12/26.
+ * Created by Yuta on 2015/12/27.
  */
 
-/**
- * アイコンとテキストを表示するためのアダプタ.
- */
-public class ProcessListAdapter extends ArrayAdapter<IconTextArrayItem> {
-
-    /**
-     * XMLからViewを生成するのに使うヤツ.
-     */
+public class ProcessListAdapter extends ArrayAdapter<ListItem> {
+    private int resourceId;
+    private List<ListItem> items;
     private LayoutInflater inflater;
 
-    /**
-     * リストアイテムのレイアウト.
-     */
-    private int textViewResourceId;
+    public ProcessListAdapter(Context context, int resourceId, List<ListItem> items) {
+        super(context, resourceId, items);
 
-    /**
-     * 表示するアイテム.
-     */
-    private List<IconTextArrayItem> items;
-
-    /**
-     * コンストラクタ.
-     */
-    public ProcessListAdapter(
-            Context context,
-            int textViewResourceId,
-            List<IconTextArrayItem> items) {
-        super(context, textViewResourceId, items);
-
-        // リソースIDと表示アイテムを保持っておく
-        this.textViewResourceId = textViewResourceId;
+        this.resourceId = resourceId;
         this.items = items;
+        this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        // ContextからLayoutInflaterを取得
-        inflater = (LayoutInflater) context.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE
-        );
     }
 
-    /**
-     * 1アイテム分のビューを取得.
-     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
-
-        // なにか入ってたら、それを使う
         if (convertView != null) {
             view = convertView;
-        }
-        // nullなら新規作成
-        else {
-            view = inflater.inflate(textViewResourceId, null);
+        } else {
+            view = this.inflater.inflate(this.resourceId, null);
         }
 
-        // 対象のアイテムを取得
-        IconTextArrayItem item = items.get(position);
+        ListItem item = this.items.get(position);
 
+        // テキストをセット
+        TextView appInfoText = (TextView)view.findViewById(R.id.textName);
+        appInfoText.setText(item.getTextProcessName());
 
-        // アイコンにアレを設定
-       try{
-           ImageView imageView = (ImageView) view.findViewWithTag("icon");
-           imageView.setImageDrawable(item.getIconResource());
-       }catch(Exception e){
-           Log.d("test","test");
-       }
+        TextView appInfo3Text = (TextView)view.findViewById(R.id.textProcessUses);
+        appInfo3Text.setText(item.getTextProcessUses());
 
+        // アイコンをセット
+        ImageView appInfoImage = (ImageView)view.findViewById(R.id.item_image);
+        appInfoImage.setImageDrawable(item.getImageId());
 
         return view;
+
     }
+
+
+
 }

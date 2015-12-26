@@ -1,20 +1,12 @@
 package jushin.net.memoryfresh;
 
-import android.content.Intent;
-import android.content.pm.ApplicationInfo;
+
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.jaredrummler.android.processes.ProcessManager;
@@ -42,12 +34,15 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.listview);
         List<AndroidAppProcess> processes = ProcessManager.getRunningAppProcesses();
         //process_names = new ArrayList<String>();
-        List<IconTextArrayItem> items = new ArrayList<IconTextArrayItem>();
+        List<ListItem> items = new ArrayList<ListItem>();
 
         Drawable icon = null;
         PackageManager pm = this.getPackageManager();
 
         for (AndroidAppProcess process : processes) {
+
+            ListItem listItem = new ListItem();
+
             String processName = process.name;
             long size = 0L;
             try {
@@ -55,30 +50,27 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //process_names.add(processName + ":" + size / 8 / 1000 + "KB");
 
             try {
                 //アプリのアイコン取得
                 icon = pm.getApplicationIcon(process.name);
             } catch (PackageManager.NameNotFoundException e) {
+
                 e.printStackTrace();
+                //例外が発生した場合デフォルトのアイコンを適用
+                icon = getDrawable(R.drawable.ic_launcher);
             }
 
-            items.add(new IconTextArrayItem(icon, processName + ":" + size / 8 / 1000 + "KB"));
+            listItem.setText(processName,size / 8 / 1000 + "KB");
+            listItem.setImageId(icon);
+
+            items.add(listItem);
         }
 
+        // adapterのインスタンスを作成カスタムレイアウトを適用
+         ProcessListAdapter adapter =
+                new ProcessListAdapter(MainActivity.this,R.layout.list_item, items);
 
-
-        // アダプタ生成
-        ListAdapter adapter = new ProcessListAdapter(this, R.layout.list_item, items);
-
-        // アダプタ設定
         listView.setAdapter(adapter);
-
-
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_expandable_list_item_1, process_names);
-//
-//        listView.setAdapter(adapter);
     }
 }
