@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.jaredrummler.android.processes.ProcessManager;
 import com.jaredrummler.android.processes.models.AndroidAppProcess;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> process_names;
     ListView listView;
     Button startButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
         for (AndroidAppProcess process : processes) {
             String processName = process.name;
-            process_names.add(processName);
+            long size = 0L;
+            try {
+                size = process.statm().getSize();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            process_names.add(processName + ":" + size / 8 / 1000 + "KB");
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
