@@ -1,76 +1,68 @@
 package jushin.net.memoryfresh;
 
-
-import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
-import android.widget.ListView;
 
-import com.jaredrummler.android.processes.ProcessManager;
-import com.jaredrummler.android.processes.models.AndroidAppProcess;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity {
-
-    ArrayList<String> process_names;
-    ListView listView;
-    Button startButton;
+public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // ツールバーをアクションバーとしてセット
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        DesignPagerAdapter adapter = new DesignPagerAdapter(getSupportFragmentManager());
+        ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+        TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
 
-        listView = (ListView)findViewById(R.id.listview);
-        List<AndroidAppProcess> processes = ProcessManager.getRunningAppProcesses();
-        //process_names = new ArrayList<String>();
-        List<ListItem> items = new ArrayList<ListItem>();
+    }
 
-        Drawable icon = null;
-        PackageManager pm = this.getPackageManager();
+    static class DesignPagerAdapter extends FragmentPagerAdapter {
 
-        for (AndroidAppProcess process : processes) {
-
-            ListItem listItem = new ListItem();
-
-            String processName = process.name;
-            long size = 0L;
-            try {
-                size = process.statm().getSize();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                //アプリのアイコン取得
-                icon = pm.getApplicationIcon(process.name);
-            } catch (PackageManager.NameNotFoundException e) {
-
-                e.printStackTrace();
-                //例外が発生した場合デフォルトのアイコンを適用
-                icon = getDrawable(R.drawable.ic_launcher);
-            }
-
-            listItem.setText(processName,size / 8 / 1000 + "KB");
-            listItem.setImageId(icon);
-
-            items.add(listItem);
+        public DesignPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
-        // adapterのインスタンスを作成カスタムレイアウトを適用
-         ProcessListAdapter adapter =
-                new ProcessListAdapter(MainActivity.this,R.layout.list_item, items);
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment;
+            //case文で分岐
+            switch(position){
+                case 0:
+                    fragment = MainFragment.newInstance(position);
+                    break;
+                case 1:
+                    fragment = new Fragment();
+                    break;
+                case 2:
+                    fragment = new Fragment();
+                    break;
+                default:
+                    fragment = new Fragment();
 
-        listView.setAdapter(adapter);
+            }
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Tab " + position;
+        }
     }
+
 }
+
