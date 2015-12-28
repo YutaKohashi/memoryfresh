@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity{
                     fragment = new Fragment();
                     break;
                 case 2:
-                    fragment = new Fragment();
+//                    fragment = new Fragment();
+                    fragment = GraphFragment.newInstance(position);
                     break;
                 default:
                     fragment = new Fragment();
