@@ -100,32 +100,7 @@ public class GraphFragment extends Fragment {
     }
 
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//
-//        View v = inflater.inflate(R.layout.fragment_main, container, false);
-//
-//        PieChart pieChart = (PieChart)findViewById(R.id.graph);
-//
-//        pieChart.setDrawHoleEnabled(true); // 真ん中に穴を空けるかどうか
-//        pieChart.setHoleRadius(50f);       // 真ん中の穴の大きさ(%指定)
-//        pieChart.setHoleColorTransparent(true);
-//        pieChart.setTransparentCircleRadius(55f);
-//        pieChart.setRotationAngle(270);          // 開始位置の調整
-//        pieChart.setRotationEnabled(true);       // 回転可能かどうか
-//        pieChart.getLegend().setEnabled(true);   //
-//        pieChart.setDescription("PieChart 説明");
-//        pieChart.setData(createPieChartData());
-//
-//        // 更新
-//        pieChart.invalidate();
-//        // アニメーション
-//        pieChart.animateXY(2000, 2000); // 表示アニメーション
-//
-//    return v;
-//    }
+//   
 
 
 
