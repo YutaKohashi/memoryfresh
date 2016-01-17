@@ -1,6 +1,8 @@
 package jushin.net.memoryfresh;
 
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.PieChart;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
@@ -19,7 +24,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 
-public class GraphFragment extends Fragment {
+public class GraphFragment extends Fragment  {
 
 
 
@@ -51,13 +56,24 @@ public class GraphFragment extends Fragment {
         PieChart pieChart = (PieChart)v.findViewById(R.id.graph);
         GraphManager graphs = new GraphManager(pieChart,true,40f);
 
+        //インスタンス化
+        MemoryManager manager = new MemoryManager(this.getContext());
 
-        String[] name = {"OS","アプリ","その他"};//項目(５つまで)
-        float[] data = {10.00f,20.00f,30.00f};//メモリ使用サイズ(型s) 先輩変更点
+        //メモリの値を格納する変数
+        float total,free,app,service;
 
+        //各種メモリサイズの格納
+        total = manager.totalMemory()/1000;
+        app = manager.ProcessMemorySize() /8/1000;
+        service = manager.serviceMemory()/8/1000;
+        free = ( total - (app+service) );
 
-        String str = "種類ごとのメモリの使用率";
+        String[] name = {"アプリ","サービス","未使用"};//項目(５つまで)
+        float[] data = {(app/total)*100,(service/total)*100,(free/total)*100};//メモリ使用サイズ(型)
+        String str = "";
 
+        str = "全体メモリ(MB):" + Math.ceil(total)+"\nアプリ(MB):" + Math.ceil(app);
+        str += "\nサービス(MB):" + Math.ceil(service) +"未使用(MB)"+ Math.ceil(free);
 
 
 
@@ -68,7 +84,6 @@ public class GraphFragment extends Fragment {
         return v;
 
     }
-
 
 
 }
