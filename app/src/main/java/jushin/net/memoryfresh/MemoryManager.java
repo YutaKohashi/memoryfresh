@@ -35,19 +35,25 @@ public class MemoryManager extends Activity {
     public float serviceMemory(){
 
         float flg = 0;//戻り値の変数
-
+        int i = 0;
         List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(100);
 
         int pids[] = new int[services.size()];//プロセスのidを格納する変数
 
         if (services != null) {
 
-            //serviceの数だけ繰り返し
-            for (int i = 0; i < services.size(); ++i) {
 
-                ActivityManager.RunningServiceInfo service = services.get(i);
+            //serviceの数だけ繰り返し
+            for(ActivityManager.RunningServiceInfo service:services){
                 pids[i] = service.pid;//process idの取得
+                i++;
             }
+
+            //serviceの数だけ繰り返し
+//            for (int i = 0; i < services.size(); ++i) {
+//                ActivityManager.RunningServiceInfo service = services.get(i);
+//                pids[i] = service.pid;//process idの取得
+//            }
         }
 
         //service idから使用中memoryを取得
