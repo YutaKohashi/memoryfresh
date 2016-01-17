@@ -14,19 +14,19 @@ import java.util.List;
  */
 public class MemoryManager extends Activity {
 
-    Context context;
 
-    public MemoryManager(Context con){
-        context = con;
+    ActivityManager activityManager;
+    ActivityManager.MemoryInfo memoryInfo;
+
+    public MemoryManager(Context context){
+
+        activityManager = (ActivityManager)context.getSystemService(ACTIVITY_SERVICE);
+        memoryInfo = new ActivityManager.MemoryInfo();
     }
 
     //memory max size
     public float totalMemory(){
-
-        ActivityManager activityManager = (ActivityManager)context.getSystemService(ACTIVITY_SERVICE);
-        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
         activityManager.getMemoryInfo(memoryInfo);
-
 
         return (float)(memoryInfo.totalMem/1000);
     }
@@ -36,9 +36,6 @@ public class MemoryManager extends Activity {
 
         float flg = 0;//戻り値の変数
 
-
-
-        ActivityManager activityManager = (ActivityManager)context.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(100);
 
         int pids[] = new int[services.size()];//プロセスのidを格納する変数
@@ -70,8 +67,6 @@ public class MemoryManager extends Activity {
 
         float flg = 0;//戻り値の変数
 
-        ActivityManager activityManager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-
         //デバイスのプロセスを取得
         List<ActivityManager.RunningAppProcessInfo> runningApps = activityManager.getRunningAppProcesses();
 
@@ -102,47 +97,8 @@ public class MemoryManager extends Activity {
     public float MemorySize(){
 
 
-        ActivityManager activityManager = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
-        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
-        activityManager.getMemoryInfo(memoryInfo);
-
-        float total = memoryInfo.totalMem;
-
-        float flgs = 0;//戻り値の変数
-
-        try {
-            //Linuxコマンドでメモリ情報を取得
-            Process process = Runtime.getRuntime().exec("cat /proc/meminfo");
-
-            //取得した情報をバッファに格納
-            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            //メモリの値を格納
-            String line = null;
-
-            //情報の分だけ繰り返し
-            while ((line = br.readLine()) != null) {
-
-                //必要な情報かを調べる
-                if (line.indexOf("Inactive") != -1 || line.indexOf("Cached") != -1 ||line.indexOf("MemFree") != -1) {
-
-                    //不要な文字列の除去
-                    line = line.replaceAll("Inactive", "");
-                    line = line.replaceAll(":", "");
-                    line = line.replaceAll("kB", "");
-                    line = line.replaceAll(" ", "");
-
-                    //float型へ変換し足しこむ
-                    flgs += Float.parseFloat(line);
-                }
-            }
-        } catch (Exception e) {
-
-            Log.i("MemoryException",e.toString());
-        }
-
         //戻り値(合計メモリ-未使用メモリ)
-        return (total - flgs);
+        return (totalMemory() - freeMemorySize());
     }
 
     //unused in memory (Deveroper Mode:本当の空き容量のみ)

@@ -52,7 +52,7 @@ public class GraphManager {
         // 更新
         pieChart.invalidate();
         // アニメーション
-        pieChart.animateXY(2000, 1000); // 表示アニメーション
+//        pieChart.animateXY(2000, 1000); // 表示アニメーション
     }
 
     //グラフの項目の名前と値を設定
