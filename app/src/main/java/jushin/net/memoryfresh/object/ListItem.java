@@ -1,4 +1,4 @@
-package jushin.net.memoryfresh;
+package jushin.net.memoryfresh.object;
 
 import android.graphics.drawable.Drawable;
 

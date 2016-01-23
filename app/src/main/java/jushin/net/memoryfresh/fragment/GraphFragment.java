@@ -1,4 +1,4 @@
-package jushin.net.memoryfresh;
+package jushin.net.memoryfresh.fragment;
 
 
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.PieChart;
+
+import jushin.net.memoryfresh.util.GraphManager;
+import jushin.net.memoryfresh.util.MemoryManager;
+import jushin.net.memoryfresh.R;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.

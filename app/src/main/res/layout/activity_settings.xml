@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="jushin.net.memoryfresh.SettingsActivity">
+    tools:context=".activity.SettingsActivity">
 
 
     <android.support.design.widget.AppBarLayout
@@ -23,7 +23,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <fragment
-        android:name="jushin.net.memoryfresh.SettingsPreferenceFragment"
+        android:name="jushin.net.memoryfresh.fragment.SettingsPreferenceFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:id="@+id/fragment_settings"

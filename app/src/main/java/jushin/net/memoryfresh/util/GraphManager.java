@@ -1,4 +1,4 @@
-package jushin.net.memoryfresh;
+package jushin.net.memoryfresh.util;
 
 import android.graphics.Color;
 

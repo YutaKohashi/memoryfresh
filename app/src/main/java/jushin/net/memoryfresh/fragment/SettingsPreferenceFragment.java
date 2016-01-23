@@ -1,4 +1,4 @@
-package jushin.net.memoryfresh;
+package jushin.net.memoryfresh.fragment;
 
 
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import jushin.net.memoryfresh.R;
 
 
 /**

@@ -1,4 +1,4 @@
-package jushin.net.memoryfresh;
+package jushin.net.memoryfresh.fragment;
 
 
 import android.content.pm.PackageManager;
@@ -17,6 +17,10 @@ import com.jaredrummler.android.processes.models.AndroidAppProcess;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import jushin.net.memoryfresh.object.ListItem;
+import jushin.net.memoryfresh.util.ProcessListAdapter;
+import jushin.net.memoryfresh.R;
 
 
 /**

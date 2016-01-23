@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--起動した時にBroadCastIntentを取得するためのパーミション-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,7 +23,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".activity.SettingsActivity" />
+
+        <!--android:exportedー他のアプリに対してこのAndroidコンポーネントを公開するかどうかを決定する。
+                              省略時のデフォルト値がAndroidコンポーネントによって異なるため省略しないほうが良い
+                              アクティビティ	         false
+                              サービス	             false
+                              ブロードキャストレシーバ	 false
+                              コンテンツプロバイダ	    `true`（Android 4.1以前）
+                                                    `false`（Android 4.2）
+            android:permissionー他のアプリからこのAndroidコンポーネントを使用する際に必要なパーミッションを設定する。
+        -->
+        <service
+            android:name=".service.MemoryFreshService"
+            android:exported="false">
+
+        </service>
+
+
+        <receiver
+            android:name=".receiver.MainBroadReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
-package jushin.net.memoryfresh;
+package jushin.net.memoryfresh.activity;
 
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -12,6 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.List;
+
+import jushin.net.memoryfresh.R;
+import jushin.net.memoryfresh.fragment.GraphFragment;
+import jushin.net.memoryfresh.fragment.MainFragment;
+import jushin.net.memoryfresh.service.MemoryFreshService;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -28,6 +37,25 @@ public class MainActivity extends AppCompatActivity{
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
+
+        //サービスが起動指定に場合に起動させる
+        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> listServiceInfo = am.getRunningServices(Integer.MAX_VALUE);
+        boolean found = false;
+        for (ActivityManager.RunningServiceInfo curr : listServiceInfo) {
+            // クラス名を比較
+            if (curr.service.getClassName().equals(MemoryFreshService.class.getName())) {
+                // 実行中のサービスと一致
+                Toast.makeText(this, "サービス実行中", Toast.LENGTH_LONG).show();
+                found = true;
+                break;
+            }
+        }
+        if (found == false) {
+            Intent intent = new Intent(MainActivity.this, MemoryFreshService.class);
+            startService(intent);
+            Toast.makeText(this, "サービス停止していたため起動しました", Toast.LENGTH_LONG).show();
+        }
 
     }
 

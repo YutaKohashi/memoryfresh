@@ -1,7 +1,6 @@
-package jushin.net.memoryfresh;
+package jushin.net.memoryfresh.util;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import jushin.net.memoryfresh.R;
+import jushin.net.memoryfresh.object.ListItem;
 
 /**
  * Created by Yuta on 2015/12/27.
