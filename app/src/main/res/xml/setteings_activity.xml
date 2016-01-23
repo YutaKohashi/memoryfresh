@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+     <!--ここで設定画面に表示させる項目を設定する-->
+     <!--summaryでは通常現在の設定を表示させておく-->
+
+     <ListPreference
+         android:key="listPreference"
+         android:title="ListPreference"
+         android:entries="@array/entries_background"
+         android:entryValues="@array/entryvalues_background"
+         android:dialogTitle="ListPreference"/>
+
+     <CheckBoxPreference
+         android:key="checkbox_value"
+         android:title="CheckboxPreference"/>
+
+     <EditTextPreference
+         android:key="edittext_value"
+         android:title="EditTexPreference"
+         android:summary="現在の設定"
+         android:dialogTitle="EditTexPreference"
+         android:dialogMessage="サブコメント" />
+
+     <SwitchPreference
+          android:key="switch_value"
+          android:title="SeitchPreference"
+          />
+</PreferenceScreen>
