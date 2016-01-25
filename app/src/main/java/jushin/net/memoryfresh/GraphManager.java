@@ -1,6 +1,7 @@
 package jushin.net.memoryfresh;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -102,5 +103,22 @@ public class GraphManager {
         return data;
 
     }
+
+    public boolean startGraph(){
+
+        try {
+
+
+
+
+            return true;
+        }catch (Exception e){
+
+            Log.e("Erorr",e.toString());
+            return false;
+        }
+
+    }
+
 
 }

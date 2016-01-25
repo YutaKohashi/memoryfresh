@@ -28,7 +28,14 @@ public class MemoryManager extends Activity {
     public float totalMemory(){
         activityManager.getMemoryInfo(memoryInfo);
 
-        return (float)(memoryInfo.totalMem/1000);
+        return (float)((memoryInfo.totalMem/1000)/1000);
+    }
+
+    public float systemMemory(){
+
+        activityManager.getMemoryInfo(memoryInfo);
+
+        return (float)(memoryInfo.availMem/1000)/1000;
     }
 
     //service use in memory
@@ -49,11 +56,7 @@ public class MemoryManager extends Activity {
                 i++;
             }
 
-            //serviceの数だけ繰り返し
-//            for (int i = 0; i < services.size(); ++i) {
-//                ActivityManager.RunningServiceInfo service = services.get(i);
-//                pids[i] = service.pid;//process idの取得
-//            }
+
         }
 
         //service idから使用中memoryを取得
@@ -65,7 +68,7 @@ public class MemoryManager extends Activity {
             flg += (float)memory.getTotalPss();
 
         }
-        return flg;
+        return flg /8/1000;
     }
 
     //process use in memory
@@ -96,7 +99,7 @@ public class MemoryManager extends Activity {
             flg += (float)memory.getTotalPss();
 
         }
-        return flg;
+        return flg /8/1000;
     }
 
     //use in memory(Developer Mode:使用中のメモリに加えてprocessが確保している領域も含む)
@@ -130,6 +133,8 @@ public class MemoryManager extends Activity {
 
                     //不要な文字列の除去
                     line = line.replaceAll("Inactive", "");
+                    line = line.replaceAll("Cached", "");
+                    line = line.replaceAll("MemFree", "");
                     line = line.replaceAll(":", "");
                     line = line.replaceAll("kB", "");
                     line = line.replaceAll(" ", "");
@@ -142,6 +147,6 @@ public class MemoryManager extends Activity {
 
             Log.i("MemoryException",e.toString());
         }
-        return flgs;
+        return (flgs/1000);
     }
 }

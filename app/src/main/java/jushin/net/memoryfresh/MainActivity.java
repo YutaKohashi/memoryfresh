@@ -1,5 +1,6 @@
 package jushin.net.memoryfresh;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity{
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,8 @@ public class MainActivity extends AppCompatActivity{
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
-
+//        intent = new Intent(MainActivity.this,SubActiviry.class);
+//        startActivity(intent);
     }
 
     static class DesignPagerAdapter extends FragmentPagerAdapter {
@@ -33,15 +37,16 @@ public class MainActivity extends AppCompatActivity{
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public Fragment getItem(final int position) {
             Fragment fragment;
+
             //case文で分岐
             switch(position){
                 case 0:
                     fragment = MainFragment.newInstance(position);
                     break;
                 case 1:
-                    fragment = new Fragment();
+                    fragment = TeatFragment.newInstance(position);
                     break;
                 case 2:
                     fragment = GraphFragment.newInstance(position);

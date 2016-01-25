@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.jaredrummler.android.processes.ProcessManager;
 import com.jaredrummler.android.processes.models.AndroidAppProcess;
@@ -53,10 +54,10 @@ public class MainFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
         listView = (ListView)v.findViewById(R.id.listview);
-        List<AndroidAppProcess> processes = ProcessManager.getRunningAppProcesses();
+        List<AndroidAppProcess> processes = ProcessManager.getRunningAppProcessInfo(this.getContext());
 
         List<ListItem> items = new ArrayList<ListItem>();
-
+        long sum =0L;
         Drawable icon = null;
         PackageManager pm = getContext().getPackageManager();
 
@@ -67,7 +68,8 @@ public class MainFragment extends Fragment {
             String processName = process.name;
             long size = 0L;
             try {
-                size = process.statm().getSize();
+                size = process.;
+                sum += size;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -92,8 +94,9 @@ public class MainFragment extends Fragment {
         ProcessListAdapter adapter =
                 new ProcessListAdapter(getContext(),R.layout.list_item, items);
 
-        listView.setAdapter(adapter);
+        sum = sum / 8 / 1000 / 1000;
 
+        listView.setAdapter(adapter);
         return v;
     }
 
