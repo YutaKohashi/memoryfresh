@@ -13,13 +13,14 @@ import jushin.net.memoryfresh.activity.MainActivity;
 
 public class MemoryFreshService extends Service {
     NotificationManager mNM;
+
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         Log.d("Debug TEST", "onCreate");
-        mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         showNotification();
     }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("Debug TEST", "onStartCommand");
@@ -41,13 +42,14 @@ public class MemoryFreshService extends Service {
     public IBinder onBind(Intent arg0) {
         return null;
     }
+
     private void showNotification() {
         Log.d("Debug TEST", "showNotification");
         PendingIntent contentIntent = PendingIntent.getActivity(
                 this, 0,
                 new Intent(this, MainActivity.class), 0);
 
-        Notification notif= new Notification.Builder(this)
+        Notification notif = new Notification.Builder(this)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getText(R.string.servicestarted))
                 .setSmallIcon(R.drawable.ic_launcher)

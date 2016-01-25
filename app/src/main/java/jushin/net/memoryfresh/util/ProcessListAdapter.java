@@ -31,6 +31,10 @@ public class ProcessListAdapter extends ArrayAdapter<ListItem> {
 
     }
 
+
+
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
@@ -56,6 +60,7 @@ public class ProcessListAdapter extends ArrayAdapter<ListItem> {
         return view;
 
     }
+
 
 
 
