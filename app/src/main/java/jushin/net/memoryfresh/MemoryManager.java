@@ -25,10 +25,38 @@ public class MemoryManager extends Activity {
     }
 
     //memory max size
-    public float totalMemory(){
-        activityManager.getMemoryInfo(memoryInfo);
+    public float totalMemory(){+
 
-        return (float)((memoryInfo.totalMem/1000)/1000);
+        float flgs = 0;//戻り値の変数
+
+        try {
+            //Linuxコマンドでメモリ情報を取得
+            Process process = Runtime.getRuntime().exec("cat /proc/meminfo");
+
+            //取得した情報をバッファに格納
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            //メモリの値を格納
+            String line = null;
+
+            //情報の分だけ繰り返し
+            while ((line = br.readLine()) != null) {
+
+                if (line.indexOf("MemTotal") != -1) {
+                    line = line.replaceAll("MemTotal", "");
+                    line = line.replaceAll(":", "");
+                    line = line.replaceAll("kB", "");
+                    line = line.replaceAll(" ", "");
+                    float test = Float.parseFloat(line);
+                    flgs = test;
+                }
+
+            }
+        } catch (Exception e) {
+
+            Log.i("MemoryException",e.toString());
+        }
+        return (flgs);
     }
 
     public float systemMemory(){
@@ -128,13 +156,20 @@ public class MemoryManager extends Activity {
             //情報の分だけ繰り返し
             while ((line = br.readLine()) != null) {
 
-                //必要な情報かを調べる
-                if (line.indexOf("Inactive") != -1 || line.indexOf("Cached") != -1 ||line.indexOf("MemFree") != -1) {
 
+                //必要な情報かを調べる
+                if (line.indexOf("Inactive") != -1 || line.indexOf("Cached") != -1 ||line.indexOf("MemFree") != -1 ||
+                        line.indexOf("Buffers") != -1||line.indexOf("Swap") != -1) {
+
+                    Log.d("MemoryView",line);
                     //不要な文字列の除去
                     line = line.replaceAll("Inactive", "");
                     line = line.replaceAll("Cached", "");
                     line = line.replaceAll("MemFree", "");
+                    line = line.replaceAll("Buffers", "");
+                    line = line.replaceAll("SwapFree", "");
+                    line = line.replaceAll("LowFree", "");
+
                     line = line.replaceAll(":", "");
                     line = line.replaceAll("kB", "");
                     line = line.replaceAll(" ", "");
@@ -149,4 +184,62 @@ public class MemoryManager extends Activity {
         }
         return (flgs/1000);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public float TestSize() {
+
+        float flgs = 0;//戻り値の変数
+        float flgs2 = 0;
+        try {
+            //Linuxコマンドでメモリ情報を取得
+            Process process = Runtime.getRuntime().exec("cat /proc/meminfo");
+
+            //取得した情報をバッファに格納
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            //メモリの値を格納
+            String line = null;
+
+            //情報の分だけ繰り返し
+            while ((line = br.readLine()) != null) {
+
+                Log.d("MemoryView",line);
+
+                String test = "Active(anon)";
+
+                if(line.contains("Active(anon)")){
+
+//                if(line.indexOf("Active(anon)") != -1){
+
+                    line = line.replaceAll(test, "");
+                    line = line.replaceAll(":", "");
+                    line = line.replaceAll("anon", "");
+
+
+                    line = line.replaceAll(":", "");
+                    line = line.replaceAll("kB", "");
+                    line = line.replaceAll(" ", "");
+                    flgs += Float.parseFloat(line);
+                }
+            }
+        } catch (Exception e) {
+
+            Log.i("MemoryException",e.toString());
+        }
+        return flgs;
+    }
+
 }
