@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,9 +112,15 @@ public class GraphFragment extends Fragment  {
         manager = new MemoryManager(this.getContext());
         name =  new String[]{"使用中","未使用"};//項目(５つまで)
 
+
+
+
+
+
         //各種メモリサイズの格納
         total = manager.totalMemory();
-        free = manager.freeMemorySize();
+        free = (total - manager.TestSize());
+//        free = manager.freeMemorySize();
 //        app = manager.ProcessMemorySize();
 //        service = manager.serviceMemory();
 //        system = manager.systemMemory();
@@ -122,7 +129,7 @@ public class GraphFragment extends Fragment  {
 //        data = new float[]{(app / total) * 100, (service / total) * 100, (system / total) * 100,(free / total) * 100};//メモリ使用サイズ(型)
         data = new  float[]{((total-free) / total) * 100,(free / total) * 100};
 
-        str = "全体メモリ(MB):" + Math.ceil(total) + "未使用(MB)" + Math.ceil(free) + "使用(MB)" + Math.ceil(total-free);
+        str = "全体メモリ(MB):" + Math.ceil(total/1000) + "\n未使用(MB)" + Math.ceil(free/1000) + "\n使用(MB):" + Math.ceil((total-free)/1000);
 //        str = "全体メモリ(MB):" + Math.ceil(total)+"\nアプリ(MB):" + Math.ceil(app);
 //        str += "\nサービス(MB):" + Math.ceil(service) +"システ(MB)"+ Math.ceil(system);
 //        str += "未使用(MB)" + Math.ceil(free);

@@ -35,7 +35,7 @@ public class SubActiviry extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_activiry);
+//        setContentView(R.layout.activity_sub_activiry);
 
         //インスタンス化
         memoryManager = new MemoryManager(this);

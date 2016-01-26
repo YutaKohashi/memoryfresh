@@ -50,26 +50,29 @@ public class TeatFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_teat, container, false);
-        TextView t1,t2,t3;
-        t1 = (TextView)v.findViewById(R.id.t1);
-        t2 = (TextView)v.findViewById(R.id.t2);
-        t3 = (TextView)v.findViewById(R.id.t3);
+//        TextView t1,t2,t3;
+//        t1 = (TextView)v.findViewById(R.id.t1);
+//        t2 = (TextView)v.findViewById(R.id.t2);
+//        t3 = (TextView)v.findViewById(R.id.t3);
+//
+//        List<AndroidAppProcess> processes = ProcessManager.getRunningAppProcesses();
+//
+//        long size = 0L,total = 0,free = 0L;
+//        for (AndroidAppProcess appProcess:processes){
+//            try{
+//                size += appProcess.statm().getSize();
+//                total = appProcess.statm().getTotalSpace();
+//                free = appProcess.statm().getFreeSpace();
+//                Log.i("memory",String.valueOf(size));
+//            }catch (Exception e){
+//                Log.e("Erorr",e.toString());
+//            }
+//            t1.setText(String.valueOf(((size/8)/1024)/1024));
+//
+//        }
+        MemoryManager memoryManager = new MemoryManager(this.getContext());
 
-        List<AndroidAppProcess> processes = ProcessManager.getRunningAppProcesses();
-
-        long size = 0L,total = 0,free = 0L;
-        for (AndroidAppProcess appProcess:processes){
-            try{
-                size += appProcess.statm().getSize();
-                total = appProcess.statm().getTotalSpace();
-                free = appProcess.statm().getFreeSpace();
-                Log.i("memory",String.valueOf(size));
-            }catch (Exception e){
-                Log.e("Erorr",e.toString());
-            }
-            t1.setText(String.valueOf(((size/8)/1024)/1024));
-
-        }
+        memoryManager.TestSize();
 
         return v;
     }
