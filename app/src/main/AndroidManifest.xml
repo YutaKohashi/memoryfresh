@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".SubActiviry"
-            android:label="@string/title_activity_sub_activiry"
+            android:label="MemoryFresh"
             android:theme="@style/AppTheme"></activity>
     </application>
 
