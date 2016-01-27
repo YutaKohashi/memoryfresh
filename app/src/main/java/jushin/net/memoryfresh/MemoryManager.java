@@ -128,6 +128,7 @@ public class MemoryManager extends Activity {
 
             //情報の分だけ繰り返し
             while ((line = br.readLine()) != null) {
+                Log.d("MemoryView", line);
 
 
                 String test = "";
@@ -135,25 +136,25 @@ public class MemoryManager extends Activity {
 
 
 
-//                if (line.contains("Active(anon)")) {
-//
-//                    line = line.replaceAll("Active", "");
-//                    line = line.replaceAll("anon", "");
-//                    line = line.replaceAll(":", "");
-//                    line = line.replaceAll("kB", "");
-//                    line = line.replaceAll(" ", "");
-//                    line = line.replaceAll("\\(", "");
-//                    test += line.replaceAll("\\)", "");
-
-
-                if(line.indexOf("Active") != -1){
+                if (line.contains("Active(anon)")) {
 
                     line = line.replaceAll("Active", "");
+                    line = line.replaceAll("anon", "");
                     line = line.replaceAll(":", "");
                     line = line.replaceAll("kB", "");
-                    test1 = line.replaceAll(" ", "");
+                    line = line.replaceAll(" ", "");
+                    line = line.replaceAll("\\(", "");
+                    test += line.replaceAll("\\)", "");
 
-                    flgs += Float.parseFloat(test1);
+
+//                if(line.indexOf("Active") != -1){
+//
+//                    line = line.replaceAll("Active", "");
+//                    line = line.replaceAll(":", "");
+//                    line = line.replaceAll("kB", "");
+//                    test1 = line.replaceAll(" ", "");
+
+                    flgs += Float.parseFloat(test);
 
                 }
             }
