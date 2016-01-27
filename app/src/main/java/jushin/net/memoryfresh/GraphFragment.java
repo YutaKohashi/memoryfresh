@@ -61,9 +61,9 @@ public class GraphFragment extends Fragment  {
         manager = new MemoryManager(this.getContext());
 
         //各種メモリサイズの格納(use)
-        total = manager.totalMemory();
-        use = manager.useSize();
-        free = total - use;
+//        total = manager.totalMemory();
+//        use = manager.useSize();
+//        free = total - use;
 
         //各種メモリサイズの格納(free)
         total = manager.totalMemory();

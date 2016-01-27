@@ -73,6 +73,8 @@ public class MemoryManager extends Activity {
             //取得した情報をバッファに格納
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
+
+            float test = 0;
             //メモリの値を格納
             String line = null;
 
@@ -82,24 +84,64 @@ public class MemoryManager extends Activity {
                     Log.d("MemoryView", line);
 
                     try{
-                        //必要な情報かを調べる
-                        if (line.indexOf("Inactive") != -1 || line.indexOf("Cached") != -1 || line.indexOf("MemFree") != -1 ||
-                                line.indexOf("Buffers") != -1 || line.indexOf("Buffers") != -1){
-                            //不要な文字列の除去
-//                            line = line.replaceAll("Inactive", "");
-                            line = line.replaceAll("Inactive", "");
-                            line = line.replaceAll("Cached", "");
-                            line = line.replaceAll("MemFree", "");
-//                            line = line.replaceAll("Buffers", "");
-//                            line = line.replaceAll("SwapFree", "");
 
+                        //必要な情報かを調べる
+//                        if (line.indexOf("LowFree") != -1) {
+//                            line = line.replaceAll("LowFree", "");
+//
+//                            line = line.replaceAll(":", "");
+//                            line = line.replaceAll("kB", "");
+//                            line = line.replaceAll(" ", "");
+//
+//                            //float型へ変換し足しこむ
+//                            flgs += Float.parseFloat(line);
+//                        }
+
+                        if(line.indexOf("MemFree") != -1 ){
+                            line = line.replaceAll("MemFree", "");
                             line = line.replaceAll(":", "");
                             line = line.replaceAll("kB", "");
                             line = line.replaceAll(" ", "");
-
                             //float型へ変換し足しこむ
                             flgs += Float.parseFloat(line);
+
                         }
+
+//                        if (line.indexOf("SwapFree") != -1) {
+//                            line = line.replaceAll("SwapFree", "");
+//
+//                            line = line.replaceAll(":", "");
+//                            line = line.replaceAll("kB", "");
+//                            line = line.replaceAll(" ", "");
+//
+//                            //float型へ変換し足しこむ
+//                            flgs += Float.parseFloat(line);
+//                        }
+
+                        if(line.indexOf("Active") != -1 ){
+                            line = line.replaceAll("Active", "");
+                            line = line.replaceAll(":", "");
+                            line = line.replaceAll("kB", "");
+                            line = line.replaceAll(" ", "");
+                            //float型へ変換し足しこむ
+                            test += Float.parseFloat(line);
+
+                        }
+
+                        if(line.indexOf("Inactive(file)") != -1 ){
+                            line = line.replaceAll("Inactive", "");
+                            line = line.replaceAll("file", "");
+                            line = line.replaceAll(":", "");
+                            line = line.replaceAll("kB", "");
+                            line = line.replaceAll(" ", "");
+                            line = line.replaceAll("\\(", "");
+                            line = line.replaceAll("\\)", "");
+                            //float型へ変換し足しこむ
+                            flgs += (test/Float.parseFloat(line));
+
+                        }
+
+
                     }catch (Exception e){
 
                     }
