@@ -49,9 +49,8 @@ public class SubActiviry extends Activity {
         db =  memoryDB.getWritableDatabase();
 
         //DBに格納する値を登録
-        values.put("app",memoryManager.ProcessMemorySize());
-        values.put("service",memoryManager.serviceMemory());
-        values.put("system",memoryManager.systemMemory());
+        values.put("use",(memoryManager.useSize()));
+        values.put("free",(memoryManager.totalMemory() - memoryManager.useSize()));
         values.put("year",calendar.get(Calendar.YEAR));//年
         values.put("month",calendar.get(Calendar.MONTH));//月
         values.put("date",calendar.get(Calendar.DATE));//日

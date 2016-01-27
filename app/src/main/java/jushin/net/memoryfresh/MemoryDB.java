@@ -27,13 +27,13 @@ public class MemoryDB extends SQLiteOpenHelper{
         //sql文作成
         sql= "create table memory_db(";
         sql += "_id integer primary key autoincrement,";
-        sql += "app real,";
-        sql += "service real,";
-        sql += "system real,";
+        sql += "use real,";
+        sql += "free real,";
         sql += "year integer,";
         sql += "month integer,";
         sql += "date integer,";
         sql += "hour integer";
+
         sql +=");";
 
         //sql文実行
@@ -43,8 +43,6 @@ public class MemoryDB extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-
 
     }
 

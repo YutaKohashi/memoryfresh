@@ -1,18 +1,9 @@
 package jushin.net.memoryfresh;
 
 
-import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,26 +28,12 @@ public class GraphFragment extends Fragment  {
     MemoryManager manager;
 
     //メモリの値を格納する変数
-    float total,free,app,service,system;
+    float total,free,use;
     float[] data;//グラフの値の指定
     String str = "";//グラフの説明変数
     GraphManager graphs;
     View v;
     String[] name;
-
-    //日付を取得する変数
-    Calendar calendar;
-
-    //DBに使う変数
-    MemoryDB memoryDB;
-    SQLiteDatabase db;
-    Cursor cursor;
-
-    //通知に使う変数
-    NotificationManager notificationManager;
-    Notification notification;
-    Intent intent;
-    PendingIntent pendingIntent;
 
     public GraphFragment() {
         // Required empty public constructor
@@ -85,59 +62,27 @@ public class GraphFragment extends Fragment  {
         PieChart pieChart = (PieChart)v.findViewById(R.id.graph);//関連付け
         graphs = new GraphManager(pieChart,true,40f);//インスタンス化
 
-        //DB関係処理
-//        memoryDB = new MemoryDB(this.getContext());//インスタンス化
-//        db = memoryDB.getReadableDatabase();//DBを読み込みモードで開く
-
-        //日付取得
-        calendar = Calendar.getInstance();
-//        String hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));//時
-//        String date = String.valueOf(calendar.get(Calendar.DATE));//日
-
-        //SQL文
-//        String sql ="select * from memory_db where ";
-//        sql += "date='" + date + "' and hour='" + hour + "'";
-//        sql += "order by date desc , hour desc";
-
-        //DB処理
-//        cursor = db.rawQuery(sql,null);//select結果取得
-//        cursor.moveToNext();//参照位置を次へ
-//        app = cursor.getFloat(1);
-//        service = cursor.getFloat(2);
-//        system = cursor.getFloat(3);
-//        cursor.close();
-//        db.close();
-//        memoryDB.close();
-
+        //メモリクラスのインスタンス化
         manager = new MemoryManager(this.getContext());
-        name =  new String[]{"使用中","未使用"};//項目(５つまで)
-
-
-
-
-
 
         //各種メモリサイズの格納
         total = manager.totalMemory();
-        free = (total - manager.TestSize());
-//        free = manager.freeMemorySize();
-//        app = manager.ProcessMemorySize();
-//        service = manager.serviceMemory();
-//        system = manager.systemMemory();
-//        free = ( total - (app+service+system) );
+        free = manager.freeMemorySize();
+        use = manager.useSize();
+        free = total - use;
+//        free = (total - manager.useSize());
 
-//        data = new float[]{(app / total) * 100, (service / total) * 100, (system / total) * 100,(free / total) * 100};//メモリ使用サイズ(型)
-        data = new  float[]{((total-free) / total) * 100,(free / total) * 100};
+        //----------グラフの処理----------
+        name =  new String[]{"使用中","未使用"};        //項目(５つまで)
+        data = new  float[]{(use / total) * 100//グラフのデータ
+                ,(free / total) * 100};
 
-        str = "全体メモリ(MB):" + Math.ceil(total/1000) + "\n未使用(MB)" + Math.ceil(free/1000) + "\n使用(MB):" + Math.ceil((total-free)/1000);
-//        str = "全体メモリ(MB):" + Math.ceil(total)+"\nアプリ(MB):" + Math.ceil(app);
-//        str += "\nサービス(MB):" + Math.ceil(service) +"システ(MB)"+ Math.ceil(system);
-//        str += "未使用(MB)" + Math.ceil(free);
 
-        graphs.graphData(name, data);
-        graphs.graphSettings(str);
-        graphs.graphColors(name.length);
-        graphs.strart();
+        str = "全体メモリ(MB):" + Math.ceil(total/1000) //グラフ情報
+                + "\n未使用(MB)" + Math.ceil(free/1000)
+                + "\n使用(MB):" + Math.ceil((total-free)/1000);
+
+        graphs.strart(name,data,str);//グラフ描画
 
         return v;
     }

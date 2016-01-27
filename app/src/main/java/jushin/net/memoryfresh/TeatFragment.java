@@ -72,7 +72,6 @@ public class TeatFragment extends Fragment {
 //        }
         MemoryManager memoryManager = new MemoryManager(this.getContext());
 
-        memoryManager.TestSize();
 
         return v;
     }
