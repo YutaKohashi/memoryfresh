@@ -80,6 +80,7 @@ public class MemoryManager extends Activity {
             while ((line = br.readLine()) != null) {
 
                     Log.d("MemoryView", line);
+
                     try{
                         //必要な情報かを調べる
                         if (line.indexOf("Inactive") != -1 || line.indexOf("Cached") != -1 || line.indexOf("MemFree") != -1 ||
