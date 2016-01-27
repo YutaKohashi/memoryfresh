@@ -1,16 +1,20 @@
 package jushin.net.memoryfresh.fragment;
 
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,8 +24,10 @@ import com.jaredrummler.android.processes.ProcessManager;
 import com.jaredrummler.android.processes.models.AndroidAppProcess;
 
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Collections;
@@ -35,12 +41,10 @@ import jushin.net.memoryfresh.util.ProcessListAdapter;
 import jushin.net.memoryfresh.R;
 
 
-
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MainFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Created by Yuta on 2016/01.
  */
+
 public class MainFragment extends Fragment {
 
     ArrayList<String> process_names;
@@ -51,6 +55,12 @@ public class MainFragment extends Fragment {
     List<ListItem> items;
     PackageManager pm;
     List<AndroidAppProcess> processes;
+    ListItem listItem;
+    String processName;
+    Drawable icon;
+    double beforeSize;
+
+    int count = 0;
 
     int position;
     int y;
@@ -98,14 +108,14 @@ public class MainFragment extends Fragment {
 
         items = new ArrayList<ListItem>();
 
-        Drawable icon = null;
+       icon = null;
         pm = getContext().getPackageManager();
 
         for (AndroidAppProcess process : processes) {
 
             ListItem listItem = new ListItem();
 
-            String processName = process.name;
+            processName = process.name;
             long size = 0L;
             try {
                 //getResidentSetSize()メソッドの処理
@@ -156,12 +166,28 @@ public class MainFragment extends Fragment {
 
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListItem listItem = items.get(position);
+                PackageManager pManager = getActivity().getPackageManager();
+                //Intent intent = pManager.getLaunchIntentForPackage(listItem.getTextProcessName());
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.parse("package:" + listItem.getTextProcessName()));
+                startActivity(intent);
+
+            }
+        });
+
+
         mHandler = new Handler();
         mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
 
+                // mHandlerを通じてUI Threadへ処理をキューイング
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -169,78 +195,114 @@ public class MainFragment extends Fragment {
                         position = listView.getFirstVisiblePosition();
                         y = listView.getChildAt(0).getTop();
                         // 実行したい処理
-                        Log.d("test","message");
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                            // TODO Auto-generated method stub
-                                items = new ArrayList<ListItem>();
+                        Log.d("thread:::","message");
+                        // TODO Auto-generated method stub
+                        items = new ArrayList<ListItem>();
 
-                                Drawable icon = null;
-                                pm = getContext().getPackageManager();
+                        icon = null;
+                        pm = getContext().getPackageManager();
 
-                                for (AndroidAppProcess process : processes) {
+                        for (AndroidAppProcess process : processes) {
 
-                                    ListItem listItem = new ListItem();
+                            listItem = new ListItem();
 
-                                    String processName = process.name;
-                                    long size = 0L;
-                                    try {
-                                        //getResidentSetSize()メソッドの処理
-                                        // 配列変数fieldsの０番目にはtotal program sizeが格納されていて
-                                        //１番目にはresident sizeが格納されている
+                            processName = process.name;
+                            long size = 0L;
+                            try {
+                                //getResidentSetSize()メソッドの処理
+                                // 配列変数fieldsの０番目にはtotal program sizeが格納されていて
+                                //１番目にはresident sizeが格納されている
 
-                                        //size       プログラムサイズの総計
-                                        //            (/proc/[pid]/status の VmSize と同じ)
-                                        //resident   実メモリー上に存在するページ
-                                        //            (/proc/[pid]/status の VmRSS と同じ)
-                                        //share      共有ページ (ファイルと関連付けられているページ)
-                                        //           text       テキスト (コード)
-                                        //lib        ライブラリ (Linux 2.6 では未使用)
-                                        //data       データ + スタック
-                                        //dt         ダーティページ (Linux 2.6 では未使用)
+                                //size       プログラムサイズの総計
+                                //            (/proc/[pid]/status の VmSize と同じ)
+                                //resident   実メモリー上に存在するページ
+                                //            (/proc/[pid]/status の VmRSS と同じ)
+                                //share      共有ページ (ファイルと関連付けられているページ)
+                                //           text       テキスト (コード)
+                                //lib        ライブラリ (Linux 2.6 では未使用)
+                                //data       データ + スタック
+                                //dt         ダーティページ (Linux 2.6 では未使用)
 
-                                        size = process.statm().getResidentSetSize();  //バイトで代入される
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    try {
-                                        //アプリのアイコン取得
-                                        icon = pm.getApplicationIcon(process.name);
-                                    } catch (PackageManager.NameNotFoundException e) {
-
-                                        e.printStackTrace();
-                                        //例外が発生した場合デフォルトのアイコンを適用
-                                        icon = getContext().getDrawable(R.drawable.ic_launcher);
-                                    }
-
-                                    double beforeSize = (double)size /1000 /1000;
-
-                                    listItem.setText(processName,String.format("%.2f",beforeSize) +"MB");
-                                    listItem.setImageId(icon);
-
-                                    items.add(listItem);
-                                }
-
-                                //並び替え処理（メモリ使用順：降順）
-                                Collections.sort(items, new MemoryUsageSort());
-                                Iterator<ListItem> it = items.iterator();
-
-
-                                // adapterのインスタンスを作成カスタムレイアウトを適用
-                                adapter =
-                                        new ProcessListAdapter(getContext(),R.layout.list_item, items);
-
-                                listView.setAdapter(adapter);
-                                listView.setSelectionFromTop(position, y);
-
+                                size = process.statm().getResidentSetSize();  //バイトで代入される
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        });
+
+                            try {
+                                //アプリのアイコン取得
+                                icon = pm.getApplicationIcon(process.name);
+                            } catch (PackageManager.NameNotFoundException e) {
+
+                                e.printStackTrace();
+                                //例外が発生した場合デフォルトのアイコンを適用
+                                icon = getContext().getDrawable(R.drawable.ic_launcher);
+                            }
+
+                            beforeSize = (double)size /1000 /1000;
+
+                            listItem.setText(processName,String.format("%.2f",beforeSize) +"MB");
+                            listItem.setImageId(icon);
+
+
+
+
+                            items.add(listItem);
+                        }
+
+                        //並び替え処理（メモリ使用順：降順）
+                        Collections.sort(items, new MemoryUsageSort());
+                        Iterator<ListItem> it = items.iterator();
+
+
+                        // adapterのインスタンスを作成カスタムレイアウトを適用
+                        adapter =
+                                new ProcessListAdapter(getContext(),R.layout.list_item, items);
+
+                        listView.setAdapter(adapter);
+                        listView.setSelectionFromTop(position, y);
+
                     }
                 });
             }
         }, 5000, 5000);
+
+        // メモリ解放の実装
+        startButton = (Button)v.findViewById(R.id.start_button);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final String TAG = "test::";
+                // Integer オブジェクトの弱参照を保持する
+                Integer integer = new Integer(123456);
+                SoftReference<Integer> ref = new SoftReference<Integer>(integer);
+
+// SoftReference の中身を取得・表示
+                Integer i = ref.get();
+                Log.d(TAG, "i=" + i);
+
+// 強参照を全て無くす
+                integer = null;
+                i = null;
+
+// メモリ負荷をかける
+                try {
+                    HashMap<String, Byte[]> map = new HashMap<String, Byte[]>();
+                    for (int j = 0; j < 100000; j++) {
+                        Byte[] v = new Byte[10000];
+                        String k = String.valueOf(System.currentTimeMillis());
+                        map.put(k, v);
+                    }
+                } catch (OutOfMemoryError oome) {
+                    Log.d(TAG, "OutOfMemoryError!!");
+                }
+
+// OutOfMemoryError 発生後に中身を取得・表示
+                i = ref.get();
+                Log.d(TAG, "i=" + i);
+
+            }
+        });
 
         return v;
     }

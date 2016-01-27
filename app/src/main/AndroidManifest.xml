@@ -4,13 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--起動した時にBroadCastIntentを取得するためのパーミション-->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <!-- 起動した時にBroadCastIntentを取得するためのパーミション -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -25,7 +26,8 @@
         </activity>
         <activity android:name=".activity.SettingsActivity" />
 
-        <!--android:exportedー他のアプリに対してこのAndroidコンポーネントを公開するかどうかを決定する。
+        <!--
+            android:exportedー他のアプリに対してこのAndroidコンポーネントを公開するかどうかを決定する。
                               省略時のデフォルト値がAndroidコンポーネントによって異なるため省略しないほうが良い
                               アクティビティ	         false
                               サービス	             false
@@ -36,19 +38,19 @@
         -->
         <service
             android:name=".service.MemoryFreshService"
-            android:exported="false">
-
-        </service>
-
+            android:exported="false"></service>
 
         <receiver
             android:name=".receiver.MainBroadReceiver"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".activity.PacageListActivity"></activity>
     </application>
 
 </manifest>

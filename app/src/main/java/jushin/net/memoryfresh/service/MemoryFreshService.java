@@ -8,31 +8,56 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.activity.MainActivity;
 
 public class MemoryFreshService extends Service {
+
+    private final String TAG = "MemoryFreshService";
+    private Timer timer;
+
     NotificationManager mNM;
 
     @Override
     public void onCreate() {
-        Log.d("Debug TEST", "onCreate");
+        Log.d(TAG, "onCreate");
         mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         showNotification();
     }
 
+    //サービス起動のたびに呼び出される
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("Debug TEST", "onStartCommand");
+
         super.onStartCommand(intent, flags, startId);
-        return super.onStartCommand(intent, flags, startId);
+
+        timer = new Timer();
+        //非同期、別スレッド定期的に実行する処理
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Log.d(TAG, "onStartCommand");
+
+                /*******************データーベースへ登録する処理**************************/
+                /*********************************************************************/
+
+            }
+        }, 0, 1000);
+
+        return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        Log.d("Debug TEST", "onDestroy");
+        Log.d(TAG, "onDestroy");
         super.onDestroy();
         mNM.cancel(1);
+
+        //タイマーをキャンセル
+        timer.cancel();
 
         //ユーザー操作により[設定 > アプリ > 実行中]から Service が停止された場合に再起動させる
         startService(new Intent(this, MemoryFreshService.class));

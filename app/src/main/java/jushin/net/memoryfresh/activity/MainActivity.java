@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -25,6 +27,10 @@ import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.fragment.GraphFragment;
 import jushin.net.memoryfresh.fragment.MainFragment;
 import jushin.net.memoryfresh.service.MemoryFreshService;
+
+/**
+ * Created by Yuta on 2016/01.
+ */
 
 public class MainActivity extends AppCompatActivity{
 
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity{
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
+
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab) ;
 
         //サービスが起動指定に場合に起動させる
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
@@ -63,28 +71,38 @@ public class MainActivity extends AppCompatActivity{
             startService(intent);
             //Toast.makeText(this, "サービスが停止していたため起動しました", Toast.LENGTH_LONG).show();
             final CoordinatorLayout coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator);
-            Snackbar.make(coordinatorLayout,"サービスが停止していたため起動しました",Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(coordinatorLayout,"サービスが停止していたため起動しました",Snackbar.LENGTH_LONG).show();
         }
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu){
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_main,menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == R.id.action_settings){
+//            Intent intent = new Intent(this, SettingsActivity.class);
+//            startActivity(intent);
+//        }
+//
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings){
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
 
     static class DesignPagerAdapter extends FragmentPagerAdapter {
 

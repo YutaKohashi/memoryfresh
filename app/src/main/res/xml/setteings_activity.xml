@@ -4,12 +4,26 @@
      <!--ここで設定画面に表示させる項目を設定する-->
      <!--summaryでは通常現在の設定を表示させておく-->
 
+     <SwitchPreference
+         android:key="switch_value"
+         android:title="サービスの有効化"
+         android:defaultValue="true"
+         />
+
+
+     <PreferenceScreen
+          android:key="enable_memory_clean"
+          android:title="起動前にメモリ開放をするアプリを選択..."
+          />
+
      <ListPreference
          android:key="listPreference"
          android:title="ListPreference"
          android:entries="@array/entries_background"
          android:entryValues="@array/entryvalues_background"
-         android:dialogTitle="ListPreference"/>
+         android:dialogTitle="ListPreference"
+         />
+
 
      <CheckBoxPreference
          android:key="checkbox_value"
@@ -22,8 +36,15 @@
          android:dialogTitle="EditTexPreference"
          android:dialogMessage="サブコメント" />
 
+
      <SwitchPreference
           android:key="switch_value"
           android:title="SeitchPreference"
           />
+
+     <MultiSelectListPreference
+          android:key="multiselectListPreference"
+         android:entries="@array/entries_background"
+         android:entryValues="@array/entryvalues_background"
+          android:title="MultiSelect"/>
 </PreferenceScreen>

@@ -8,7 +8,7 @@ import android.util.Log;
 import jushin.net.memoryfresh.service.MemoryFreshService;
 
 /**
- * Created by Yuta on 2016/01/23.
+ * Created by Yuta on 2016/01.
  */
 public class MainBroadReceiver extends BroadcastReceiver{
 
