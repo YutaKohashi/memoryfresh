@@ -5,6 +5,8 @@
       <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jaredrummler/android-processes/1.0.2/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jaredrummler/android-processes/1.0.2/dcd93efc0c84d02007d0a65df06ffcaa994d4aa7/android-processes-1.0.2-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
