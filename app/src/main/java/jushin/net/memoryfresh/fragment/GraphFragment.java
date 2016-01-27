@@ -1,6 +1,7 @@
 package jushin.net.memoryfresh.fragment;
 
 
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,23 +10,26 @@ import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.PieChart;
 
+import java.util.Calendar;
+
+import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.util.GraphManager;
 import jushin.net.memoryfresh.util.MemoryManager;
-import jushin.net.memoryfresh.R;
 
-/**
- * A simple {@link android.support.v4.app.Fragment} subclass.
- * Use the {@link MainFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 
 public class GraphFragment extends Fragment  {
 
+
+    private NotificationManager mManager;
+    private int number = 0;
+
+    //メモリ取得に使う変数
     MemoryManager manager;
+
     //メモリの値を格納する変数
-    float total,free,app,service;
-    float[] data;
-    String str = "";
+    float total,free,use;
+    float[] data;//グラフの値の指定
+    String str = "";//グラフの説明変数
     GraphManager graphs;
     View v;
     String[] name;
@@ -50,40 +54,38 @@ public class GraphFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //viewを取得
         v = inflater.inflate(R.layout.fragment_graph, container, false);
-        PieChart pieChart = (PieChart)v.findViewById(R.id.graph);
-        graphs = new GraphManager(pieChart,true,40f);
 
+        //グラフ処理
+        PieChart pieChart = (PieChart)v.findViewById(R.id.graph);//関連付け
+        graphs = new GraphManager(pieChart,true,40f);//インスタンス化
 
-
+        //メモリクラスのインスタンス化
         manager = new MemoryManager(this.getContext());
-        name =  new String[]{"アプリ","サービス","未使用"};//項目(５つまで)
+
+        //各種メモリサイズの格納(use)
+        total = manager.totalMemory();
+        use = manager.useSize();
+        free = total - use;
+
+        //各種メモリサイズの格納(free)
+//        total = manager.totalMemory();
+//        free = manager.freeMemorySize();
+//        use = (total-free);
+//        free = (total - manager.useSize());
+
+        //----------グラフの処理----------
+        name =  new String[]{"使用中","未使用"};        //項目(５つまで)
+        data = new  float[]{(use / total) * 100//グラフのデータ
+                ,(free / total) * 100};
 
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //各種メモリサイズの格納
-                total = manager.totalMemory()/1000;
-                app = manager.ProcessMemorySize() /8/1000;
-                service = manager.serviceMemory()/8/1000;
-                free = ( total - (app+service) );
+        str = "全体メモリ(MB):" + Math.ceil(total/1000) //グラフ情報
+                + "\n未使用(MB)" + Math.ceil(free/1000)
+                + "\n使用(MB):" + Math.ceil((total-free)/1000);
 
-            }
-        }).start();
-
-
-
-
-        data = new float[]{(app / total) * 100, (service / total) * 100, (free / total) * 100};//メモリ使用サイズ(型)
-
-        str = "全体メモリ(MB):" + Math.ceil(total)+"\nアプリ(MB):" + Math.ceil(app);
-        str += "\nサービス(MB):" + Math.ceil(service) +"未使用(MB)"+ Math.ceil(free);
-
-        graphs.graphData(name, data);
-        graphs.graphSettings(str);
-        graphs.graphColors(name.length);
-        graphs.strart();
+        graphs.strart(name,data,str,true);//グラフ描画
 
         return v;
     }

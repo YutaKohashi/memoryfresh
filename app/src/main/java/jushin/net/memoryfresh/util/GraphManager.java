@@ -1,6 +1,7 @@
 package jushin.net.memoryfresh.util;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -18,13 +19,11 @@ import java.util.ArrayList;
 
 public class GraphManager {
 
-    PieChart pieChart;//グラフの設定に使用
-    ArrayList<Entry> yVals;//グラフの値
-    ArrayList<String> xVals;//値の名前
-    ArrayList<Integer> colors;//色
-    PieDataSet dataSet;
-
-    boolean flgColor;
+    private PieChart pieChart;//グラフの設定に使用
+    private ArrayList<Entry> yVals;//グラフの値
+    private ArrayList<String> xVals;//値の名前
+    private ArrayList<Integer> colors;//色
+    private PieDataSet dataSet;
 
     //引数 1:IDと関連化済みのPieChart,2:真ん中に穴を空けるかどうか,3:真ん中の穴の大きさ(%指定)
     public GraphManager(PieChart pieChart, boolean flg, float size){
@@ -47,16 +46,22 @@ public class GraphManager {
     }
 
     //グラフの表示
-    public void strart(){
+    public void strart(String[] name, float[] data, String info,boolean flg){
+
+        graphData(name, data);
+        graphSettings(info);
+        graphColors(name.length);
 
         // 更新
         pieChart.invalidate();
         // アニメーション
-//        pieChart.animateXY(2000, 1000); // 表示アニメーション
+        if(flg){
+            pieChart.animateXY(2000, 1000); // 表示アニメーション
+        }
     }
 
     //グラフの項目の名前と値を設定
-    public void graphData(String[] prossesName,float[] prossesSize){
+    private void graphData(String[] prossesName,float[] prossesSize){
 
         yVals = new ArrayList<>();//グラフの値
         xVals = new ArrayList<>();//値の名前
@@ -70,7 +75,7 @@ public class GraphManager {
         }
     }
 
-    public void graphColors(int maxLength){
+    private void graphColors(int maxLength){
 
         colors = new ArrayList<Integer>();//色
 
