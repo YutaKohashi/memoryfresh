@@ -12,11 +12,6 @@ import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.Calendar;
 
-/**
- * A simple {@link android.support.v4.app.Fragment} subclass.
- * Use the {@link MainFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 
 public class GraphFragment extends Fragment  {
 
@@ -65,11 +60,15 @@ public class GraphFragment extends Fragment  {
         //メモリクラスのインスタンス化
         manager = new MemoryManager(this.getContext());
 
-        //各種メモリサイズの格納
+        //各種メモリサイズの格納(use)
         total = manager.totalMemory();
-        free = manager.freeMemorySize();
         use = manager.useSize();
         free = total - use;
+
+        //各種メモリサイズの格納(free)
+//        total = manager.totalMemory();
+//        free = manager.freeMemorySize();
+//        use = (total-free);
 //        free = (total - manager.useSize());
 
         //----------グラフの処理----------
@@ -82,29 +81,10 @@ public class GraphFragment extends Fragment  {
                 + "\n未使用(MB)" + Math.ceil(free/1000)
                 + "\n使用(MB):" + Math.ceil((total-free)/1000);
 
-        graphs.strart(name,data,str);//グラフ描画
+        graphs.strart(name,data,str,true);//グラフ描画
 
         return v;
     }
-
-//    private void notification() {
-//
-//
-//    }
-//    private void sendNotification() {
-//        Notification.Builder noticeBuilder = new Notification.Builder(this);
-//        noticeBuilder.setSmallIcon(android.R.drawable.ic_dialog_alert);
-//        noticeBuilder.setTicker("ticker");
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//            noticeBuilder.setSmallIcon(android.R.drawable.ic_dialog_alert);
-//        }
-//        noticeBuilder.setContentTitle("title");
-//        noticeBuilder.setContentInfo("info");
-//        noticeBuilder.setContentText("text");
-//        Notification notice = noticeBuilder.build();
-//        NotificationManager manager =this.getContext().getSystemService(this.getContext().NOTIFICATION_SERVICE);
-//        manager.notify(1, notice);// 1 はアプリ内の通知uniqueID。削除時に指定
-//    }
 
 
 }

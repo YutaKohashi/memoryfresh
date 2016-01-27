@@ -46,7 +46,7 @@ public class GraphManager {
     }
 
     //グラフの表示
-    public void strart(String[] name, float[] data, String info){
+    public void strart(String[] name, float[] data, String info,boolean flg){
 
         graphData(name, data);
         graphSettings(info);
@@ -55,7 +55,9 @@ public class GraphManager {
         // 更新
         pieChart.invalidate();
         // アニメーション
-//        pieChart.animateXY(2000, 1000); // 表示アニメーション
+        if(flg){
+            pieChart.animateXY(2000, 1000); // 表示アニメーション
+        }
     }
 
     //グラフの項目の名前と値を設定
