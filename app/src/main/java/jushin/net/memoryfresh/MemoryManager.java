@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import com.jaredrummler.android.processes.ProcessManager;
@@ -16,14 +17,7 @@ import java.util.List;
 /**
  * Created by freedom18 on 2016/01/17.
  */
-public class MemoryManager extends Activity {
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-
-
-
+public class MemoryManager extends Activity{
 
     public MemoryManager(Context context) {
 
@@ -65,8 +59,53 @@ public class MemoryManager extends Activity {
         return (flgs/1000);
     }
 
-    //unused in memory (Deveroper Mode:本当の空き容量のみ)
-    public float freeMemorySize() {
+
+    public float freeMem(){
+        float flg  = 0;
+
+        //SDK(Androidのversion)で分岐
+        switch (Build.VERSION.SDK_INT){
+
+            case 21://(android 5.0.2)
+                flg = freeSizeVer5_0();
+                break;
+            case 22://(Android 5.1.1)
+                flg = freeSizeVer5_1();
+                break;
+            default:
+                flg =  (totalMemory() - kUseMemory());
+        }
+        return flg;
+    }
+
+    public float useMem(){
+
+        float flg = 0;
+        //SDK(Androidのversion)で分岐
+        switch (Build.VERSION.SDK_INT){
+
+            case 21://(android 5.0.2)
+                flg = freeSizeVer5_0();
+                break;
+            case 22://(Android 5.1.1)
+                flg = freeSizeVer5_1();
+                break;
+            default:
+                flg = kUseMemory();
+        }
+
+        return flg;
+    }
+
+
+    //unused in memory(Android 5.0)
+    private float freeSizeVer5_0(){
+
+        return useMem5_0();
+    }
+
+    //unused in memory(Android 5.1)
+    public float freeSizeVer5_1() {
 
         float flgs = 0;//戻り値の変数
 
@@ -77,29 +116,24 @@ public class MemoryManager extends Activity {
             //取得した情報をバッファに格納
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-
-            float test = 0;
             //メモリの値を格納
             String line = null;
 
             //情報の分だけ繰り返し
             while ((line = br.readLine()) != null) {
 
-                    Log.d("MemoryView", line);
-
                     try{
 
                         //必要な情報かを調べる
-//                        if (line.indexOf("LowFree") != -1) {
-//                            line = line.replaceAll("LowFree", "");
-//
-//                            line = line.replaceAll(":", "");
-//                            line = line.replaceAll("kB", "");
-//                            line = line.replaceAll(" ", "");
-//
-//                            //float型へ変換し足しこむ
-//                            flgs += Float.parseFloat(line);
-//                        }
+                        if (line.indexOf("LowFree") != -1) {
+                            line = line.replaceAll("LowFree", "");
+                            line = line.replaceAll(":", "");
+                            line = line.replaceAll("kB", "");
+                            line = line.replaceAll(" ", "");
+
+                            //float型へ変換し足しこむ
+                            flgs += Float.parseFloat(line);
+                        }
 
                         if(line.indexOf("MemFree") != -1 ){
                             line = line.replaceAll("MemFree", "");
@@ -111,57 +145,31 @@ public class MemoryManager extends Activity {
 
                         }
 
-//                        if (line.indexOf("SwapFree") != -1) {
-//                            line = line.replaceAll("SwapFree", "");
-//
-//                            line = line.replaceAll(":", "");
-//                            line = line.replaceAll("kB", "");
-//                            line = line.replaceAll(" ", "");
-//
-//                            //float型へ変換し足しこむ
-//                            flgs += Float.parseFloat(line);
-//                        }
-
-                        if(line.indexOf("Active") != -1 ){
-                            line = line.replaceAll("Active", "");
+                        if (line.indexOf("SwapFree") != -1) {
+                            line = line.replaceAll("SwapFree", "");
                             line = line.replaceAll(":", "");
                             line = line.replaceAll("kB", "");
                             line = line.replaceAll(" ", "");
+
                             //float型へ変換し足しこむ
-                            test += Float.parseFloat(line);
-
+                            flgs += Float.parseFloat(line);
                         }
-
-                        if(line.indexOf("Inactive(file)") != -1 ){
-                            line = line.replaceAll("Inactive", "");
-                            line = line.replaceAll("file", "");
-                            line = line.replaceAll(":", "");
-                            line = line.replaceAll("kB", "");
-                            line = line.replaceAll(" ", "");
-                            line = line.replaceAll("\\(", "");
-                            line = line.replaceAll("\\)", "");
-                            //float型へ変換し足しこむ
-                            flgs += (test/Float.parseFloat(line));
-
-                        }
-
 
                     }catch (Exception e){
 
                     }
-
-
             }
         } catch (Exception e) {
 
             Log.i("MemoryException", e.toString());
         }
-        return (flgs);
+        return (flgs/1000);
     }
 
-    public float useSize() {
 
-        float flgs = 0;//戻り値の変数
+    public float useMem5_0(){
+        float flg = 0;//戻り値の変数
+
         try {
             //Linuxコマンドでメモリ情報を取得
             Process process = Runtime.getRuntime().exec("cat /proc/meminfo");
@@ -174,13 +182,48 @@ public class MemoryManager extends Activity {
 
             //情報の分だけ繰り返し
             while ((line = br.readLine()) != null) {
-                Log.d("MemoryView", line);
+
+                if(line.indexOf("Active") != -1){
+
+                    line = line.replaceAll("Active", "");
+                    line = line.replaceAll(":", "");
+                    line = line.replaceAll("kB", "");
+                    line = line.replaceAll(" ", "");
+
+                    flg += Float.parseFloat(line);
+
+                }
+            }
+        } catch (Exception e) {
+
+        }
+        return flg/1000;
+    }
+
+    public float useMem5_1(){
+        float flg = 0;
+
+        return flg;
+    }
 
 
-                String test = "";
-                String test1 = "";
 
+    public float useSize() {
 
+        float flgs = 0;//戻り値の変数
+
+        try {
+            //Linuxコマンドでメモリ情報を取得
+            Process process = Runtime.getRuntime().exec("cat /proc/meminfo");
+
+            //取得した情報をバッファに格納
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            //メモリの値を格納
+            String line = null;
+
+            //情報の分だけ繰り返し
+            while ((line = br.readLine()) != null) {
 
                 if (line.contains("Active(anon)")) {
 
@@ -190,18 +233,9 @@ public class MemoryManager extends Activity {
                     line = line.replaceAll("kB", "");
                     line = line.replaceAll(" ", "");
                     line = line.replaceAll("\\(", "");
-                    test += line.replaceAll("\\)", "");
+                    line += line.replaceAll("\\)", "");
 
-
-//                if(line.indexOf("Active") != -1){
-//
-//                    line = line.replaceAll("Active", "");
-//                    line = line.replaceAll(":", "");
-//                    line = line.replaceAll("kB", "");
-//                    test1 = line.replaceAll(" ", "");
-
-                    flgs += Float.parseFloat(test);
-
+                    flgs += Float.parseFloat(line);
                 }
             }
         } catch (Exception e) {
@@ -230,6 +264,8 @@ public class MemoryManager extends Activity {
         }
         return flg/1000/1000;
     }
+
+
 
     //MemoryLogView
     public void logInfo(){
@@ -277,8 +313,6 @@ public class MemoryManager extends Activity {
             }
         }catch (Exception e){
         }
-
-
     }
 
 }
