@@ -61,14 +61,15 @@ public class GraphFragment extends Fragment  {
         manager = new MemoryManager(this.getContext());
 
         //各種メモリサイズの格納(use)
-//        total = manager.totalMemory();
-//        use = manager.useSize();
-//        free = total - use;
+        total = manager.totalMemory();
+        use = manager.kUseMemory();
+        free = total - use;
+        manager.logInfo();
 
         //各種メモリサイズの格納(free)
-        total = manager.totalMemory();
-        free = manager.freeMemorySize();
-        use = (total-free);
+//        total = manager.totalMemory();
+//        free = manager.freeMemorySize();
+//        use = (total-free);
 
         //----------グラフの処理----------
         name =  new String[]{"使用中","未使用"};        //項目(５つまで)
@@ -76,9 +77,9 @@ public class GraphFragment extends Fragment  {
                 ,(free / total) * 100};
 
 
-        str = "全体メモリ(MB):" + Math.ceil(total/1000) //グラフ情報
-                + "\n未使用(MB)" + Math.ceil(free/1000)
-                + "\n使用(MB):" + Math.ceil((total-free)/1000);
+        str = "全体メモリ(MB):" + Math.ceil(total) //グラフ情報
+                + "\n未使用(MB)" + Math.ceil(free)
+                + "\n使用(MB):" + Math.ceil((total-free));
 
         graphs.strart(name,data,str,true);//グラフ描画
 

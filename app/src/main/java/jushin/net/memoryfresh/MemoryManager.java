@@ -1,11 +1,17 @@
 package jushin.net.memoryfresh;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+
+import com.jaredrummler.android.processes.ProcessManager;
+import com.jaredrummler.android.processes.models.AndroidAppProcess;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * Created by freedom18 on 2016/01/17.
@@ -56,10 +62,8 @@ public class MemoryManager extends Activity {
         } catch (Exception e) {
 
         }
-        return (flgs);
+        return (flgs/1000);
     }
-
-
 
     //unused in memory (Deveroper Mode:本当の空き容量のみ)
     public float freeMemorySize() {
@@ -155,7 +159,6 @@ public class MemoryManager extends Activity {
         return (flgs);
     }
 
-
     public float useSize() {
 
         float flgs = 0;//戻り値の変数
@@ -205,6 +208,77 @@ public class MemoryManager extends Activity {
 
         }
         return flgs;
+    }
+
+    //小橋君の使ってるメモリの取得
+    public float kUseMemory(){
+
+        float flg = 0;
+
+        List<AndroidAppProcess> processes = ProcessManager.getRunningAppProcesses();
+
+        try{
+
+            for (AndroidAppProcess app : processes){
+
+                flg += app.statm().getResidentSetSize();
+            }
+
+        }catch (Exception e){
+            Log.d("Erorr",e.toString());
+
+        }
+        return flg/1000/1000;
+    }
+
+    //MemoryLogView
+    public void logInfo(){
+
+
+        //MemoryLog(cat /proc/meminfo)
+        try{
+            //Linuxコマンドでメモリ情報を取得
+            Process process = Runtime.getRuntime().exec("cat /proc/meminfo");
+
+            //取得した情報をバッファに格納
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            float test = 0;
+            //メモリの値を格納
+            String line = null;
+
+            //情報の分だけ繰り返し
+            while ((line = br.readLine()) != null) {
+
+                Log.d("MemoryView", line);
+            }
+        }catch (Exception e){
+        }
+
+        Log.d("MemoryView", "                                               ");
+        Log.d("MemoryView", "                                               ");
+
+        //MemoryLog(adb shell dumpsys meminfo)
+        try{
+            //Linuxコマンドでメモリ情報を取得
+            Process process = Runtime.getRuntime().exec("adb shell dumpsys meminfo");
+
+            //取得した情報をバッファに格納
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            float test = 0;
+            //メモリの値を格納
+            String line = null;
+
+            //情報の分だけ繰り返し
+            while ((line = br.readLine()) != null) {
+
+                Log.d("MemoryView", line);
+            }
+        }catch (Exception e){
+        }
+
+
     }
 
 }
