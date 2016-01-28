@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jushin.net.memoryfresh">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <!-- 起動した時にBroadCastIntentを取得するためのパーミション -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 

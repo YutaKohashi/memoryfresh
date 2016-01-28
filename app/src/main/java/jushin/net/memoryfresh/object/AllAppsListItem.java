@@ -18,11 +18,8 @@ public class AllAppsListItem {
     //private CheckBox checkBox;
     private String pacageName;
 
-    public Drawable getImageId() {
+    public Drawable getImage() {
         return image;
-    }
-    public void setImageId(Drawable imageId) {
-        this.image = imageId;
     }
 
     public String getappName() {
@@ -32,6 +29,9 @@ public class AllAppsListItem {
     public String getProcessName(){
         return pacageName;
     }
+
+
+
 
     //アイコンをセット
     public void setImage(Drawable image) {

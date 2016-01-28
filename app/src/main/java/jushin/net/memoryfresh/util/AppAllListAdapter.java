@@ -44,7 +44,7 @@ public class AppAllListAdapter extends ArrayAdapter<AllAppsListItem> {
 
         // アプリアイコン
         ImageView appInfoImage = (ImageView)view.findViewById(R.id.item_app_image);
-        appInfoImage.setImageDrawable(item.getImageId());
+        appInfoImage.setImageDrawable(item.getImage());
 
         // アプリ名
         TextView appInfoText = (TextView)view.findViewById(R.id.appname_text);

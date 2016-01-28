@@ -1,6 +1,9 @@
 package jushin.net.memoryfresh.activity;
 
+import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +24,8 @@ public class PacageListActivity extends AppCompatActivity {
     ListView listView;
     AppAllListAdapter adapter;
     ArrayList<AllAppsListItem> items;
+    ProgressDialog progressDialog;
+    Thread thread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,7 @@ public class PacageListActivity extends AppCompatActivity {
         toolbar.setTitle("アプリを選択");
         setSupportActionBar(toolbar);
 
+        
         //インストールされているアプリケーションをリストで表示
         PackageManager pm = getPackageManager();
         //検索条件
@@ -40,15 +46,18 @@ public class PacageListActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
         //検索
-        List<ResolveInfo> list = pm.queryIntentActivities(intent,0);
+        //List<ResolveInfo> list = pm.queryIntentActivities(intent,0);
+        List<ApplicationInfo> list = pm.getInstalledApplications(0);
 
+        items = new ArrayList<AllAppsListItem>();
         // ArrayAdapter にアプリ名を追加
-        for (ResolveInfo info : list) {
+        for (ApplicationInfo info : list) {
             AllAppsListItem item = new AllAppsListItem();
 
-            String AppName = info.loadLabel(pm).toString();
+            String AppName = info.loadLabel(pm).toString();  //アプリケーション名
+            String PackageName =  info.packageName;
             item.setAppName(AppName);
-            item.setPackaeName(AppName);
+            item.setPackaeName(PackageName);
             item.setImage(info.loadIcon(pm));
 
             items.add(item);
