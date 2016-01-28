@@ -14,8 +14,9 @@ import jushin.net.memoryfresh.activity.MainActivity;
  */
 public class AllAppsListItem {
     private Drawable image;
-    private String textProcessName;
-    private CheckBox checkBox;
+    private String appName;
+    //private CheckBox checkBox;
+    private String pacageName;
 
     public Drawable getImageId() {
         return image;
@@ -24,32 +25,31 @@ public class AllAppsListItem {
         this.image = imageId;
     }
 
-    public String getTextProcessName() {
-        return textProcessName;
+    public String getappName() {
+        return appName;
     }
 
-    public boolean getcheckboxstatus(){
-
-        Boolean flag;
-
-        if(checkBox.isEnabled()){
-            flag = true;
-        }else{
-            flag = false;
-        }
-
-        return flag;
-    }
-    public CheckBox getcheckbox(){
-
-        return checkBox;
+    public String getProcessName(){
+        return pacageName;
     }
 
-    public void setText(String textProcessName) {
-        this.textProcessName = textProcessName;
+    //アイコンをセット
+    public void setImage(Drawable image) {
+        this.image = image;
+    }
+    //アプリ名をセット
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
+    //パッケージ名をセット
+    public void setPackaeName(String text) {
+        this.pacageName = text;
     }
 
-    public void saveCheckBoxState(CheckBox checkBox,boolean bln){
-        checkBox.setChecked(bln);
-    }
+
+
+//
+//    public void saveCheckBoxState(CheckBox checkBox,boolean bln){
+//        checkBox.setChecked(bln);
+//    }
 }
