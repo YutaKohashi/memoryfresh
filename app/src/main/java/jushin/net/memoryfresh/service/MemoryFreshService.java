@@ -5,7 +5,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.Timer;
@@ -59,8 +61,14 @@ public class MemoryFreshService extends Service {
         //タイマーをキャンセル
         timer.cancel();
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //ユーザー操作により[設定 > アプリ > 実行中]から Service が停止された場合に再起動させる
-        startService(new Intent(this, MemoryFreshService.class));
+        //設定画面で向こうにしている場合はは再起動しない
+        if(prefs.getBoolean("service_switch", true)){
+            startService(new Intent(this, MemoryFreshService.class));
+        }
+
+
     }
 
     @Override

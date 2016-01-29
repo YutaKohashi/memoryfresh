@@ -17,6 +17,7 @@ public class AllAppsListItem {
     private String appName;
     //private CheckBox checkBox;
     private String pacageName;
+    private boolean checkbox;
 
     public Drawable getImage() {
         return image;
@@ -30,7 +31,9 @@ public class AllAppsListItem {
         return pacageName;
     }
 
-
+    public boolean getCheckBox(){
+        return checkbox;
+    }
 
 
     //アイコンをセット
@@ -44,6 +47,10 @@ public class AllAppsListItem {
     //パッケージ名をセット
     public void setPackaeName(String text) {
         this.pacageName = text;
+    }
+
+    public void setCheckboxState(boolean bol){
+        this.checkbox = bol;
     }
 
 

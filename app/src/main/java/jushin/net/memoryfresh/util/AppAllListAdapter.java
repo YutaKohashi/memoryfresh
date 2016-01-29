@@ -54,7 +54,12 @@ public class AppAllListAdapter extends ArrayAdapter<AllAppsListItem> {
         TextView appInfo3Text = (TextView)view.findViewById(R.id.packagename_text);
         appInfo3Text.setText(item.getProcessName());
 
+        Boolean checkBox;
+
+
         //チェックボックス
+
+        
 
         return view;
 

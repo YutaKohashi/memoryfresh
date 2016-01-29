@@ -5,7 +5,7 @@
      <!--summaryでは通常現在の設定を表示させておく-->
 
      <SwitchPreference
-         android:key="switch_value"
+         android:key="service_switch"
          android:title="サービスの有効化"
          android:defaultValue="true"
          />
@@ -16,35 +16,35 @@
           android:title="起動前にメモリ開放をするアプリを選択..."
           />
 
-     <ListPreference
-         android:key="listPreference"
-         android:title="ListPreference"
-         android:entries="@array/entries_background"
-         android:entryValues="@array/entryvalues_background"
-         android:dialogTitle="ListPreference"
-         />
+     <!--<ListPreference-->
+         <!--android:key="listPreference"-->
+         <!--android:title="ListPreference"-->
+         <!--android:entries="@array/entries_background"-->
+         <!--android:entryValues="@array/entryvalues_background"-->
+         <!--android:dialogTitle="ListPreference"-->
+         <!--/>-->
 
 
-     <CheckBoxPreference
-         android:key="checkbox_value"
-         android:title="CheckboxPreference"/>
+     <!--<CheckBoxPreference-->
+         <!--android:key="checkbox_value"-->
+         <!--android:title="CheckboxPreference"/>-->
 
-     <EditTextPreference
-         android:key="edittext_value"
-         android:title="EditTexPreference"
-         android:summary="現在の設定"
-         android:dialogTitle="EditTexPreference"
-         android:dialogMessage="サブコメント" />
+     <!--<EditTextPreference-->
+         <!--android:key="edittext_value"-->
+         <!--android:title="EditTexPreference"-->
+         <!--android:summary="現在の設定"-->
+         <!--android:dialogTitle="EditTexPreference"-->
+         <!--android:dialogMessage="サブコメント" />-->
 
 
-     <SwitchPreference
-          android:key="switch_value"
-          android:title="SeitchPreference"
-          />
+     <!--<SwitchPreference-->
+          <!--android:key="switch_value"-->
+          <!--android:title="SeitchPreference"-->
+          <!--/>-->
 
-     <MultiSelectListPreference
-          android:key="multiselectListPreference"
-         android:entries="@array/entries_background"
-         android:entryValues="@array/entryvalues_background"
-          android:title="MultiSelect"/>
+     <!--<MultiSelectListPreference-->
+          <!--android:key="multiselectListPreference"-->
+         <!--android:entries="@array/entries_background"-->
+         <!--android:entryValues="@array/entryvalues_background"-->
+          <!--android:title="MultiSelect"/>-->
 </PreferenceScreen>

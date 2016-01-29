@@ -266,43 +266,43 @@ public class MainFragment extends Fragment {
             }
         }, 5000, 5000);
 
-        // メモリ解放の実装
-        startButton = (Button)v.findViewById(R.id.start_button);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                final String TAG = "test::";
-                // Integer オブジェクトの弱参照を保持する
-                Integer integer = new Integer(123456);
-                SoftReference<Integer> ref = new SoftReference<Integer>(integer);
-
-// SoftReference の中身を取得・表示
-                Integer i = ref.get();
-                Log.d(TAG, "i=" + i);
-
-// 強参照を全て無くす
-                integer = null;
-                i = null;
-
-// メモリ負荷をかける
-                try {
-                    HashMap<String, Byte[]> map = new HashMap<String, Byte[]>();
-                    for (int j = 0; j < 100000; j++) {
-                        Byte[] v = new Byte[10000];
-                        String k = String.valueOf(System.currentTimeMillis());
-                        map.put(k, v);
-                    }
-                } catch (OutOfMemoryError oome) {
-                    Log.d(TAG, "OutOfMemoryError!!");
-                }
-
-// OutOfMemoryError 発生後に中身を取得・表示
-                i = ref.get();
-                Log.d(TAG, "i=" + i);
-
-            }
-        });
+//        // メモリ解放の実装
+//        startButton = (Button)v.findViewById(R.id.start_button);
+//        startButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                final String TAG = "test::";
+//                // Integer オブジェクトの弱参照を保持する
+//                Integer integer = new Integer(123456);
+//                SoftReference<Integer> ref = new SoftReference<Integer>(integer);
+//
+//// SoftReference の中身を取得・表示
+//                Integer i = ref.get();
+//                Log.d(TAG, "i=" + i);
+//
+//// 強参照を全て無くす
+//                integer = null;
+//                i = null;
+//
+//// メモリ負荷をかける
+//                try {
+//                    HashMap<String, Byte[]> map = new HashMap<String, Byte[]>();
+//                    for (int j = 0; j < 100000; j++) {
+//                        Byte[] v = new Byte[10000];
+//                        String k = String.valueOf(System.currentTimeMillis());
+//                        map.put(k, v);
+//                    }
+//                } catch (OutOfMemoryError oome) {
+//                    Log.d(TAG, "OutOfMemoryError!!");
+//                }
+//
+//// OutOfMemoryError 発生後に中身を取得・表示
+//                i = ref.get();
+//                Log.d(TAG, "i=" + i);
+//
+//            }
+//        });
 
         return v;
     }

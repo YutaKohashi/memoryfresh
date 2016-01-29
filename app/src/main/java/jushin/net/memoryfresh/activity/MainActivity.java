@@ -2,7 +2,9 @@ package jushin.net.memoryfresh.activity;
 
 import android.app.ActivityManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -51,7 +53,11 @@ public class MainActivity extends AppCompatActivity{
 
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab) ;
 
-        //サービスが起動指定に場合に起動させる
+        //サービスが起動指定で起動していない場合起動させる
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean isEnableService = preferences.getBoolean("service_switch",true);
+
+
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> listServiceInfo = am.getRunningServices(Integer.MAX_VALUE);
         boolean found = false;
@@ -66,7 +72,7 @@ public class MainActivity extends AppCompatActivity{
                 break;
             }
         }
-        if (found == false) {
+        if (found == false && isEnableService) {
             Intent intent = new Intent(MainActivity.this, MemoryFreshService.class);
             startService(intent);
             //Toast.makeText(this, "サービスが停止していたため起動しました", Toast.LENGTH_LONG).show();
