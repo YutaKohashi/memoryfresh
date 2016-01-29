@@ -38,7 +38,7 @@ public class GraphManager {
         pieChart.setHoleColorTransparent(true);
         pieChart.setTransparentCircleRadius(55f);
         pieChart.setRotationAngle(270);          // 開始位置の調整
-        pieChart.setRotationEnabled(false);       // 回転可能かどうか
+        pieChart.setRotationEnabled(true);       // 回転可能かどうか
         pieChart.getLegend().setEnabled(true);   //
         pieChart.setDescription(str);
         pieChart.setData(createPieChartData());
@@ -82,7 +82,7 @@ public class GraphManager {
 
         for (int i = 0;i < maxLength;i++ ){
 
-            colors.add(ColorTemplate.COLORFUL_COLORS[i]);
+            colors.add(ColorTemplate.JOYFUL_COLORS[i]);
         }
 
         dataSet.setColors(colors);

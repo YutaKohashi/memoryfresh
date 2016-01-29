@@ -84,6 +84,11 @@ public class GraphFragment extends Fragment  {
         graphs.strart(name,data,str,true);//グラフ描画
 
         return v;
+
+
+
+
+
     }
 
 
