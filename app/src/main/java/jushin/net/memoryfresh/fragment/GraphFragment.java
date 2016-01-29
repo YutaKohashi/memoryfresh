@@ -1,9 +1,13 @@
 package jushin.net.memoryfresh.fragment;
 
 
+import android.app.ActivityManager;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.ActivityManagerCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,10 +68,29 @@ public class GraphFragment extends Fragment  {
         //メモリクラスのインスタンス化
         manager = new MemoryManager(this.getContext());
 
-        //各種メモリサイズの格納(use)
+        /*************************************************************/
+
+        ActivityManager activityManager = (ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+        //メモリ情報を取得
+        activityManager.getMemoryInfo(memoryInfo);
+
+        long availMem =  memoryInfo.availMem/1000;//B -> KB
+
         total = manager.totalMemory();
-        use = manager.useSize();
-        free = total - use;
+        free = availMem;
+        use = total - availMem;
+
+        Log.d("memoryInfo-total::",String.valueOf(total));
+        Log.d("memoryInfo-free::",String.valueOf(free));
+        Log.d("memoryInfo-use::",String.valueOf(use));
+
+        /*************************************************************/
+
+        //各種メモリサイズの格納(use)
+//        total = manager.totalMemory();
+//        use = manager.useSize();
+//        free = total - use;
 
         //各種メモリサイズの格納(free)
 //        total = manager.totalMemory();
