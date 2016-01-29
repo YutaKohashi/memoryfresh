@@ -68,7 +68,7 @@ public class GraphFragment extends Fragment  {
 
         //各種メモリサイズの格納(free)
         total = manager.totalMemory();
-        free = manager.freeSizeVer5_1();
+        free = manager.defaultFreeMem();
         use = (total-free);
 
         //----------グラフの処理----------
