@@ -35,7 +35,7 @@ public class GraphManager {
 
     public void graphSettings(String str){
 
-        pieChart.setHoleColorTransparent(true);
+        pieChart.setHoleColorTransparent(false);
         pieChart.setTransparentCircleRadius(55f);
         pieChart.setRotationAngle(270);          // 開始位置の調整
         pieChart.setRotationEnabled(false);       // 回転可能かどうか
@@ -99,13 +99,13 @@ public class GraphManager {
 
         dataSet = new PieDataSet(yVals, "");
         dataSet.setSliceSpace(4f);//グラフの値の表示の間のスペース
-        dataSet.setSelectionShift(1f);//円グラフの大きさ(画面に対する)：値が小さいほど大きい
+        dataSet.setSelectionShift(15f);//円グラフの大きさ(画面に対する)：値が小さいほど大きい
 
         PieData data = new PieData(xVals, dataSet);
         data.setValueFormatter(new PercentFormatter());
 
         // テキストの設定
-        data.setValueTextSize(12f);
+        data.setValueTextSize(15f);
         data.setValueTextColor(Color.WHITE);
         return data;
 
