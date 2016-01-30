@@ -5,6 +5,9 @@ import android.app.ActivityManager;
 import android.os.*;
 import android.os.Process;
 
+import com.jaredrummler.android.processes.ProcessManager;
+import com.jaredrummler.android.processes.models.AndroidAppProcess;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +22,14 @@ public class MemoryManager {
         this.activity = activity;
     }
 
-    private List<ActivityManager.RunningAppProcessInfo> initProcess() {
-        ActivityManager manager = (ActivityManager) activity.getSystemService(activity.ACTIVITY_SERVICE);
-        return manager.getRunningAppProcesses();
+    private List<AndroidAppProcess> initProcess() {
+        return ProcessManager.getRunningAppProcesses();
     }
 
     public int killTargetProcessId(ArrayList<Integer> processList) {
         int count = 0;
 
-        for (ActivityManager.RunningAppProcessInfo process : initProcess()) {
+        for (AndroidAppProcess process : initProcess()) {
             if (processList.contains(process.pid)) {
                 killTargetProcess(process.pid);
                 count++;
@@ -54,8 +56,8 @@ public class MemoryManager {
 
     public boolean killTargetProcess(String processName) {
 
-        for (ActivityManager.RunningAppProcessInfo process : initProcess()) {
-            if (process.processName.equals(processName)) {
+        for (AndroidAppProcess process : initProcess()) {
+            if (process.name.equals(processName)) {
                 killTargetProcess(process.pid);
                 return true;
             }
@@ -67,7 +69,7 @@ public class MemoryManager {
     public int killAllProcess() {
         int count = 0;
 
-        for (ActivityManager.RunningAppProcessInfo process : initProcess()) {
+        for (AndroidAppProcess process : initProcess()) {
             killTargetProcess(process.pid);
             count++;
         }
