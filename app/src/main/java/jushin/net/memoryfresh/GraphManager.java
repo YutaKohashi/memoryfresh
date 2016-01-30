@@ -22,6 +22,7 @@ public class GraphManager {
     private PieChart pieChart;//グラフの設定に使用
     private ArrayList<Entry> yVals;//グラフの値
     private ArrayList<String> xVals;//値の名前
+    private ArrayList<String> xVals2;//値の名前
     private ArrayList<Integer> colors;//色
     private PieDataSet dataSet;
 
@@ -47,7 +48,6 @@ public class GraphManager {
 
     //グラフの表示
     public void strart(String[] name, float[] data, String info,boolean flg){
-
         graphData(name, data);
         graphSettings(info);
         graphColors(name.length);
@@ -55,9 +55,9 @@ public class GraphManager {
         // 更新
         pieChart.invalidate();
         // アニメーション
-//        if(flg){
+        if(flg){
             pieChart.animateXY(2000, 1000); // 表示アニメーション
-//        }
+        }
     }
 
     //グラフの項目の名前と値を設定
@@ -65,8 +65,10 @@ public class GraphManager {
 
         yVals = new ArrayList<>();//グラフの値
         xVals = new ArrayList<>();//値の名前
-
+        xVals2 = new ArrayList<>();//値の名前
         for(String name : prossesName){
+            Log.d("startView",name);
+            xVals2.add("");
             xVals.add(name);//名前の追加
         }
 
@@ -79,10 +81,9 @@ public class GraphManager {
 
         colors = new ArrayList<Integer>();//色
 
-
         for (int i = 0;i < maxLength;i++ ){
-
             colors.add(ColorTemplate.JOYFUL_COLORS[i]);
+
         }
 
         dataSet.setColors(colors);
@@ -94,10 +95,13 @@ public class GraphManager {
     //pieChartのデータ設定
     private PieData createPieChartData() {
 
-        dataSet = new PieDataSet(yVals, "Data");
-        dataSet.setSliceSpace(5f);
-        dataSet.setSelectionShift(1f);
+//        dataSet = new PieDataSet(xVals, "Data");
+        dataSet = new PieDataSet(yVals, "");
+        dataSet.setSliceSpace(4f);//グラフの値の表示の間のスペース
+        dataSet.setSelectionShift(1f);//円グラフの大きさ(画面に対する)：値が小さいほど大きい
 
+//        PieData data = new PieData(yVals, dataSet);
+        Log.d("startView",xVals.get(0) + " " + xVals.get(1));
         PieData data = new PieData(xVals, dataSet);
         data.setValueFormatter(new PercentFormatter());
 
