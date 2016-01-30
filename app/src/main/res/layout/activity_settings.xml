@@ -1,42 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-<<<<<<< HEAD
     tools:context=".activity.SettingsActivity">
-=======
-    tools:context="jushin.net.memoryfresh.SettingsActivity">
->>>>>>> 070d207e172419471d2dc3d339f07659bc3c4161
-
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        android:id="@+id/view">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_settings"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"/>
+            app:layout_scrollFlags="scroll|enterAlways" />
 
     </android.support.design.widget.AppBarLayout>
 
     <fragment
-<<<<<<< HEAD
-        android:name="jushin.net.memoryfresh.fragment.SettingsPreferenceFragment"
-=======
-        android:name="jushin.net.memoryfresh.SettingsPreferenceFragment"
->>>>>>> 070d207e172419471d2dc3d339f07659bc3c4161
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
         android:id="@+id/fragment_settings"
+        android:name="jushin.net.memoryfresh.fragment.SettingsPreferenceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/view" />
-
-
 
 </RelativeLayout>
