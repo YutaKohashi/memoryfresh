@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+     <!--ここで設定画面に表示させる項目を設定する-->
+     <!--summaryでは通常現在の設定を表示させておく-->
+
+     <SwitchPreference
+         android:key="service_switch"
+         android:title="サービスの有効化"
+         android:defaultValue="true"
+         />
+
+
+     <PreferenceScreen
+          android:key="enable_memory_clean"
+          android:title="起動前にメモリ開放をするアプリを選択..."
+          />
+
+     <com.hlidskialf.android.preference.SeekBarPreference android:key="duration"
+         android:title="Duration of something"
+         android:summary="How long something will last"
+         android:dialogMessage="Something duration"
+         android:defaultValue="5"
+         android:text=" minutes"
+         android:max="60"
+         />
+
+
+     <!--<ListPreference-->
+         <!--android:key="listPreference"-->
+         <!--android:title="ListPreference"-->
+         <!--android:entries="@array/entries_background"-->
+         <!--android:entryValues="@array/entryvalues_background"-->
+         <!--android:dialogTitle="ListPreference"-->
+         <!--/>-->
+
+
+     <!--<CheckBoxPreference-->
+         <!--android:key="checkbox_value"-->
+         <!--android:title="CheckboxPreference"/>-->
+
+     <!--<EditTextPreference-->
+         <!--android:key="edittext_value"-->
+         <!--android:title="EditTexPreference"-->
+         <!--android:summary="現在の設定"-->
+         <!--android:dialogTitle="EditTexPreference"-->
+         <!--android:dialogMessage="サブコメント" />-->
+
+
+     <!--<SwitchPreference-->
+          <!--android:key="switch_value"-->
+          <!--android:title="SeitchPreference"-->
+          <!--/>-->
+
+     <!--<MultiSelectListPreference-->
+          <!--android:key="multiselectListPreference"-->
+         <!--android:entries="@array/entries_background"-->
+         <!--android:entryValues="@array/entryvalues_background"-->
+          <!--android:title="MultiSelect"/>-->
+</PreferenceScreen><!-- From: file:/Users/sakamotoyuuta/memoryfresh/app/src/main/res/xml/setteings_activity.xml -->

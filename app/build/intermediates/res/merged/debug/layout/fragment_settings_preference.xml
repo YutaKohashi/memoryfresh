@@ -1,0 +1,10 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.SettingsPreferenceFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+</FrameLayout>
+<!-- From: file:/Users/sakamotoyuuta/memoryfresh/app/src/main/res/layout/fragment_settings_preference.xml -->
