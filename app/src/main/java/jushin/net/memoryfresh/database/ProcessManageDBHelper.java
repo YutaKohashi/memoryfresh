@@ -12,9 +12,8 @@ public class ProcessManageDBHelper extends SQLiteOpenHelper {
     static final String DB = "memory_fresh.db";
     static  final int DB_VERSION = 1;
     static  final String CREATE_TABLE = "CREATE TABLE freshtable " +
-            "( _id, integer primary key autoincrement, package text not null, isenable integer);";
+            "( _id INTEGER PRIMARY KEY autoincrement, package text not null);";
     static final String DROP_TABLE = "DROP TABLE freshtable";
-
 
     public ProcessManageDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

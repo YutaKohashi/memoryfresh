@@ -4,8 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.MainActivity">
 
-    <item android:id="@+id/action_settings"
-        android:title="設定"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_setting"
+        android:title="test"
+        app:showAsAction="always" />
 </menu>
+<!--<menu xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto">-->
+
+<!--<item-->
+    <!--android:id="@+id/action_settings"-->
+    <!--android:title="@string/action_settings"-->
+    <!--android:orderInCategory="100"-->
+    <!--app:showAsAction="never" />-->
+
+<!--<item-->
+    <!--android:id="@+id/action_search"-->
+    <!--android:icon="@drawable/search"-->
+    <!--android:title="test"-->
+    <!--app:showAsAction="always" />-->
+<!--</menu>-->
