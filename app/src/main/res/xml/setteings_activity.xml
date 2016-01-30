@@ -13,7 +13,7 @@
 
      <PreferenceScreen
           android:key="enable_memory_clean"
-          android:title="起動前にメモリ開放をするアプリを選択..."
+          android:title="優先アプリ設定..."
           />
 
      <!--<com.hlidskialf.android.preference.SeekBarPreference android:key="duration"-->
