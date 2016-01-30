@@ -3,6 +3,7 @@ package jushin.net.memoryfresh.activity;
 import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import jushin.net.memoryfresh.R;
+import jushin.net.memoryfresh.database.ProcessManageDBHelper;
 import jushin.net.memoryfresh.fragment.GraphFragment;
 import jushin.net.memoryfresh.fragment.MainFragment;
 import jushin.net.memoryfresh.service.MemoryFreshService;
@@ -35,6 +37,8 @@ import jushin.net.memoryfresh.service.MemoryFreshService;
  */
 
 public class MainActivity extends AppCompatActivity{
+
+    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,11 @@ public class MainActivity extends AppCompatActivity{
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
+
+        //データーベースの作成,オープン処理
+        ProcessManageDBHelper dbHelper = new ProcessManageDBHelper(getApplicationContext());
+        database = dbHelper.getWritableDatabase();
+
 
         //FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab) ;
 

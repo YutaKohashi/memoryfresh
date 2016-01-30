@@ -9,8 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by sakamotoyuuta on 16/01/30.
  */
 public class ProcessManageDBHelper extends SQLiteOpenHelper {
+    static final String DB = "memory_fresh.db";
+    static  final int DB_VERSION = 1;
+    static  final String CREATE_TABLE = "CREATE TABLE freshtable " +
+            "( _id, integer primary key autoincrement, package text not null, isenable integer);";
+    static final String DROP_TABLE = "DROP TABLE freshtable";
 
-    
 
     public ProcessManageDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -20,13 +24,18 @@ public class ProcessManageDBHelper extends SQLiteOpenHelper {
         super(context, name, factory, version, errorHandler);
     }
 
+    public ProcessManageDBHelper(Context context) {
+        super(context, DB, null, DB_VERSION);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL(DROP_TABLE);
+        onCreate(db);
     }
 }
