@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity{
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab) ;
+        //FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab) ;
 
         //サービスが起動指定で起動していない場合起動させる
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity{
             if (curr.service.getClassName().equals(MemoryFreshService.class.getName())) {
                 // 実行中のサービスと一致
                 //Toast.makeText(this, "サービス実行中", Toast.LENGTH_LONG).show();
-                final CoordinatorLayout coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator);
+                final LinearLayout coordinatorLayout = (LinearLayout)findViewById(R.id.linearCoordinator);
                 Snackbar.make(coordinatorLayout,"サービス実行中",Snackbar.LENGTH_SHORT).show();
                 found = true;
                 break;
@@ -76,17 +76,17 @@ public class MainActivity extends AppCompatActivity{
             Intent intent = new Intent(MainActivity.this, MemoryFreshService.class);
             startService(intent);
             //Toast.makeText(this, "サービスが停止していたため起動しました", Toast.LENGTH_LONG).show();
-            final CoordinatorLayout coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator);
+            final LinearLayout coordinatorLayout = (LinearLayout)findViewById(R.id.linearCoordinator);
             Snackbar.make(coordinatorLayout,"サービスが停止していたため起動しました",Snackbar.LENGTH_LONG).show();
         }
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity{
 
 
 
+    //pagerAdapterクラス
     static class DesignPagerAdapter extends FragmentPagerAdapter {
 
         public DesignPagerAdapter(FragmentManager fm) {

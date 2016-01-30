@@ -6,12 +6,12 @@
     android:fitsSystemWindows="true"
     xmlns:design="http://schemas.android.com/tools">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinator"
+    <LinearLayout
+        android:id="@+id/linearCoordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        >
+        android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -52,22 +52,33 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="7"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:src="@drawable/ic_setting"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            design:fabSize="normal"/>
+        <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_button"
+        android:layout_weight="1"
+        android:text="start"
+        android:padding="10dp"
+        android:layout_margin="20dp"/>
 
 
-    </android.support.design.widget.CoordinatorLayout>
+
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/fab"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|right"-->
+            <!--android:src="@drawable/ic_setting"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--design:fabSize="normal"/>-->
+
+
+    </LinearLayout>
 
 
 </android.support.v4.widget.DrawerLayout>
