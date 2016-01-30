@@ -179,7 +179,14 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Tab " + position;
+            switch (position) {
+                case 0:
+                    return "TASKS";
+                case 1:
+                    return "MEMORY";
+                default:
+                    return "TAB";
+            }
         }
     }
 
