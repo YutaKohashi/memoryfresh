@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -58,9 +60,16 @@ public class AppAllListAdapter extends ArrayAdapter<AllAppsListItem> {
 
 
         //チェックボックス
-
-        
-
+        ListView listView = (ListView) parent;
+        CheckBox check = (CheckBox) view.findViewById(R.id.checkbox);
+        if (listView.getChoiceMode() == ListView.CHOICE_MODE_NONE) {
+            check.setVisibility(View.GONE);
+        } else {
+            // チェックボックスを自前で設定すると、どうしてもおかしくなる。
+            // ここはListViewで管理している mCheckStates からもらうのが得策。
+            check.setChecked(listView.isItemChecked(position));
+            check.setVisibility(View.VISIBLE);
+        }
         return view;
 
     }
