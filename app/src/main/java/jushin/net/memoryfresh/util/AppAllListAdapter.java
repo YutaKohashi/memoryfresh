@@ -1,11 +1,13 @@
 package jushin.net.memoryfresh.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -54,23 +56,37 @@ public class AppAllListAdapter extends ArrayAdapter<AllAppsListItem> {
         appInfoText.setText(item.getappName());
 
         //パッケージ名
-        TextView appInfo3Text = (TextView)view.findViewById(R.id.packagename_text);
+        final TextView appInfo3Text = (TextView)view.findViewById(R.id.packagename_text);
         appInfo3Text.setText(item.getProcessName());
 
         Boolean checkBox;
 
 
         //チェックボックス
-        ListView listView = (ListView) parent;
+        final ListView listView = (ListView) parent;
         CheckBox check = (CheckBox) view.findViewById(R.id.checkbox);
-        if (listView.getChoiceMode() == ListView.CHOICE_MODE_NONE) {
-            check.setVisibility(View.GONE);
+
+        SharedPreferences pref = listView.getContext().getSharedPreferences("check", Context.MODE_PRIVATE);
+        if (pref.getString(appInfo3Text.getText().toString(), "").equals("")) {
+            check.setChecked(false);
         } else {
-            // チェックボックスを自前で設定すると、どうしてもおかしくなる。
-            // ここはListViewで管理している mCheckStates からもらうのが得策。
-            check.setChecked(listView.isItemChecked(position));
-            check.setVisibility(View.VISIBLE);
+            check.setChecked(true);
         }
+
+        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences pref = listView.getContext().getSharedPreferences("check", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
+                if (isChecked) {
+                    edit.putString(appInfo3Text.getText().toString(), "checked");
+                } else {
+                    edit.remove(appInfo3Text.getText().toString());
+                }
+                edit.commit();
+            }
+        });
+
         return view;
 
     }
