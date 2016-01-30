@@ -29,6 +29,8 @@ public class MemoryManager {
     public int killTargetProcessId(ArrayList<Integer> processList) {
         int count = 0;
 
+
+
         for (AndroidAppProcess process : initProcess()) {
             if (processList.contains(process.pid)) {
                 killTargetProcess(process.pid);
