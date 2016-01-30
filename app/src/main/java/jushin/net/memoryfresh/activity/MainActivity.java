@@ -46,7 +46,27 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //toolbar.setLogo(R.drawable.memorybutton);
+        toolbar.setNavigationIcon(R.drawable.memorybutton);
+
         setSupportActionBar(toolbar);
+
+//
+//        toolbar.inflateMenu(R.menu.menu_main);
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                int id = item.getItemId();
+//
+//                if (id == R.id.action_search) {
+//                    Toast.makeText(MainActivity.this,"search click!!",Toast.LENGTH_LONG).show();
+//                    return true;
+//                }
+//
+//                return true;
+//            }
+//        });
+
         DesignPagerAdapter adapter = new DesignPagerAdapter(getSupportFragmentManager());
         ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
 
@@ -55,7 +75,7 @@ public class MainActivity extends AppCompatActivity{
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
-        //データーベースの作成,オープン処理
+        //データーベースの作成オープン処理
         ProcessManageDBHelper dbHelper = new ProcessManageDBHelper(getApplicationContext());
         database = dbHelper.getWritableDatabase();
 
@@ -100,22 +120,22 @@ public class MainActivity extends AppCompatActivity{
     }
 
 //
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu){
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_main,menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.action_settings){
-//            Intent intent = new Intent(this, SettingsActivity.class);
-//            startActivity(intent);
-//        }
-//
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings){
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
 

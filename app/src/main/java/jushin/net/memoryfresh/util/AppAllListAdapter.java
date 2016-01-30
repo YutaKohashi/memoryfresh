@@ -38,6 +38,7 @@ public class AppAllListAdapter extends ArrayAdapter<AllAppsListItem> {
         View view;
         if (convertView != null) {
             view = convertView;
+
         } else {
             view = this.inflater.inflate(this.resourceId, null);
         }

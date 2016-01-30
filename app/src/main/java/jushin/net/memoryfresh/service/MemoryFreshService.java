@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -17,6 +18,7 @@ import java.util.TimerTask;
 
 import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.activity.MainActivity;
+import jushin.net.memoryfresh.database.ProcessManageDBHelper;
 import jushin.net.memoryfresh.memory.MemoryManager;
 
 public class MemoryFreshService extends Service {
@@ -49,6 +51,11 @@ public class MemoryFreshService extends Service {
                 List<String> packageNameList = new ArrayList<String>();
 
                 // データベースから取得する
+                SQLiteDatabase sqLiteDatabase;
+                ProcessManageDBHelper dbHelper = new ProcessManageDBHelper(getApplicationContext());
+                sqLiteDatabase = dbHelper.getReadableDatabase();
+                //packageNameList.addAll();
+
 
                 // メモリの解放を必要とするか確認する
                 boolean needFresh = false;
