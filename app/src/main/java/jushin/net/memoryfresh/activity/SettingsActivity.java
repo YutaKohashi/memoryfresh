@@ -30,28 +30,4 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-
-        //チェックされていたアイテムをINSERTする
-        ArrayList<String> checkedArrayList = new ArrayList<String>;
-
-        //チェックボックスをつけたアプリケーションのパッケージ名を保存
-        SQLiteDatabase database;
-        ProcessManageDBHelper dbHelper = new ProcessManageDBHelper(getApplicationContext());
-        database = dbHelper.getReadableDatabase();
-        //一旦データベースの内容を全て削除
-        //第一引数：テーブル名
-        //第二引数、第三引数：SQLのWHERE条件文を作成するための引数。
-        database.delete("freshtable", null, null);
-
-
-        //checkedArrayList = slectCheckBoxEnables(getApplicationContext());
-
-        for(String packageName: checkedArrayList){
-            String sql = "INSERT (package) INTO freshtable VALUES('" + packageName + "')";
-
-        }
-    }
 }

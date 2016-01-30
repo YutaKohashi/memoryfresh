@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.os.*;
 import android.os.Process;
+import android.widget.Toast;
 
 import com.jaredrummler.android.processes.ProcessManager;
 import com.jaredrummler.android.processes.models.AndroidAppProcess;
 
+import java.lang.ref.SoftReference;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MemoryManager {
@@ -28,7 +31,6 @@ public class MemoryManager {
 
     public int killTargetProcessId(List<Integer> processList) {
         int count = 0;
-
 
 
         for (AndroidAppProcess process : initProcess()) {
@@ -50,17 +52,38 @@ public class MemoryManager {
         }
         return count;
     }
-
+    String a;
     public int killProcessWithinList(List<String> processList) {
 
         int count = 0;
 
-        for (AndroidAppProcess process : initProcess()) {
-            if (! processList.contains(process.getPackageName())) {
-                Process.killProcess(process.pid);
-                count++;
+
+        Integer integer = new Integer(123456);
+        SoftReference<Integer> ref = new SoftReference<Integer>(integer);
+
+        Integer i = ref.get();
+        integer = null;
+        i = null;
+        System.gc();
+        try {
+            HashMap<String, Byte[]> map = new HashMap<>();
+            for (int j = 0; j < 100000; j++) {
+                Byte[] v = new Byte[10000];
+                String k = String.valueOf(System.currentTimeMillis());
+                map.put(k, v);
             }
+        } catch (OutOfMemoryError e) {
+
         }
+        i = ref.get();
+
+//
+//        for (AndroidAppProcess process : initProcess()) {
+//            if (!processList.contains(process.getPackageName())) {
+//                Process.killProcess(process.pid);
+//                count++;
+//            }
+//        }
         return count;
     }
 
