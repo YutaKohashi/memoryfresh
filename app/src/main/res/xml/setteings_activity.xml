@@ -13,17 +13,17 @@
 
      <PreferenceScreen
           android:key="enable_memory_clean"
-          android:title="優先アプリ設定..."
+          android:title="起動前にメモリ開放をするアプリを選択..."
           />
 
-     <!--<com.hlidskialf.android.preference.SeekBarPreference android:key="duration"-->
-         <!--android:title="Duration of something"-->
-         <!--android:summary="How long something will last"-->
-         <!--android:dialogMessage="Something duration"-->
-         <!--android:defaultValue="5"-->
-         <!--android:text=" minutes"-->
-         <!--android:max="60"-->
-         <!--/>-->
+     <com.hlidskialf.android.preference.SeekBarPreference android:key="duration"
+         android:title="Duration of something"
+         android:summary="How long something will last"
+         android:dialogMessage="Something duration"
+         android:defaultValue="5"
+         android:text=" minutes"
+         android:max="60"
+         />
 
 
      <!--<ListPreference-->

@@ -1,4 +1,4 @@
-package jushin.net.memoryfresh.util;
+package jushin.net.memoryfresh;
 
 import android.graphics.Color;
 import android.util.Log;
@@ -48,10 +48,7 @@ public class GraphManager {
     //グラフの表示
     public void strart(String[] name, float[] data, String info,boolean flg){
 
-<<<<<<< HEAD:app/src/main/java/jushin/net/memoryfresh/util/GraphManager.java
-=======
 
->>>>>>> 070d207e172419471d2dc3d339f07659bc3c4161:app/src/main/java/jushin/net/memoryfresh/GraphManager.java
         graphData(name, data);
         graphSettings(info);
         graphColors(name.length);
@@ -63,10 +60,7 @@ public class GraphManager {
         if(flg){
             pieChart.animateXY(2000, 1000); // 表示アニメーション
         }
-<<<<<<< HEAD:app/src/main/java/jushin/net/memoryfresh/util/GraphManager.java
-=======
 
->>>>>>> 070d207e172419471d2dc3d339f07659bc3c4161:app/src/main/java/jushin/net/memoryfresh/GraphManager.java
     }
 
     //グラフの項目の名前と値を設定
