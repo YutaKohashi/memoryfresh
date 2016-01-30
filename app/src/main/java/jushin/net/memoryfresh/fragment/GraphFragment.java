@@ -1,13 +1,9 @@
 package jushin.net.memoryfresh.fragment;
 
 
-import android.app.ActivityManager;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.ActivityManagerCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,35 +64,16 @@ public class GraphFragment extends Fragment  {
         //メモリクラスのインスタンス化
         manager = new MemoryManager(this.getContext());
 
-        /*************************************************************/
-
-        ActivityManager activityManager = (ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
-        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
-        //メモリ情報を取得
-        activityManager.getMemoryInfo(memoryInfo);
-
-        long availMem =  memoryInfo.availMem/1000;//B -> KB
-
-        total = manager.totalMemory();
-        free = availMem;
-        use = total - availMem;
-
-        Log.d("memoryInfo-total::",String.valueOf(total));
-        Log.d("memoryInfo-free::",String.valueOf(free));
-        Log.d("memoryInfo-use::",String.valueOf(use));
-
-        /*************************************************************/
-
         //各種メモリサイズの格納(use)
 //        total = manager.totalMemory();
-//        use = manager.useSize();
+//        use = manager.kUseMemory();
 //        free = total - use;
+        manager.logInfo();
 
         //各種メモリサイズの格納(free)
-//        total = manager.totalMemory();
-//        free = manager.freeMemorySize();
-//        use = (total-free);
-//        free = (total - manager.useSize());
+        total = manager.totalMemory();
+        free = manager.freeSizeVer5_1();
+        use = (total-free);
 
         //----------グラフの処理----------
         name =  new String[]{"使用中","未使用"};        //項目(５つまで)
@@ -104,9 +81,9 @@ public class GraphFragment extends Fragment  {
                 ,(free / total) * 100};
 
 
-        str = "全体メモリ(MB):" + Math.ceil(total/1000) //グラフ情報
-                + "\n未使用(MB)" + Math.ceil(free/1000)
-                + "\n使用(MB):" + Math.ceil((total-free)/1000);
+        str = "全体メモリ(MB):" + Math.ceil(total) //グラフ情報
+                + "\n未使用(MB)" + Math.ceil(free)
+                + "\n使用(MB):" + Math.ceil((total-free));
 
         graphs.strart(name,data,str,true);//グラフ描画
 
