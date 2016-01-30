@@ -10,11 +10,14 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.activity.MainActivity;
+import jushin.net.memoryfresh.memory.MemoryManager;
 
 public class MemoryFreshService extends Service {
 
@@ -41,10 +44,31 @@ public class MemoryFreshService extends Service {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Log.d(TAG, "onStartCommand");
 
-                /*******************データーベースへ登録する処理**************************/
-                /*********************************************************************/
+                // 特定のアプリが起動中にメモリの解放を行なう。
+                List<String> packageNameList = new ArrayList<String>();
+
+                // データベースから取得する
+
+                // メモリの解放を必要とするか確認する
+                boolean needFresh = false;
+
+                MemoryManager memoryManager = new MemoryManager();
+
+                // 起動中のパッケージ名を取得する
+                List<String> runningPackageList = memoryManager.getRunningPackageName();
+                for (String packageName : runningPackageList) {
+                    if (packageNameList.contains(packageName)) {
+                        needFresh = true;
+                        break;
+                    }
+                }
+
+                // 必要に応じてメモリの解放を行なう。
+                if (needFresh) {
+                    memoryManager.killProcessWithinList(packageNameList);
+                }
+
 
             }
         }, 0, 1000);
@@ -64,7 +88,7 @@ public class MemoryFreshService extends Service {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //ユーザー操作により[設定 > アプリ > 実行中]から Service が停止された場合に再起動させる
         //設定画面で向こうにしている場合はは再起動しない
-        if(prefs.getBoolean("service_switch", true)){
+        if (prefs.getBoolean("service_switch", true)) {
             startService(new Intent(this, MemoryFreshService.class));
         }
 

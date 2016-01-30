@@ -8,25 +8,25 @@ import android.os.Process;
 import com.jaredrummler.android.processes.ProcessManager;
 import com.jaredrummler.android.processes.models.AndroidAppProcess;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by sakamotoyuuta on 16/01/30.
- */
 public class MemoryManager {
-
-    private Activity activity;
-
-    public MemoryManager(Activity activity) {
-        this.activity = activity;
-    }
 
     private List<AndroidAppProcess> initProcess() {
         return ProcessManager.getRunningAppProcesses();
     }
 
-    public int killTargetProcessId(ArrayList<Integer> processList) {
+    public List<String> getRunningPackageName() {
+        List<String> list = new ArrayList<>();
+        for (AndroidAppProcess process : initProcess()) {
+            list.add(process.getPackageName());
+        }
+        return list;
+    }
+
+    public int killTargetProcessId(List<Integer> processList) {
         int count = 0;
 
         for (AndroidAppProcess process : initProcess()) {
@@ -38,11 +38,24 @@ public class MemoryManager {
         return count;
     }
 
-    public int killTargetProcessName(ArrayList<String> processList) {
+    public int killTargetProcessName(List<String> processList) {
         int count = 0;
 
         for (String process : processList) {
             if (killTargetProcess(process)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int killProcessWithinList(List<String> processList) {
+
+        int count = 0;
+
+        for (AndroidAppProcess process : initProcess()) {
+            if (! processList.contains(process.getPackageName())) {
+                Process.killProcess(process.pid);
                 count++;
             }
         }
@@ -57,7 +70,7 @@ public class MemoryManager {
     public boolean killTargetProcess(String processName) {
 
         for (AndroidAppProcess process : initProcess()) {
-            if (process.name.equals(processName)) {
+            if (process.getPackageName().equals(processName)) {
                 killTargetProcess(process.pid);
                 return true;
             }
