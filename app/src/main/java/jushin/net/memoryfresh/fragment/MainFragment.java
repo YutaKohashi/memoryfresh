@@ -50,7 +50,6 @@ public class MainFragment extends Fragment {
     ArrayList<String> process_names;
     ListView listView;
     Button startButton;
-    Button updateButton;
     ProcessListAdapter adapter;
     List<ListItem> items;
     PackageManager pm;
@@ -101,7 +100,6 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_main, container, false);
-        updateButton = (Button)v.findViewById(R.id.update_button);
 
         listView = (ListView)v.findViewById(R.id.listview);
         processes = ProcessManager.getRunningAppProcesses();
