@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -46,8 +47,8 @@ public class MainActivity extends AppCompatActivity{
             if (curr.service.getClassName().equals(MemoryFreshService.class.getName())) {
                 // 実行中のサービスと一致
                 //Toast.makeText(this, "サービス実行中", Toast.LENGTH_LONG).show();
-                final CoordinatorLayout coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator);
-                Snackbar.make(coordinatorLayout,"サービス実行中",Snackbar.LENGTH_SHORT).show();
+                final LinearLayout linearLayout = (LinearLayout)findViewById(R.id.coordinator);
+                Snackbar.make(linearLayout,"サービス実行中",Snackbar.LENGTH_SHORT).show();
                 found = true;
                 break;
             }
@@ -56,8 +57,8 @@ public class MainActivity extends AppCompatActivity{
             Intent intent = new Intent(MainActivity.this, MemoryFreshService.class);
             startService(intent);
             //Toast.makeText(this, "サービスが停止していたため起動しました", Toast.LENGTH_LONG).show();
-            final CoordinatorLayout coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator);
-            Snackbar.make(coordinatorLayout,"サービスが停止していたため起動しました",Snackbar.LENGTH_SHORT).show();
+            final LinearLayout linearLayout = (LinearLayout)findViewById(R.id.coordinator);
+            Snackbar.make(linearLayout,"サービスが停止していたため起動しました",Snackbar.LENGTH_SHORT).show();
         }
 
     }
@@ -120,7 +121,13 @@ public class MainActivity extends AppCompatActivity{
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Tab " + position;
+
+            if (position == 0){
+                return "Tasks";
+            }else {
+                return "Memory";
+            }
+
         }
     }
 

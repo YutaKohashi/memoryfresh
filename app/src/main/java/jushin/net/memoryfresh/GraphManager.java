@@ -22,7 +22,6 @@ public class GraphManager {
     private PieChart pieChart;//グラフの設定に使用
     private ArrayList<Entry> yVals;//グラフの値
     private ArrayList<String> xVals;//値の名前
-    private ArrayList<String> xVals2;//値の名前
     private ArrayList<Integer> colors;//色
     private PieDataSet dataSet;
 
@@ -40,7 +39,7 @@ public class GraphManager {
         pieChart.setTransparentCircleRadius(55f);
         pieChart.setRotationAngle(270);          // 開始位置の調整
         pieChart.setRotationEnabled(false);       // 回転可能かどうか
-        pieChart.getLegend().setEnabled(true);   //
+        pieChart.getLegend().setEnabled(false);   //
         pieChart.setDescription(str);
         pieChart.setData(createPieChartData());
 
@@ -48,16 +47,20 @@ public class GraphManager {
 
     //グラフの表示
     public void strart(String[] name, float[] data, String info,boolean flg){
+
+
         graphData(name, data);
         graphSettings(info);
         graphColors(name.length);
 
         // 更新
         pieChart.invalidate();
+
         // アニメーション
         if(flg){
             pieChart.animateXY(2000, 1000); // 表示アニメーション
         }
+
     }
 
     //グラフの項目の名前と値を設定
@@ -65,10 +68,8 @@ public class GraphManager {
 
         yVals = new ArrayList<>();//グラフの値
         xVals = new ArrayList<>();//値の名前
-        xVals2 = new ArrayList<>();//値の名前
+
         for(String name : prossesName){
-            Log.d("startView",name);
-            xVals2.add("");
             xVals.add(name);//名前の追加
         }
 
@@ -88,20 +89,18 @@ public class GraphManager {
 
         dataSet.setColors(colors);
 
-        dataSet.setDrawValues(true);
+        dataSet.setDrawValues(true);//グラフに値を表示
+
     }
 
 
     //pieChartのデータ設定
     private PieData createPieChartData() {
 
-//        dataSet = new PieDataSet(xVals, "Data");
         dataSet = new PieDataSet(yVals, "");
         dataSet.setSliceSpace(4f);//グラフの値の表示の間のスペース
         dataSet.setSelectionShift(1f);//円グラフの大きさ(画面に対する)：値が小さいほど大きい
 
-//        PieData data = new PieData(yVals, dataSet);
-        Log.d("startView",xVals.get(0) + " " + xVals.get(1));
         PieData data = new PieData(xVals, dataSet);
         data.setValueFormatter(new PercentFormatter());
 
