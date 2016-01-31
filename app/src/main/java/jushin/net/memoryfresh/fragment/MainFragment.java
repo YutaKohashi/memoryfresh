@@ -1,6 +1,7 @@
 package jushin.net.memoryfresh.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -93,6 +94,25 @@ public class MainFragment extends Fragment {
             mTimer.cancel();
             mTimer = null;
         }
+    }
+
+    public interface OnPageChangeListener{
+        public void onChange(int index);
+    }
+
+    //Activityへ通知
+    //Fragment内でページを更新したい場合に呼ぶ
+    public void refresh(){
+
+        Bundle bundle = getArguments();
+        int index = bundle.getInt("INDEX");
+
+        Activity activity = getActivity();
+        if(activity instanceof OnPageChangeListener == false){
+            System.out.println("activity unimplement OnPageChangeListener");
+            return;
+        }
+        ((OnPageChangeListener)activity).onChange(index);
     }
 
     @Override
@@ -191,7 +211,12 @@ public class MainFragment extends Fragment {
                     public void run() {
 
                         position = listView.getFirstVisiblePosition();
-                        y = listView.getChildAt(0).getTop();
+                        try{
+                            y = listView.getChildAt(0).getTop();
+                        }catch(NullPointerException ex){
+                            Log.d("listView::", ex.toString());
+                        }
+
                         // 実行したい処理
                         Log.d("thread:::","message");
                         // TODO Auto-generated method stub
@@ -262,7 +287,9 @@ public class MainFragment extends Fragment {
                     }
                 });
             }
-        }, 5000, 5000);
+        }, 0, 5000);
+
+
 
 //        // メモリ解放の実装
 //        startButton = (Button)v.findViewById(R.id.start_button);

@@ -67,7 +67,7 @@ public class MemoryManager {
         System.gc();
         try {
             HashMap<String, Byte[]> map = new HashMap<>();
-            for (int j = 0; j < 100000; j++) {
+            for (int j = 0; j < 5000; j++) {  //100000
                 Byte[] v = new Byte[10000];
                 String k = String.valueOf(System.currentTimeMillis());
                 map.put(k, v);

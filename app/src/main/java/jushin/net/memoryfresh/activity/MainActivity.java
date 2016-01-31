@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -13,20 +14,25 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.ExecutionException;
 
 import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.database.ProcessManageDBHelper;
@@ -34,6 +40,16 @@ import jushin.net.memoryfresh.fragment.GraphFragment;
 import jushin.net.memoryfresh.fragment.MainFragment;
 import jushin.net.memoryfresh.memory.MemoryManager;
 import jushin.net.memoryfresh.service.MemoryFreshService;
+import jushin.net.memoryfresh.services.MyService01;
+import jushin.net.memoryfresh.services.MyService02;
+import jushin.net.memoryfresh.services.MyService03;
+import jushin.net.memoryfresh.services.MyService04;
+import jushin.net.memoryfresh.services.MyService05;
+import jushin.net.memoryfresh.services.MyService06;
+import jushin.net.memoryfresh.services.MyService07;
+import jushin.net.memoryfresh.services.MyService08;
+import jushin.net.memoryfresh.services.MyService09;
+import jushin.net.memoryfresh.services.MyService10;
 
 /**
  * Created by Yuta on 2016/01.
@@ -43,6 +59,32 @@ public class MainActivity extends AppCompatActivity{
 
     SQLiteDatabase database;
     Button startButton;
+    private Timer timer;
+    private final Handler handler = new Handler();
+    Intent intent;
+    Intent intent1;
+    Intent intent2;
+    Intent intent3;
+    Intent intent4;
+    Intent intent5;
+    Intent intent6;
+    Intent intent7;
+    Intent intent8;
+    Intent intent9;
+    private DesignPagerAdapter designPagerAdapter;
+
+
+    @Override
+    public void onChange(int index){
+        //Fragmentから呼ばれる
+        //ページのフラグメントを全て削除し再セット
+        ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
+        designPagerAdapter.destroyAllItem(pager);
+        designPagerAdapter.notifyDataSetChanged();
+        viewPager.setAdapter(designPagerAdapter);
+        viewPager.setCurrentItem(index);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,27 +101,120 @@ public class MainActivity extends AppCompatActivity{
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 起動中のアプリを取得する
-                List<String> runningAppList = new ArrayList<>();
+//                // 起動中のアプリを取得する
+//                List<String> runningAppList = new ArrayList<>();
+//
+//                //チェックされていたアイテムをINSERTする
+//                final ArrayList<String> checkedArrayList = new ArrayList<String>();
+//
+//                final MemoryManager memoryManager = new MemoryManager();
+//                runningAppList = memoryManager.getRunningPackageName();
+//
+//                SharedPreferences pref = getSharedPreferences("check", MODE_PRIVATE);
+//                for (String packageName : runningAppList) {
+//                    if (! pref.getString(packageName, "").equals("")) {
+//                        checkedArrayList.add(packageName);
+//                    }
+//                }
+//
+//                new Thread() {
+//                    public void run() {
+//                        memoryManager.killProcessWithinList(checkedArrayList);
+//                    }
+//                }.start();
 
-                //チェックされていたアイテムをINSERTする
-                final ArrayList<String> checkedArrayList = new ArrayList<String>();
+                intent = new Intent(MainActivity.this, MyService01.class);
+                startService(intent);
+                intent1 = new Intent(MainActivity.this, MyService02.class);
+                startService(intent1);
+                intent2 = new Intent(MainActivity.this, MyService03.class);
+                startService(intent2);
+                intent3 = new Intent(MainActivity.this, MyService04.class);
+                startService(intent3);
+                intent4 = new Intent(MainActivity.this, MyService05.class);
+                startService(intent4);
 
-                final MemoryManager memoryManager = new MemoryManager();
-                runningAppList = memoryManager.getRunningPackageName();
+                intent5 = new Intent(MainActivity.this, MyService06.class);
+                startService(intent5);
+                intent6 = new Intent(MainActivity.this, MyService07.class);
+                startService(intent6);
+                intent7 = new Intent(MainActivity.this, MyService08.class);
+                startService(intent7);
+                intent8 = new Intent(MainActivity.this, MyService09.class);
+                startService(intent8);
+                intent9 = new Intent(MainActivity.this, MyService10.class);
+                startService(intent9);
 
-                SharedPreferences pref = getSharedPreferences("check", MODE_PRIVATE);
-                for (String packageName : runningAppList) {
-                    if (! pref.getString(packageName, "").equals("")) {
-                        checkedArrayList.add(packageName);
-                    }
-                }
-
-                new Thread() {
+                handler.postDelayed(new Runnable() {
+                    @Override
                     public void run() {
-                        memoryManager.killProcessWithinList(checkedArrayList);
+                        try{
+                            Intent intent1  = new Intent(MainActivity.this,MyService01.class);
+                            stopService(intent1);
+                        }catch (Exception ex){
+                            Log.d("stopService::", ex.toString());
+                        }
+                        try{
+                            Intent intent2  = new Intent(MainActivity.this,MyService02.class);
+                            stopService(intent2);
+                        }catch (Exception ex){
+                            Log.d("stopService::", ex.toString());
+                        }
+                        try{
+                            Intent intent3  = new Intent(MainActivity.this,MyService03.class);
+                            stopService(intent3);
+                        }catch (Exception ex){
+                            Log.d("stopService::", ex.toString());
+                        }
+                        try{
+                            Intent intent4  = new Intent(MainActivity.this,MyService04.class);
+                            stopService(intent4);
+                        }catch (Exception ex){
+                            Log.d("stopService::", ex.toString());
+                        }
+                        try{
+                            Intent intent5  = new Intent(MainActivity.this,MyService05.class);
+                            stopService(intent5);
+                        }catch (Exception ex){
+                            Log.d("stopService::", ex.toString());
+                        }
+                        try{
+                            Intent intent6  = new Intent(MainActivity.this,MyService06.class);
+                            stopService(intent6);
+                        }catch (Exception ex){
+                            Log.d("stopService::", ex.toString());
+                        }
+                        try{
+                            Intent intent7  = new Intent(MainActivity.this,MyService07.class);
+                            stopService(intent7);
+                        }catch (Exception ex){
+                            Log.d("stopService::", ex.toString());
+                        }
+                        try{
+                            Intent intent8  = new Intent(MainActivity.this,MyService08.class);
+                            stopService(intent8);
+                        }catch (Exception ex){
+                            Log.d("stopService::", ex.toString());
+                        }
+                        try{
+                            Intent intent9  = new Intent(MainActivity.this,MyService09.class);
+                            stopService(intent9);
+                        }catch (Exception ex){
+                            Log.d("stopService::", ex.toString());
+                        }
+                        try{
+                            Intent intent10  = new Intent(MainActivity.this,MyService10.class);
+                            stopService(intent10);
+                        }catch (Exception ex){
+                            Log.d("stopService::", ex.toString());
+                        }
+
+
+                        Intent memoryFreshService  = new Intent(MainActivity.this,MemoryFreshService.class);
+                        startService(memoryFreshService);
                     }
-                }.start();
+                }, 20000);
+
             }
         });
 
@@ -99,7 +234,7 @@ public class MainActivity extends AppCompatActivity{
 //            }
 //        });
 
-        DesignPagerAdapter adapter = new DesignPagerAdapter(getSupportFragmentManager());
+        adapter = new DesignPagerAdapter(getSupportFragmentManager());
         ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
 
         viewPager.setAdapter(adapter);
@@ -107,9 +242,9 @@ public class MainActivity extends AppCompatActivity{
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
-        //データーベースの作成オープン処理
-        ProcessManageDBHelper dbHelper = new ProcessManageDBHelper(getApplicationContext());
-        database = dbHelper.getWritableDatabase();
+//        //データーベースの作成オープン処理
+//        ProcessManageDBHelper dbHelper = new ProcessManageDBHelper(getApplicationContext());
+//        database = dbHelper.getWritableDatabase();
 
 
         //FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab) ;
@@ -150,6 +285,8 @@ public class MainActivity extends AppCompatActivity{
 //        });
 
     }
+
+
 
 //
     @Override
@@ -220,7 +357,34 @@ public class MainActivity extends AppCompatActivity{
                     return "TAB";
             }
         }
+
+
+        public void destroyAllItem(ViewPager pager) {
+            for (int i = 0; i < getCount() - 1; i++) {
+                try {
+                    Object obj = this.instantiateItem(pager, i);
+                    if (obj != null)
+                        destroyItem(pager, i, obj);
+                } catch (Exception e) {
+                }
+            }
+        }
     }
+
+//
+//    @Override
+//    public void destroyItem(ViewGroup container, int position, Object object) {
+//        super.destroyItem(container, position, object);
+//
+//        if (position <= getCount()) {
+//            FragmentManager manager = ((Fragment) object).getFragmentManager();
+//            FragmentTransaction trans = manager.beginTransaction();
+//            trans.remove((Fragment) object);
+//            trans.commit();
+//        }
+//    }
+
+
 
 
 

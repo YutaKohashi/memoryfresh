@@ -49,6 +49,39 @@
         </receiver>
 
         <activity android:name=".activity.PacageListActivity"></activity>
+
+        <service
+            android:name=".services.MyService01"
+            android:process=":testprocess1"/>
+        <service
+            android:name=".services.MyService02"
+            android:process=":testprocess3"/>
+        <service
+            android:name=".services.MyService03"
+            android:process=":testprocess4"/>
+        <service
+            android:name=".services.MyService04"
+            android:process=":testprocess5"/>
+        <service
+            android:name=".services.MyService05"
+            android:process=":testprocess2"/>
+
+        <service
+            android:name=".services.MyService06"
+            android:process=":testprocess6"/>
+        <service
+            android:name=".services.MyService07"
+            android:process=":testprocess7"/>
+        <service
+            android:name=".services.MyService08"
+            android:process=":testprocess9"/>
+        <service
+            android:name=".services.MyService09"
+            android:process=":testprocess9"/>
+        <service
+            android:name=".services.MyService10"
+            android:process=":testprocess10"/>
+
     </application>
 
 </manifest>
