@@ -149,7 +149,7 @@ public class MemoryFreshService extends Service {
             mainTimer.cancel();
             mainTimer = null;
         }
-        //Toast.makeText(this, "MyService　onDestroy", Toast.LENGTH_SHORT).show();
+
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //ユーザー操作により[設定 > アプリ > 実行中]から Service が停止された場合に再起動させる

@@ -4,8 +4,24 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-public class MyService extends Service {
-    public MyService() {
+public class MyService10 extends Service {
+    public MyService10() {
+    }
+
+    @Override
+    public void onCreate(){
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId){
+
+        return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+
     }
 
     @Override
