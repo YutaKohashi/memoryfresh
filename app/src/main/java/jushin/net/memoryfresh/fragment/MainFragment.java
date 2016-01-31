@@ -66,8 +66,9 @@ public class MainFragment extends Fragment {
     int y;
 
     private Timer mTimer = null;
+    private Timer mTimer2 = null;
     private Handler mHandler = null;
-
+    private Handler mHandler2 = null;
     private Runnable updateText;
 
     public MainFragment() {
@@ -96,24 +97,7 @@ public class MainFragment extends Fragment {
         }
     }
 
-    public interface OnPageChangeListener{
-        public void onChange(int index);
-    }
 
-    //Activityへ通知
-    //Fragment内でページを更新したい場合に呼ぶ
-    public void refresh(){
-
-        Bundle bundle = getArguments();
-        int index = bundle.getInt("INDEX");
-
-        Activity activity = getActivity();
-        if(activity instanceof OnPageChangeListener == false){
-            System.out.println("activity unimplement OnPageChangeListener");
-            return;
-        }
-        ((OnPageChangeListener)activity).onChange(index);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -200,7 +184,11 @@ public class MainFragment extends Fragment {
 
 
         mHandler = new Handler();
+        mHandler2 = new Handler();
         mTimer = new Timer();
+        mTimer2 = new Timer();
+
+
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -209,7 +197,6 @@ public class MainFragment extends Fragment {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-
                         position = listView.getFirstVisiblePosition();
                         try{
                             y = listView.getChildAt(0).getTop();

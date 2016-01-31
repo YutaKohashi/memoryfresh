@@ -55,7 +55,7 @@ import jushin.net.memoryfresh.services.MyService10;
  * Created by Yuta on 2016/01.
  */
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     SQLiteDatabase database;
     Button startButton;
@@ -71,19 +71,10 @@ public class MainActivity extends AppCompatActivity{
     Intent intent7;
     Intent intent8;
     Intent intent9;
-    private DesignPagerAdapter designPagerAdapter;
+    private DesignPagerAdapter adapter;
 
 
-    @Override
-    public void onChange(int index){
-        //Fragmentから呼ばれる
-        //ページのフラグメントを全て削除し再セット
-        ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
-        designPagerAdapter.destroyAllItem(pager);
-        designPagerAdapter.notifyDataSetChanged();
-        viewPager.setAdapter(designPagerAdapter);
-        viewPager.setCurrentItem(index);
-    }
+
 
 
     @Override
@@ -318,6 +309,7 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public Fragment getItem(int position) {
             Fragment fragment;
+
             //case文で分岐
             switch(position){
                 case 0:
