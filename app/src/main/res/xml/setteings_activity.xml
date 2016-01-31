@@ -16,6 +16,7 @@
      <PreferenceScreen
           android:key="enable_memory_clean"
           android:title="優先アプリ設定..."
+         android:enabled="false"
           />
 
      <com.pavelsikun.seekbarpreference.SeekBarPreference

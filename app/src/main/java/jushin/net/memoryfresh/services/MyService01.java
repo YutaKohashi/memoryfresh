@@ -14,10 +14,12 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.activity.MainActivity;
 import jushin.net.memoryfresh.memory.MemoryManager;
+import jushin.net.memoryfresh.service.MemoryFreshService;
 
 public class MyService01 extends Service {
     NotificationManager mNM;
@@ -67,6 +69,16 @@ public class MyService01 extends Service {
                 memoryManager.killProcessWithinList(checkedArrayList);
             }
         }.start();
+
+        new Timer().schedule(new TimerTask()
+        {
+            public void run()
+            {
+                stopSelf();
+                Log.d("MyService1 : ", "サービス停止");
+
+            }
+        }, 15000);
         return START_STICKY;
     }
 

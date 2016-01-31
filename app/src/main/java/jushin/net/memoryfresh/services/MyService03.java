@@ -9,10 +9,13 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.activity.MainActivity;
 import jushin.net.memoryfresh.memory.MemoryManager;
+import jushin.net.memoryfresh.service.MemoryFreshService;
 
 public class MyService03 extends Service {
 
@@ -59,6 +62,15 @@ public class MyService03 extends Service {
                 memoryManager.killProcessWithinList(checkedArrayList);
             }
         }.start();
+
+        new Timer().schedule(new TimerTask()
+        {
+            public void run()
+            {
+                stopSelf();
+                Log.d("MyService3 : ", "サービス停止");
+            }
+        }, 15000);
         return START_STICKY;
     }
 

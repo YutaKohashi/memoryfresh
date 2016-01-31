@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -136,75 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 intent9 = new Intent(MainActivity.this, MyService10.class);
                 startService(intent9);
 
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            Intent intent1  = new Intent(MainActivity.this,MyService01.class);
-                            stopService(intent1);
-                        }catch (Exception ex){
-                            Log.d("stopService::", ex.toString());
-                        }
-                        try{
-                            Intent intent2  = new Intent(MainActivity.this,MyService02.class);
-                            stopService(intent2);
-                        }catch (Exception ex){
-                            Log.d("stopService::", ex.toString());
-                        }
-                        try{
-                            Intent intent3  = new Intent(MainActivity.this,MyService03.class);
-                            stopService(intent3);
-                        }catch (Exception ex){
-                            Log.d("stopService::", ex.toString());
-                        }
-                        try{
-                            Intent intent4  = new Intent(MainActivity.this,MyService04.class);
-                            stopService(intent4);
-                        }catch (Exception ex){
-                            Log.d("stopService::", ex.toString());
-                        }
-                        try{
-                            Intent intent5  = new Intent(MainActivity.this,MyService05.class);
-                            stopService(intent5);
-                        }catch (Exception ex){
-                            Log.d("stopService::", ex.toString());
-                        }
-                        try{
-                            Intent intent6  = new Intent(MainActivity.this,MyService06.class);
-                            stopService(intent6);
-                        }catch (Exception ex){
-                            Log.d("stopService::", ex.toString());
-                        }
-                        try{
-                            Intent intent7  = new Intent(MainActivity.this,MyService07.class);
-                            stopService(intent7);
-                        }catch (Exception ex){
-                            Log.d("stopService::", ex.toString());
-                        }
-                        try{
-                            Intent intent8  = new Intent(MainActivity.this,MyService08.class);
-                            stopService(intent8);
-                        }catch (Exception ex){
-                            Log.d("stopService::", ex.toString());
-                        }
-                        try{
-                            Intent intent9  = new Intent(MainActivity.this,MyService09.class);
-                            stopService(intent9);
-                        }catch (Exception ex){
-                            Log.d("stopService::", ex.toString());
-                        }
-                        try{
-                            Intent intent10  = new Intent(MainActivity.this,MyService10.class);
-                            stopService(intent10);
-                        }catch (Exception ex){
-                            Log.d("stopService::", ex.toString());
-                        }
 
-
-                        Intent memoryFreshService  = new Intent(MainActivity.this,MemoryFreshService.class);
-                        startService(memoryFreshService);
-                    }
-                }, 20000);
 
             }
         });
