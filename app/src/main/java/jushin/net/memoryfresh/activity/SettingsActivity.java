@@ -3,6 +3,7 @@ package jushin.net.memoryfresh.activity;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.database.ProcessManageDBHelper;
+import jushin.net.memoryfresh.service.MemoryFreshService;
 
 public class SettingsActivity extends AppCompatActivity {
     Toolbar toolbar;
@@ -27,6 +29,15 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Intent intent = new Intent(SettingsActivity.this, MemoryFreshService.class);
+        stopService(intent);
+        startService(intent);
 
     }
 
