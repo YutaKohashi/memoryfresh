@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:sample="http://schemas.android.com/apk/res-auto">
 
      <!--ここで設定画面に表示させる項目を設定する-->
      <!--summaryでは通常現在の設定を表示させておく-->
@@ -15,6 +17,18 @@
           android:key="enable_memory_clean"
           android:title="優先アプリ設定..."
           />
+
+     <com.pavelsikun.seekbarpreference.SeekBarPreference
+         android:key="timer_kill"
+         android:summary="0に設定すると無効化"
+         android:title="定期的に実行する間隔（単位時間）"
+         sample:msbp_interval="2"
+         sample:msbp_maxValue="24"
+         android:defaultValue="0"
+         sample:msbp_measurementUnit="時間"
+         sample:msbp_minValue="0"/>
+
+
 
      <!--<com.hlidskialf.android.preference.SeekBarPreference android:key="duration"-->
          <!--android:title="Duration of something"-->

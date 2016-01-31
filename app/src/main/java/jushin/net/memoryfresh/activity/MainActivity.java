@@ -21,15 +21,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.database.ProcessManageDBHelper;
 import jushin.net.memoryfresh.fragment.GraphFragment;
 import jushin.net.memoryfresh.fragment.MainFragment;
+import jushin.net.memoryfresh.memory.MemoryManager;
 import jushin.net.memoryfresh.service.MemoryFreshService;
 
 /**
@@ -39,6 +42,7 @@ import jushin.net.memoryfresh.service.MemoryFreshService;
 public class MainActivity extends AppCompatActivity{
 
     SQLiteDatabase database;
+    Button startButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,34 @@ public class MainActivity extends AppCompatActivity{
         toolbar.setNavigationIcon(R.drawable.memorybutton);
 
         setSupportActionBar(toolbar);
+
+        startButton = (Button)findViewById(R.id.start_button);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 起動中のアプリを取得する
+                List<String> runningAppList = new ArrayList<>();
+
+                //チェックされていたアイテムをINSERTする
+                final ArrayList<String> checkedArrayList = new ArrayList<String>();
+
+                final MemoryManager memoryManager = new MemoryManager();
+                runningAppList = memoryManager.getRunningPackageName();
+
+                SharedPreferences pref = getSharedPreferences("check", MODE_PRIVATE);
+                for (String packageName : runningAppList) {
+                    if (! pref.getString(packageName, "").equals("")) {
+                        checkedArrayList.add(packageName);
+                    }
+                }
+
+                new Thread() {
+                    public void run() {
+                        memoryManager.killProcessWithinList(checkedArrayList);
+                    }
+                }.start();
+            }
+        });
 
 //
 //        toolbar.inflateMenu(R.menu.menu_main);
