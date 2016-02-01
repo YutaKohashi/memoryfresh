@@ -12,6 +12,7 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,8 @@ import jushin.net.memoryfresh.R;
  * Created by Yuta on 2016/01.
  */
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements
+        SwipeRefreshLayout.OnRefreshListener{
 
     ArrayList<String> process_names;
     ListView listView;
@@ -65,6 +67,9 @@ public class MainFragment extends Fragment {
 
     int position;
     int y;
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     private Timer mTimer = null;
     private Timer mTimer2 = null;
@@ -105,7 +110,9 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_main, container, false);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout);
 
+        listView = (ListView)v.findViewById(R.id.listview);
         listView = (ListView)v.findViewById(R.id.listview);
         processes = ProcessManager.getRunningAppProcesses();
 
@@ -184,162 +191,99 @@ public class MainFragment extends Fragment {
         });
 
 
-        mHandler = new Handler();
-        mHandler2 = new Handler();
-        mTimer = new Timer();
-        mTimer2 = new Timer();
 
+        // 色設定
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.red,
+                R.color.green, R.color.blue,
+                R.color.yellow);
 
-        mTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                // mHandlerを通じてUI Threadへ処理をキューイング
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        position = listView.getFirstVisiblePosition();
-                        try{
-                            y = listView.getChildAt(0).getTop();
-                        }catch(NullPointerException ex){
-                            Log.d("listView::", ex.toString());
-                        }
-
-                        // 実行したい処理
-                        Log.d("thread:::","message");
-                        // TODO Auto-generated method stub
-                        items = new ArrayList<ListItem>();
-
-                        icon = null;
-                        pm = getContext().getPackageManager();
-
-                        for (AndroidAppProcess process : processes) {
-
-                            listItem = new ListItem();
-
-                            processName = process.name;
-                            long size = 0L;
-                            try {
-                                //getResidentSetSize()メソッドの処理
-                                // 配列変数fieldsの０番目にはtotal program sizeが格納されていて
-                                //１番目にはresident sizeが格納されている
-
-                                //size       プログラムサイズの総計
-                                //            (/proc/[pid]/status の VmSize と同じ)
-                                //resident   実メモリー上に存在するページ
-                                //            (/proc/[pid]/status の VmRSS と同じ)
-                                //share      共有ページ (ファイルと関連付けられているページ)
-                                //           text       テキスト (コード)
-                                //lib        ライブラリ (Linux 2.6 では未使用)
-                                //data       データ + スタック
-                                //dt         ダーティページ (Linux 2.6 では未使用)
-
-                                size = process.statm().getResidentSetSize();  //バイトで代入される
-                            } catch (Throwable e) {
-                                e.printStackTrace();
-                            }
-
-                            try {
-                                //アプリのアイコン取得
-                                icon = pm.getApplicationIcon(process.name);
-                            } catch (Throwable e) {
-
-                                e.printStackTrace();
-                                //例外が発生した場合デフォルトのアイコンを適用
-                                icon = getContext().getDrawable(R.drawable.ic_launcher);
-                            }
-
-                            beforeSize = (double)size /1000 /1000;
-
-                            listItem.setText(processName,String.format("%.2f",beforeSize) +"MB");
-                            listItem.setImageId(icon);
-
-
-
-
-                            items.add(listItem);
-                        }
-
-                        //並び替え処理（メモリ使用順：降順）
-                        Collections.sort(items, new MemoryUsageSort());
-
-
-                        // adapterのインスタンスを作成カスタムレイアウトを適用
-                        adapter =
-                                new ProcessListAdapter(getContext(),R.layout.list_item, items);
-
-                        listView.setAdapter(adapter);
-                        try{
-                            listView.setSelectionFromTop(position, y);
-                        }catch(Exception ex){
-                            Log.d("listView",ex.toString());
-                        }
-
-
-                    }
-                });
-            }
-        }, 0, 3000);
-
-
-
-//        // メモリ解放の実装
-//        startButton = (Button)v.findViewById(R.id.start_button);
-//        startButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                final String TAG = "test::";
-//                // Integer オブジェクトの弱参照を保持する
-//                Integer integer = new Integer(123456);
-//                SoftReference<Integer> ref = new SoftReference<Integer>(integer);
-//
-//// SoftReference の中身を取得・表示
-//                Integer i = ref.get();
-//                Log.d(TAG, "i=" + i);
-//
-//// 強参照を全て無くす
-//                integer = null;
-//                i = null;
-//
-//// メモリ負荷をかける
-//                try {
-//                    HashMap<String, Byte[]> map = new HashMap<String, Byte[]>();
-//                    for (int j = 0; j < 100000; j++) {
-//                        Byte[] v = new Byte[10000];
-//                        String k = String.valueOf(System.currentTimeMillis());
-//                        map.put(k, v);
-//                    }
-//                } catch (OutOfMemoryError oome) {
-//                    Log.d(TAG, "OutOfMemoryError!!");
-//                }
-//
-//// OutOfMemoryError 発生後に中身を取得・表示
-//                i = ref.get();
-//                Log.d(TAG, "i=" + i);
-//
-//            }
-//        });
+        // Listenerをセット
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         return v;
     }
 
+    @Override
+    public void onRefresh() {
+        // 更新処理を実装する
+        // ここでは単純に2秒後にインジケータ非表示
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listView = (ListView) getActivity().findViewById(R.id.listview);
+                processes = ProcessManager.getRunningAppProcesses();
+
+                items = new ArrayList<ListItem>();
+
+                icon = null;
+                pm = getContext().getPackageManager();
+
+                for (AndroidAppProcess process : processes) {
+
+                    ListItem listItem = new ListItem();
+
+                    processName = process.name;
+                    long size = 0L;
+                    try {
+
+                        size = process.statm().getResidentSetSize();  //バイトで代入される
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        //アプリのアイコン取得
+                        icon = pm.getApplicationIcon(process.name);
+                    } catch (PackageManager.NameNotFoundException e) {
+
+                        e.printStackTrace();
+                        //例外が発生した場合デフォルトのアイコンを適用
+                        icon = getContext().getDrawable(R.drawable.ic_launcher);
+                    }
+
+                    double beforeSize = (double) size / 1000 / 1000;
+
+                    listItem.setText(processName, String.format("%.2f", beforeSize) + "MB");
+                    listItem.setImageId(icon);
+
+                    items.add(listItem);
+                }
+
+                //並び替え処理（メモリ使用順：降順）
+                Collections.sort(items, new MemoryUsageSort());
+
+                // adapterのインスタンスを作成カスタムレイアウトを適用
+                adapter =
+                        new ProcessListAdapter(getContext(), R.layout.list_item, items);
+//
+//        listView.setAdapter(adapter);
+                listView.setAdapter(adapter);
+                try {
+                    listView.setSelectionFromTop(position, y);
+                } catch (Exception ex) {
+                    Log.d("listView", ex.toString());
+                }
+
+                // 更新が終了したらインジケータ非表示
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 5000);
+    }
 
 
-
-    public class MemoryUsageSort implements Comparator<ListItem>{
+    public class MemoryUsageSort implements Comparator<ListItem> {
 
         @Override
         public int compare(ListItem lhs, ListItem rhs) {
 
-            int no1 = Integer.parseInt(lhs.getTextProcessUses().replaceAll("[^0-9]",""));
-            int no2 = Integer.parseInt(rhs.getTextProcessUses().replaceAll("[^0-9]",""));
+            int no1 = Integer.parseInt(lhs.getTextProcessUses().replaceAll("[^0-9]", ""));
+            int no2 = Integer.parseInt(rhs.getTextProcessUses().replaceAll("[^0-9]", ""));
 
-            if(no1 < no2){
+            if (no1 < no2) {
                 return 1;
-            }else if(no1 == no2){
-                    return 0;
-            }else{
+            } else if (no1 == no2) {
+                return 0;
+            } else {
                 return -1;
             }
 
