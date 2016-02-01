@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -234,14 +235,14 @@ public class MainFragment extends Fragment {
                                 //dt         ダーティページ (Linux 2.6 では未使用)
 
                                 size = process.statm().getResidentSetSize();  //バイトで代入される
-                            } catch (IOException e) {
+                            } catch (Throwable e) {
                                 e.printStackTrace();
                             }
 
                             try {
                                 //アプリのアイコン取得
                                 icon = pm.getApplicationIcon(process.name);
-                            } catch (PackageManager.NameNotFoundException e) {
+                            } catch (Throwable e) {
 
                                 e.printStackTrace();
                                 //例外が発生した場合デフォルトのアイコンを適用
@@ -261,7 +262,6 @@ public class MainFragment extends Fragment {
 
                         //並び替え処理（メモリ使用順：降順）
                         Collections.sort(items, new MemoryUsageSort());
-                        Iterator<ListItem> it = items.iterator();
 
 
                         // adapterのインスタンスを作成カスタムレイアウトを適用
@@ -269,12 +269,17 @@ public class MainFragment extends Fragment {
                                 new ProcessListAdapter(getContext(),R.layout.list_item, items);
 
                         listView.setAdapter(adapter);
-                        listView.setSelectionFromTop(position, y);
+                        try{
+                            listView.setSelectionFromTop(position, y);
+                        }catch(Exception ex){
+                            Log.d("listView",ex.toString());
+                        }
+
 
                     }
                 });
             }
-        }, 0, 5000);
+        }, 0, 3000);
 
 
 

@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolbar.setLogo(R.drawable.memorybutton);
-        toolbar.setNavigationIcon(R.drawable.memorybutton);
 
         setSupportActionBar(toolbar);
 
@@ -139,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
             }
         });
 
@@ -172,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         //FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab) ;
+
+
 
         //サービスが起動指定で起動していない場合起動させる
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
