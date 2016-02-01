@@ -216,8 +216,9 @@ public class MemoryManager extends Activity{
 
                 }
             }
+            br.close();
         } catch (Exception e) {
-
+            Log.d("MemLog",e.toString());
         }
         return ((flgs)/1000);
 
