@@ -21,6 +21,16 @@ import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.activity.MainActivity;
 import jushin.net.memoryfresh.database.ProcessManageDBHelper;
 import jushin.net.memoryfresh.memory.MemoryManager;
+import jushin.net.memoryfresh.services.MyService01;
+import jushin.net.memoryfresh.services.MyService02;
+import jushin.net.memoryfresh.services.MyService03;
+import jushin.net.memoryfresh.services.MyService04;
+import jushin.net.memoryfresh.services.MyService05;
+import jushin.net.memoryfresh.services.MyService06;
+import jushin.net.memoryfresh.services.MyService07;
+import jushin.net.memoryfresh.services.MyService08;
+import jushin.net.memoryfresh.services.MyService09;
+import jushin.net.memoryfresh.services.MyService10;
 
 public class MemoryFreshService extends Service {
 
@@ -75,6 +85,28 @@ public class MemoryFreshService extends Service {
                 public void run() {
 
                     //メモリ解放処理
+                    Intent intent = new Intent(MemoryFreshService.this, MyService01.class);
+                    startService(intent);
+                    Intent intent1 = new Intent(MemoryFreshService.this, MyService02.class);
+                    startService(intent1);
+                    Intent intent2 = new Intent(MemoryFreshService.this, MyService03.class);
+                    startService(intent2);
+                    Intent intent3 = new Intent(MemoryFreshService.this, MyService04.class);
+                    startService(intent3);
+                    Intent intent4 = new Intent(MemoryFreshService.this, MyService05.class);
+                    startService(intent4);
+
+                    Intent intent5 = new Intent(MemoryFreshService.this, MyService06.class);
+                    startService(intent5);
+                    Intent intent6 = new Intent(MemoryFreshService.this, MyService07.class);
+                    startService(intent6);
+                    Intent intent7 = new Intent(MemoryFreshService.this, MyService08.class);
+                    startService(intent7);
+                    Intent intent8 = new Intent(MemoryFreshService.this, MyService09.class);
+                    startService(intent8);
+                    Intent intent9 = new Intent(MemoryFreshService.this, MyService10.class);
+                    startService(intent9);
+
 
                 }
             });

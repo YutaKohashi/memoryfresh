@@ -29,20 +29,21 @@ public class MyService01 extends Service {
 
     @Override
     public void onCreate(){
-        mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        showNotification();
+        super.onCreate();
+//        mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        showNotification();
     }
-    private void showNotification() {
-        Log.d("Debug TEST", "showNotification1");
-
-        Notification notif = new Notification.Builder(this)
-                .setContentTitle("MyService01")
-                .setSmallIcon(R.drawable.ic_launcher)
-                .build();
-        //常駐させる
-        notif.flags = Notification.FLAG_ONGOING_EVENT;
-        mNM.notify(1, notif);
-    }
+//    private void showNotification() {
+//        Log.d("Debug TEST", "showNotification1");
+//
+//        Notification notif = new Notification.Builder(this)
+//                .setContentTitle("MyService01")
+//                .setSmallIcon(R.drawable.ic_launcher)
+//                .build();
+//        //常駐させる
+//        notif.flags = Notification.FLAG_ONGOING_EVENT;
+//        mNM.notify(1, notif);
+//    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
@@ -86,7 +87,7 @@ public class MyService01 extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d("Debug TEST_service1", "onDestroy");
-        mNM.cancel(1);
+//        mNM.cancel(1);
 
     }
 
