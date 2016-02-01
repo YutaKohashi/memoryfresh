@@ -25,19 +25,19 @@ public class MyService02 extends Service {
 
     @Override
     public void onCreate(){
-        mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        showNotification();
-    }
-    private void showNotification() {
-        Log.d("Debug TEST", "showNotification2");
-
-        Notification notif = new Notification.Builder(this)
-                .setContentTitle("MyService02")
-                .setSmallIcon(R.drawable.ic_launcher)
-                .build();
-        //常駐させる
-        notif.flags = Notification.FLAG_ONGOING_EVENT;
-        mNM.notify(1, notif);
+//        mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        showNotification();
+//    }
+//    private void showNotification() {
+//        Log.d("Debug TEST", "showNotification2");
+//
+//        Notification notif = new Notification.Builder(this)
+//                .setContentTitle("MyService02")
+//                .setSmallIcon(R.drawable.ic_launcher)
+//                .build();
+//        //常駐させる
+//        notif.flags = Notification.FLAG_ONGOING_EVENT;
+//        mNM.notify(1, notif);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class MyService02 extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.d("Debug TEST_service2", "onDestroy");
-        mNM.cancel(1);
+       // mNM.cancel(1);
     }
 
     @Override
