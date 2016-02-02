@@ -79,7 +79,7 @@ public class GraphFragment extends Fragment  {
 
         //インスタンス化
         graphs = new GraphManager(pieChart,true,40f);//グラフクラスのインスタンス化
-        manager = new MemoryManager(this.getContext());//メモリクラスのインスタンス化
+        manager = new MemoryManager();//メモリクラスのインスタンス化
 
         useText.setTextColor(ColorTemplate.JOYFUL_COLORS[0]);
         freeText.setTextColor(ColorTemplate.JOYFUL_COLORS[1]);
@@ -110,7 +110,7 @@ public class GraphFragment extends Fragment  {
     private void memView(boolean flg){
 
         //メモリクラスのインスタンス化
-        manager = new MemoryManager(this.getContext());
+        manager = new MemoryManager();
 
         //各種メモリサイズの格納(free)
         total = manager.totalMemory();

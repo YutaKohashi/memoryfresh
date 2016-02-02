@@ -17,12 +17,10 @@ import java.util.List;
 /**
  * Created by freedom18 on 2016/01/17.
  */
-public class MemoryManager extends Activity{
+public class MemoryManager{
 
-    public MemoryManager(Context context) {
+    public MemoryManager(){
 
-//        activityManager = (ActivityManager)context.getSystemService(ACTIVITY_SERVICE);
-//        memoryInfo = new ActivityManager.MemoryInfo();
     }
 
     //memory max size
