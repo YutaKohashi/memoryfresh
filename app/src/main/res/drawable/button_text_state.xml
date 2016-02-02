@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- フォーカスを得たとき -->
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
     <item
-        android:state_focused="true"
-        android:state_enabled="true"
-        android:state_pressed="false"
-        android:drawable="@color/colorPrimary" />
-    <!-- ボタンが無効で、かつフォーカスを得たとき -->
+        android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid
+                android:color="@color/colorPrimaryDark"
+                />
+            <corners android:bottomRightRadius="5dp"
+                android:bottomLeftRadius="5dp"
+                android:topLeftRadius="2dp"
+                android:topRightRadius="2dp" />
+        </shape>
+    </item>
+
     <item
-        android:state_focused="true"
-        android:state_enabled="false"
-        android:state_pressed="false"
-        android:drawable="@color/colorPrimary" />
-    <!-- ボタンが押されたとき -->
-    <item
-        android:state_focused="true"
-        android:state_enabled="true"
-        android:state_pressed="true"
-        android:drawable="@color/colorPrimary" />
-    <!-- ボタンが無効なとき -->
-    <item
-        android:state_enabled="false"
-        android:drawable="@android:color/black" />
-    <!-- 通常の状態 -->
-    <item
-        android:drawable="@drawable/btn_blue_matte" />
+        android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid
+                android:color="@color/colorPrimaryDark"
+                />
+            <corners android:bottomRightRadius="5dp"
+                android:bottomLeftRadius="5dp"
+                android:topLeftRadius="2dp"
+                android:topRightRadius="2dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <solid
+                android:color="@color/colorPrimary"/>
+            <corners
+                android:bottomRightRadius="5dp"
+                android:bottomLeftRadius="5dp"
+                android:topLeftRadius="2dp"
+                android:topRightRadius="2dp" />
+        </shape>
+    </item>
+
 </selector>
