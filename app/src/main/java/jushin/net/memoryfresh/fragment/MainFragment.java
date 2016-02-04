@@ -223,6 +223,14 @@ public class MainFragment extends Fragment implements
                     ListItem listItem = new ListItem();
 
                     processName = process.name;
+
+                    //procesNameがサービスの名前ならばArrayListに含めない
+                    //jushin.net.memoryfresh:testprocess
+
+                    if(processName.matches("jushin.net.memoryfresh:testprocess"+ ".*")){
+                        continue;
+                    }
+
                     long size = 0L;
                     try {
 
