@@ -4,12 +4,16 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.ListPreference;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -19,7 +23,8 @@ import java.util.TimerTask;
 
 import jushin.net.memoryfresh.R;
 import jushin.net.memoryfresh.activity.MainActivity;
-import jushin.net.memoryfresh.database.ProcessManageDBHelper;
+
+import jushin.net.memoryfresh.activity.WidgetActivity;
 import jushin.net.memoryfresh.memory.MemoryManager;
 import jushin.net.memoryfresh.services.MyService01;
 import jushin.net.memoryfresh.services.MyService02;
@@ -31,6 +36,7 @@ import jushin.net.memoryfresh.services.MyService07;
 import jushin.net.memoryfresh.services.MyService08;
 import jushin.net.memoryfresh.services.MyService09;
 import jushin.net.memoryfresh.services.MyService10;
+import jushin.net.memoryfresh.util.MemoryKillerExecuteManager;
 
 public class MemoryFreshService extends Service {
 
@@ -51,7 +57,7 @@ public class MemoryFreshService extends Service {
     public void onCreate() {
         Log.d(TAG, "onCreate");
         mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        showNotification();
+        showNotification(getApplicationContext());
 
 
 
@@ -76,8 +82,16 @@ public class MemoryFreshService extends Service {
         return START_STICKY;
     }
 
+    public PreferenceScreen getPreferenceScreen() {
+
+        return preferenceScreen;
+    }
+
 
     public class MainTimerTask extends TimerTask {
+
+        MemoryKillerExecuteManager exec;
+
         @Override
         public void run() {
             //ここに定周期で実行したい処理を記述します
@@ -85,27 +99,8 @@ public class MemoryFreshService extends Service {
                 public void run() {
 
                     //メモリ解放処理
-                    Intent intent = new Intent(MemoryFreshService.this, MyService01.class);
-                    startService(intent);
-                    Intent intent1 = new Intent(MemoryFreshService.this, MyService02.class);
-                    startService(intent1);
-                    Intent intent2 = new Intent(MemoryFreshService.this, MyService03.class);
-                    startService(intent2);
-                    Intent intent3 = new Intent(MemoryFreshService.this, MyService04.class);
-                    startService(intent3);
-                    Intent intent4 = new Intent(MemoryFreshService.this, MyService05.class);
-                    startService(intent4);
 
-                    Intent intent5 = new Intent(MemoryFreshService.this, MyService06.class);
-                    startService(intent5);
-                    Intent intent6 = new Intent(MemoryFreshService.this, MyService07.class);
-                    startService(intent6);
-                    Intent intent7 = new Intent(MemoryFreshService.this, MyService08.class);
-                    startService(intent7);
-                    Intent intent8 = new Intent(MemoryFreshService.this, MyService09.class);
-                    startService(intent8);
-                    Intent intent9 = new Intent(MemoryFreshService.this, MyService10.class);
-                    startService(intent9);
+                    exec.killExe(getApplicationContext());
 
 
                 }
@@ -185,7 +180,7 @@ public class MemoryFreshService extends Service {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //ユーザー操作により[設定 > アプリ > 実行中]から Service が停止された場合に再起動させる
-        //設定画面で向こうにしている場合はは再起動しない
+        //設定画面で無効にしている場合はは再起動しない
         if (prefs.getBoolean("service_switch", true)) {
             startService(new Intent(this, MemoryFreshService.class));
         }
@@ -193,23 +188,46 @@ public class MemoryFreshService extends Service {
 
     }
 
+
     @Override
     public IBinder onBind(Intent arg0) {
         return null;
     }
 
-    private void showNotification() {
-        Log.d("Debug TEST", "showNotification");
-        PendingIntent contentIntent = PendingIntent.getActivity(
-                this, 0,
-                new Intent(this, MainActivity.class), 0);
 
+    PreferenceScreen preferenceScreen;
+    PendingIntent contentIntent;
+    private void showNotification(Context context) {
+
+        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        //第二引数にキーを入れる
+        String str = sharedPreference.getString("list_pref","-1");
+
+
+        Log.d("Debug TEST", "showNotification");
+
+        if (str.equals(getString(R.string.listItem1))){
+
+            contentIntent = PendingIntent.getActivity(
+                    this, 0,
+                    new Intent(this, MainActivity.class), 0);
+        }else{
+            Intent intent = new Intent(this,WidgetActivity.class);
+
+            contentIntent = PendingIntent.getActivity(
+                    this, 0,
+                    intent, 0);
+        }
+
+
+        //通知のカスタマイズ
         Notification notif = new Notification.Builder(this)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getText(R.string.servicestarted))
                 .setSmallIcon(R.drawable.memorybutton)
                 .setContentIntent(contentIntent)
                 .build();
+
         //常駐させる
         notif.flags = Notification.FLAG_ONGOING_EVENT;
         mNM.notify(1, notif);

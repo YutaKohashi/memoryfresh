@@ -42,4 +42,10 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected  void onPause(){
+        super.onPause();
+        finish();
+    }
+
 }

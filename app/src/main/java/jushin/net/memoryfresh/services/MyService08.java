@@ -23,6 +23,7 @@ public class MyService08 extends Service {
     @Override
     public void onCreate(){
         super.onCreate();
+        Log.d("Debug TEST_service8", "onCreate");
 //        mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 //        showNotification();
     }
@@ -71,7 +72,7 @@ public class MyService08 extends Service {
                 stopSelf();
                 Log.d("MyService8 : ", "サービス停止");
             }
-        }, 15000);
+        }, 12000);
         return START_STICKY;
     }
 

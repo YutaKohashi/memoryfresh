@@ -1,45 +1,36 @@
 package jushin.net.memoryfresh.activity;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.SpannableStringBuilder;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.concurrent.ExecutionException;
 
 import jushin.net.memoryfresh.R;
-import jushin.net.memoryfresh.database.ProcessManageDBHelper;
 import jushin.net.memoryfresh.fragment.GraphFragment;
 import jushin.net.memoryfresh.fragment.MainFragment;
-import jushin.net.memoryfresh.memory.MemoryManager;
 import jushin.net.memoryfresh.service.MemoryFreshService;
 import jushin.net.memoryfresh.services.MyService01;
 import jushin.net.memoryfresh.services.MyService02;
@@ -51,6 +42,8 @@ import jushin.net.memoryfresh.services.MyService07;
 import jushin.net.memoryfresh.services.MyService08;
 import jushin.net.memoryfresh.services.MyService09;
 import jushin.net.memoryfresh.services.MyService10;
+import jushin.net.memoryfresh.util.ActivityState;
+import jushin.net.memoryfresh.util.MemoryKillerExecuteManager;
 
 /**
  * Created by Yuta on 2016/01.
@@ -62,17 +55,8 @@ public class MainActivity extends AppCompatActivity {
     Button startButton;
     private Timer timer;
     private final Handler handler = new Handler();
-    Intent intent;
-    Intent intent1;
-    Intent intent2;
-    Intent intent3;
-    Intent intent4;
-    Intent intent5;
-    Intent intent6;
-    Intent intent7;
-    Intent intent8;
-    Intent intent9;
     private DesignPagerAdapter adapter;
+    ActivityState activityState = new ActivityState();
 
 
 
@@ -82,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolbar.setLogo(R.drawable.memorybutton);
 
@@ -114,30 +98,9 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                }.start();
 
-                intent = new Intent(MainActivity.this, MyService01.class);
-                startService(intent);
-                intent1 = new Intent(MainActivity.this, MyService02.class);
-                startService(intent1);
-                intent2 = new Intent(MainActivity.this, MyService03.class);
-                startService(intent2);
-                intent3 = new Intent(MainActivity.this, MyService04.class);
-                startService(intent3);
-                intent4 = new Intent(MainActivity.this, MyService05.class);
-                startService(intent4);
 
-                intent5 = new Intent(MainActivity.this, MyService06.class);
-                startService(intent5);
-                intent6 = new Intent(MainActivity.this, MyService07.class);
-                startService(intent6);
-                intent7 = new Intent(MainActivity.this, MyService08.class);
-                startService(intent7);
-                intent8 = new Intent(MainActivity.this, MyService09.class);
-                startService(intent8);
-                intent9 = new Intent(MainActivity.this, MyService10.class);
-                startService(intent9);
-
-
-
+                MemoryKillerExecuteManager exec = new MemoryKillerExecuteManager();
+                exec.killExe(MainActivity.this);
 
 
             }
@@ -178,7 +141,8 @@ public class MainActivity extends AppCompatActivity {
 
         //サービスが起動指定で起動していない場合起動させる
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Boolean isEnableService = preferences.getBoolean("service_switch",true);
+        //第二引数は初回起動時にサービスを起動させない設定するためfalseにする
+        Boolean isEnableService = preferences.getBoolean("service_switch",false);
 
 
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
@@ -189,18 +153,61 @@ public class MainActivity extends AppCompatActivity {
             if (curr.service.getClassName().equals(MemoryFreshService.class.getName())) {
                 // 実行中のサービスと一致
                 //Toast.makeText(this, "サービス実行中", Toast.LENGTH_LONG).show();
-                final LinearLayout coordinatorLayout = (LinearLayout)findViewById(R.id.linearCoordinator);
-                Snackbar.make(coordinatorLayout,"サービス実行中",Snackbar.LENGTH_SHORT).show();
+                //final LinearLayout coordinatorLayout = (LinearLayout)findViewById(R.id.linearCoordinator);
+                //Snackbar.make(coordinatorLayout,"サービス実行中",Snackbar.LENGTH_SHORT).show();
+
+                // create instance
+                Toast toast = new Toast(getApplicationContext());
+
+                // inflate custom view
+                View view = getLayoutInflater().inflate(R.layout.toast_view_2, null);
+
+                // set custom view
+                toast.setView(view);
+
+                // set duration
+                toast.setDuration(Toast.LENGTH_LONG);
+
+                // set position
+                int margin = getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
+                toast.setGravity(Gravity.TOP | Gravity.CENTER_VERTICAL, 0, margin);
+
+                // show toast
+                toast.show();
+
                 found = true;
+
                 break;
             }
         }
+
+
         if (found == false && isEnableService) {
             Intent intent = new Intent(MainActivity.this, MemoryFreshService.class);
             startService(intent);
             //Toast.makeText(this, "サービスが停止していたため起動しました", Toast.LENGTH_LONG).show();
-            final LinearLayout coordinatorLayout = (LinearLayout)findViewById(R.id.linearCoordinator);
-            Snackbar.make(coordinatorLayout,"サービスが停止していたため起動しました",Snackbar.LENGTH_LONG).show();
+            //final LinearLayout coordinatorLayout = (LinearLayout)findViewById(R.id.linearCoordinator);
+            //Snackbar.make(coordinatorLayout,"サービスが停止していたため起動しました",Snackbar.LENGTH_LONG).show();
+
+            // create instance
+            Toast toast = new Toast(getApplicationContext());
+
+            // inflate custom view
+            View view = getLayoutInflater().inflate(R.layout.toast_view_1, null);
+
+            // set custom view
+            toast.setView(view);
+
+            // set duration
+            toast.setDuration(Toast.LENGTH_LONG);
+
+            // set position
+            int margin = getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
+            toast.setGravity(Gravity.TOP | Gravity.CENTER_VERTICAL, 0, margin);
+
+            // show toast
+            toast.show();
+
         }
 
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -226,12 +233,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_settings){
             Intent intent = new Intent(this, SettingsActivity.class);
+            //設定画面遷移時はActivityを保持する
+            activityState.activityKeep();
             startActivity(intent);
         }
 
 
         return super.onOptionsItemSelected(item);
     }
+
 
 
 
@@ -276,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
+            SpannableStringBuilder sb;
             switch (position) {
                 case 0:
                     return "TASKS";
@@ -298,6 +309,34 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    protected  void onPause(){
+        super.onPause();
+
+    }
+
+    static int flag = 0;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        activityState.activityDestruction();
+
+
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        activityState.activityDestruction();
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+
+        if(!activityState.getActivityState()){
+            finish();
+        }
+
+    }
 
 //
 //    @Override
@@ -311,10 +350,6 @@ public class MainActivity extends AppCompatActivity {
 //            trans.commit();
 //        }
 //    }
-
-
-
-
 
 
 }

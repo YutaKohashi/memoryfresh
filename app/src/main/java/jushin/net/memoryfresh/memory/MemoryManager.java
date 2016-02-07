@@ -71,9 +71,9 @@ public class MemoryManager {
 
         int flg = (int) manager.totalMemory();
 
-        if(flg > 3000){
+        if(flg > 2000){
             flg = 15000;
-        }else if(flg > 2000){
+        }else if(flg > 1000){
             flg = 10000;
         }else if(flg > 500){
             flg = 5000;

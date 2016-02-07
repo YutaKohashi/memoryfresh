@@ -15,8 +15,9 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:finishOnTaskLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,7 +40,7 @@
         -->
         <service
             android:name=".service.MemoryFreshService"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <receiver
             android:name=".receiver.MainBroadReceiver"
@@ -51,39 +52,59 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.PacageListActivity"></activity>
+        <activity android:name=".activity.PacageListActivity"
+            />
 
         <service
             android:name=".services.MyService01"
-            android:process=":testprocess1"/>
+            android:process=":testprocess1"
+            android:stopWithTask="true" />
         <service
             android:name=".services.MyService02"
-            android:process=":testprocess3"/>
+            android:process=":testprocess2"
+            android:stopWithTask="true" />
         <service
             android:name=".services.MyService03"
-            android:process=":testprocess4"/>
-        <service
-            android:name=".services.MyService04"
-            android:process=":testprocess5"/>
-        <service
-            android:name=".services.MyService05"
-            android:process=":testprocess2"/>
+            android:process=":testprocess2"
+            android:stopWithTask="true" />
+        <!-- <service -->
+        <!-- android:name=".services.MyService04" -->
+        <!-- android:process=":testprocess4"/> -->
 
         <service
             android:name=".services.MyService06"
-            android:process=":testprocess6"/>
+            android:process=":testprocess1"
+            android:stopWithTask="true" />
         <service
             android:name=".services.MyService07"
-            android:process=":testprocess7"/>
+            android:process=":testprocess2"
+            android:stopWithTask="true" />
         <service
             android:name=".services.MyService08"
-            android:process=":testprocess9"/>
-        <service
-            android:name=".services.MyService09"
-            android:process=":testprocess9"/>
-        <service
-            android:name=".services.MyService10"
-            android:process=":testprocess10"/>
+            android:process=":testprocess1"
+            android:stopWithTask="true" />
+        <!-- <service -->
+        <!-- android:name=".services.MyService09" -->
+        <!-- android:process=":testprocess4"/> -->
+
+        <receiver android:name=".widget.MemoryFreshWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="jushin.net.memoryfresh.widget.MemoryFreshWidgetProvider.BUTTON_CLICKED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/memory_fresh_widget_info" />
+        </receiver>
+
+        <!-- appwidgetを押下した時に起動するActivity -->
+        <activity
+            android:name=".activity.WidgetActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            >
+
+        </activity>
 
     </application>
 

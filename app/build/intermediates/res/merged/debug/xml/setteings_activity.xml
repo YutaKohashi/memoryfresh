@@ -1,20 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:sample="http://schemas.android.com/apk/res-auto">
 
      <!--ここで設定画面に表示させる項目を設定する-->
      <!--summaryでは通常現在の設定を表示させておく-->
 
+     <!-- サービスを有効化をenableにすることで2つの項目も有効になる -->
      <SwitchPreference
          android:key="service_switch"
          android:title="サービスの有効化"
-         android:defaultValue="true"
+         android:defaultValue="false"
          />
 
+     <!-- 既定では無効 -->
+     <SwitchPreference
+         android:key="service_boot_switch"
+         android:title="端末起動時に自動的に実行"
+         android:defaultValue="false"
+         android:enabled="false"
+         />
 
-     <PreferenceScreen
-          android:key="enable_memory_clean"
-          android:title="優先アプリ設定..."
+     <!-- 既定ではでは無効 -->
+     <com.pavelsikun.seekbarpreference.SeekBarPreference
+         android:key="timer_kill"
+         android:summary="0に設定すると無効化"
+         android:title="定期的に実行する間隔（単位時間）"
+         sample:msbp_interval="1"
+         sample:msbp_maxValue="24"
+         android:defaultValue="0"
+         sample:msbp_measurementUnit="時間"
+         sample:msbp_minValue="0"
+         android:enabled="false"/>
+
+     <ListPreference
+          android:key="list_pref"
+          android:title="通知タップ時に行う処理"
+         android:entries="@array/list_notifi"
+         android:entryValues="@array/list_notifi"
+         android:dialogTitle="通知タップ時に行う処理"
+         android:defaultValue="アプリケーションを起動"
+         android:enabled="false"
           />
+
+<!--今後実装予定-->
+     <!--<PreferenceScreen-->
+          <!--android:key="enable_memory_clean"-->
+          <!--android:title="優先アプリ設定..."-->
+         <!--android:enabled="false"-->
+          <!--/>-->
+
+
+
+
 
      <!--<com.hlidskialf.android.preference.SeekBarPreference android:key="duration"-->
          <!--android:title="Duration of something"-->
@@ -57,4 +95,4 @@
          <!--android:entries="@array/entries_background"-->
          <!--android:entryValues="@array/entryvalues_background"-->
           <!--android:title="MultiSelect"/>-->
-</PreferenceScreen><!-- From: file:/Users/sakamotoyuuta/memoryfresh/app/src/main/res/xml/setteings_activity.xml -->
+</PreferenceScreen><!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/src/main/res/xml/setteings_activity.xml -->

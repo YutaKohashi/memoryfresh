@@ -40,6 +40,7 @@ import java.util.regex.Pattern;
 
 import jushin.net.memoryfresh.activity.MainActivity;
 import jushin.net.memoryfresh.object.ListItem;
+import jushin.net.memoryfresh.util.ActivityState;
 import jushin.net.memoryfresh.util.ProcessListAdapter;
 import jushin.net.memoryfresh.R;
 
@@ -67,6 +68,8 @@ public class MainFragment extends Fragment implements
 
     int position;
     int y;
+
+    ActivityState activityState = new ActivityState();
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -179,6 +182,7 @@ public class MainFragment extends Fragment implements
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                activityState.activityKeep();
                 ListItem listItem = items.get(position);
                 PackageManager pManager = getActivity().getPackageManager();
                 //Intent intent = pManager.getLaunchIntentForPackage(listItem.getTextProcessName());

@@ -1,9 +1,14 @@
 <resources>
-    <string name="app_name">MemoryFresh</string>
+    <string name="app_name">memoryfresh</string>
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="servicestarted">サービス実行中</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="listItem1">アプリケーションを起動</string>
+    <string name="listItem2">memoryfreshを実行</string>
 </resources>

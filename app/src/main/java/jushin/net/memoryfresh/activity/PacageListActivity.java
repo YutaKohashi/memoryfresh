@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jushin.net.memoryfresh.R;
-import jushin.net.memoryfresh.database.ProcessManageDBHelper;
+
 import jushin.net.memoryfresh.memory.MemoryManager;
 import jushin.net.memoryfresh.object.AllAppsListItem;
 import jushin.net.memoryfresh.util.AppAllListAdapter;
