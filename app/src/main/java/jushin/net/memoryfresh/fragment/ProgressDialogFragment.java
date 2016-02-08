@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Window;
 
@@ -25,6 +26,7 @@ public class ProgressDialogFragment extends DialogFragment{
     public Dialog onCreateDialog(Bundle safedInstanceState) {
         //第二引数でスタイルを適用
         progressDialog = new SpotsDialog(getActivity(), R.style.Custom);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
 
         return progressDialog;
