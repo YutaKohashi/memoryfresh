@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -59,7 +61,7 @@ public class MainFragment extends Fragment implements
     List<ListItem> items;
     PackageManager pm;
     List<AndroidAppProcess> processes;
-    ListItem listItem;
+
     String processName;
     Drawable icon;
     double beforeSize;
@@ -107,105 +109,115 @@ public class MainFragment extends Fragment implements
     }
 
 
-
+    ListItem listItem;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_main, container, false);
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout);
 
-        listView = (ListView)v.findViewById(R.id.listview);
-        listView = (ListView)v.findViewById(R.id.listview);
-        processes = ProcessManager.getRunningAppProcesses();
-
-        items = new ArrayList<ListItem>();
-
-       icon = null;
-        pm = getContext().getPackageManager();
-
-        for (AndroidAppProcess process : processes) {
-
-            ListItem listItem = new ListItem();
-
-            processName = process.name;
-            long size = 0L;
-            try {
-                //getResidentSetSize()メソッドの処理
-                // 配列変数fieldsの０番目にはtotal program sizeが格納されていて
-                //１番目にはresident sizeが格納されている
-
-                //size       プログラムサイズの総計
-                //            (/proc/[pid]/status の VmSize と同じ)
-                //resident   実メモリー上に存在するページ
-                //            (/proc/[pid]/status の VmRSS と同じ)
-                //share      共有ページ (ファイルと関連付けられているページ)
-                //           text       テキスト (コード)
-                //lib        ライブラリ (Linux 2.6 では未使用)
-                //data       データ + スタック
-                //dt         ダーティページ (Linux 2.6 では未使用)
-
-                size = process.statm().getResidentSetSize();  //バイトで代入される
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                //アプリのアイコン取得
-                icon = pm.getApplicationIcon(process.name);
-            } catch (PackageManager.NameNotFoundException e) {
-
-                e.printStackTrace();
-                //例外が発生した場合デフォルトのアイコンを適用
-                icon = getContext().getDrawable(R.drawable.ic_launcher);
-            }
-
-            double beforeSize = (double)size /1000 /1000;
-
-            listItem.setText(processName,String.format("%.2f",beforeSize) +"MB");
-            listItem.setImageId(icon);
-
-            items.add(listItem);
-        }
-
-        //並び替え処理（メモリ使用順：降順）
-        Collections.sort(items, new MemoryUsageSort());
-        Iterator<ListItem> it = items.iterator();
 
 
-        // adapterのインスタンスを作成カスタムレイアウトを適用
-        adapter =
-                new ProcessListAdapter(getContext(),R.layout.list_item, items);
+//
+//        listView = (ListView)v.findViewById(R.id.listview);
+//        processes = ProcessManager.getRunningAppProcesses();
+//
+//        items = new ArrayList<ListItem>();
+//
+//       icon = null;
+//        pm = getContext().getPackageManager();
+//
+//        new AsyncTask<Void, Void, List<ListItem>>() {
+//
+//            @Override
+//            protected List<ListItem> doInBackground(Void... params) {
+//                for (AndroidAppProcess process : processes) {
+//
+//                    listItem = new ListItem();
+//
+//                    processName = process.name;
+//                    long size = 0L;
+//                    try {
+//                        //getResidentSetSize()メソッドの処理
+//                        // 配列変数fieldsの０番目にはtotal program sizeが格納されていて
+//                        //１番目にはresident sizeが格納されている
+//
+//                        //size       プログラムサイズの総計
+//                        //            (/proc/[pid]/status の VmSize と同じ)
+//                        //resident   実メモリー上に存在するページ
+//                        //            (/proc/[pid]/status の VmRSS と同じ)
+//                        //share      共有ページ (ファイルと関連付けられているページ)
+//                        //           text       テキスト (コード)
+//                        //lib        ライブラリ (Linux 2.6 では未使用)
+//                        //data       データ + スタック
+//                        //dt         ダーティページ (Linux 2.6 では未使用)
+//
+//                        size = process.statm().getResidentSetSize();  //バイトで代入される
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    try {
+//                        //アプリのアイコン取得
+//                        icon = pm.getApplicationIcon(process.name);
+//                    } catch (PackageManager.NameNotFoundException e) {
+//
+//                        e.printStackTrace();
+//                        //例外が発生した場合デフォルトのアイコンを適用
+//                        icon = getContext().getDrawable(R.drawable.ic_launcher);
+//                    }
+//
+//                    double beforeSize = (double)size /1000 /1000;
+//
+//                    listItem.setText(processName,String.format("%.2f",beforeSize) +"MB");
+//                    listItem.setImageId(icon);
+//
+//                    items.add(listItem);
+//                }
+//
+//                //並び替え処理（メモリ使用順：降順）
+//                Collections.sort(items, new MemoryUsageSort());
+//
+//
+//
+//                return items;
+//            }
+//            protected void onPostExecute(List<ListItem> items) {
+//                // adapterのインスタンスを作成カスタムレイアウトを適用
+//                adapter =
+//                        new ProcessListAdapter(getContext(),R.layout.list_item, items);
+//
+//                listView.setAdapter(adapter);
+//
+//
+//            }
+//
+//        };
+//
+//
 
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                activityState.activityKeep();
-                ListItem listItem = items.get(position);
-                PackageManager pManager = getActivity().getPackageManager();
-                //Intent intent = pManager.getLaunchIntentForPackage(listItem.getTextProcessName());
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                intent.setData(Uri.parse("package:" + listItem.getTextProcessName()));
-                startActivity(intent);
-
-            }
-        });
-
-
-
+//
+//
+//
         // 色設定
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.red,
-                R.color.green, R.color.blue,
-                R.color.yellow);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary, R.color.colorPrimaryDeepDark,
+                R.color.colorAccentDark);
 
         // Listenerをセット
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        onRefresh();
+
+
+
 
         return v;
     }
+
+
+
 
     @Override
     public void onRefresh() {
@@ -215,8 +227,8 @@ public class MainFragment extends Fragment implements
             @Override
             public void run() {
                 listView = (ListView) getActivity().findViewById(R.id.listview);
-                processes = ProcessManager.getRunningAppProcesses();
 
+                processes = ProcessManager.getRunningAppProcesses();
                 items = new ArrayList<ListItem>();
 
                 icon = null;
@@ -267,6 +279,8 @@ public class MainFragment extends Fragment implements
                 // adapterのインスタンスを作成カスタムレイアウトを適用
                 adapter =
                         new ProcessListAdapter(getContext(), R.layout.list_item, items);
+
+
 //
 //        listView.setAdapter(adapter);
                 listView.setAdapter(adapter);
@@ -276,6 +290,20 @@ public class MainFragment extends Fragment implements
                     Log.d("listView", ex.toString());
                 }
 
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        activityState.activityKeep();
+                        ListItem listItem = items.get(position);
+                        PackageManager pManager = getActivity().getPackageManager();
+                        //Intent intent = pManager.getLaunchIntentForPackage(listItem.getTextProcessName());
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + listItem.getTextProcessName()));
+                        startActivity(intent);
+
+                    }
+                });
                 // 更新が終了したらインジケータ非表示
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -306,3 +334,4 @@ public class MainFragment extends Fragment implements
 
 
 }
+
