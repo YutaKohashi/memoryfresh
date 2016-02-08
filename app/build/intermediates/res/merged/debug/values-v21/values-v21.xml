@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/sakamotoyuuta/memoryfresh/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/res/values-v21/values-v21.xml -->
+    <!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <dimen name="design_navigation_padding_top_default">24dp</dimen>
-    <!-- From: file:/Users/sakamotoyuuta/memoryfresh/app/src/main/res/values-v21/styles.xml -->
+    <!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/src/main/res/values-v21/styles.xml -->
     <eat-comment/>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -11,7 +11,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
-    <!-- From: file:/Users/sakamotoyuuta/memoryfresh/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v21/values-v21.xml -->
+    <!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-v21/values-v21.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance.Material"/>
     <style name="Base.TextAppearance.AppCompat.Body1" parent="android:TextAppearance.Material.Body1"/>
@@ -249,4 +249,12 @@
     </style>
     <style name="Platform.ThemeOverlay.AppCompat.Dark"/>
     <style name="Platform.ThemeOverlay.AppCompat.Light"/>
+    <!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.github.d-max/spots-dialog/0.4/res/values-v21/values-v21.xml -->
+    <eat-comment/>
+    <style name="SpotsDialogDefault" parent="android:Theme.DeviceDefault.Light.Dialog">
+        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="DialogTitleText">Loading…</item>
+        <item name="DialogSpotColor">@android:color/holo_blue_dark</item>
+        <item name="DialogSpotCount">5</item>
+    </style>
 </resources>

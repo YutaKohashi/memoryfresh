@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <!--android:background="#09C"-->
+
+    <Button
+        android:id="@+id/memory_fresh_button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_margin="3dp"
+        android:background="@drawable/widget_button_state"/>
+
+    <!--android:contentDescription="@string/appwidget_text"/-->
+        <!--android:text="@string/appwidget_text"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="24sp"-->
+        <!--android:textStyle="bold|italic" />-->
+
+</RelativeLayout><!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/src/main/res/layout/memory_fresh_widget_layout.xml -->

@@ -20,7 +20,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="jushin.net.memoryfresh.activity.MainActivity"
+            android:finishOnTaskLaunch="true"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +30,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="jushin.net.memoryfresh.activity.SettingsActivity" />
+        <activity
+            android:name="jushin.net.memoryfresh.activity.SettingsActivity"
+            android:screenOrientation="portrait" />
 
         <!--
             android:exportedー他のアプリに対してこのAndroidコンポーネントを公開するかどうかを決定する。
@@ -55,6 +59,55 @@
         </receiver>
 
         <activity android:name="jushin.net.memoryfresh.activity.PacageListActivity" />
+
+        <service
+            android:name="jushin.net.memoryfresh.services.MyService01"
+            android:process=":testprocess1"
+            android:stopWithTask="true" />
+        <service
+            android:name="jushin.net.memoryfresh.services.MyService02"
+            android:process=":testprocess2"
+            android:stopWithTask="true" />
+        <service
+            android:name="jushin.net.memoryfresh.services.MyService03"
+            android:process=":testprocess2"
+            android:stopWithTask="true" />
+        <!-- <service -->
+        <!-- android:name=".services.MyService04" -->
+        <!-- android:process=":testprocess4"/> -->
+
+        <service
+            android:name="jushin.net.memoryfresh.services.MyService06"
+            android:process=":testprocess1"
+            android:stopWithTask="true" />
+        <service
+            android:name="jushin.net.memoryfresh.services.MyService07"
+            android:process=":testprocess2"
+            android:stopWithTask="true" />
+        <service
+            android:name="jushin.net.memoryfresh.services.MyService08"
+            android:process=":testprocess1"
+            android:stopWithTask="true" />
+        <!-- <service -->
+        <!-- android:name=".services.MyService09" -->
+        <!-- android:process=":testprocess4"/> -->
+
+        <receiver android:name="jushin.net.memoryfresh.widget.MemoryFreshWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="jushin.net.memoryfresh.widget.MemoryFreshWidgetProvider.BUTTON_CLICKED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/memory_fresh_widget_info" />
+        </receiver>
+
+        <!-- appwidgetを押下した時に起動するActivity -->
+        <activity
+            android:name="jushin.net.memoryfresh.activity.WidgetActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>

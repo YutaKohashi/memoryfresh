@@ -1,0 +1,16 @@
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/txtMessage"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:paddingTop="13dp"
+    android:paddingBottom="13dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+
+    android:gravity="center"
+    android:textColor="@android:color/white"
+    android:textSize="14sp"
+    android:text="サービスが停止していたため起動しました"
+    android:background="@color/colorAccent"/><!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/src/main/res/layout/toast_view_1.xml -->

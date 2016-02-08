@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <item
+        android:state_pressed="true"
+        android:drawable="@drawable/btn_bluedark_matte">
+        <!--<shape android:shape="rectangle">-->
+            <!--<solid-->
+                <!--android:color="@color/colorPrimaryDark"-->
+                <!--/>-->
+            <!--<corners android:bottomRightRadius="5dp"-->
+                <!--android:bottomLeftRadius="5dp"-->
+                <!--android:topLeftRadius="2dp"-->
+                <!--android:topRightRadius="2dp" />-->
+        <!--</shape>-->
+    </item>
+
+    <item
+        android:state_focused="true"
+        android:drawable="@drawable/btn_bluedark_matte">
+        <!--<shape android:shape="rectangle">-->
+            <!--<solid-->
+                <!--android:color="@color/colorPrimaryDark"-->
+                <!--/>-->
+            <!--<corners android:bottomRightRadius="5dp"-->
+                <!--android:bottomLeftRadius="5dp"-->
+                <!--android:topLeftRadius="2dp"-->
+                <!--android:topRightRadius="2dp" />-->
+        <!--</shape>-->
+    </item>
+
+    <item
+        android:drawable="@drawable/btn_blue_matte">
+
+        <!--<shape>-->
+
+            <!--<corners-->
+                <!--android:bottomRightRadius="5dp"-->
+                <!--android:bottomLeftRadius="5dp"-->
+                <!--android:topLeftRadius="2dp"-->
+                <!--android:topRightRadius="2dp" />-->
+        <!--</shape>-->
+    </item>
+
+</selector><!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/src/main/res/drawable/button_background_state.xml -->

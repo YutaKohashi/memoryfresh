@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!--<gradient-->
+        <!--android:angle="90"-->
+        <!--android:endColor="#FFFFFFFF"-->
+        <!--android:startColor="@color/colorPrimaryDark" />-->
+    <solid
+        android:color="@android:color/white"/>
+    　　
+</shape><!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/src/main/res/drawable/grad_bg.xml -->

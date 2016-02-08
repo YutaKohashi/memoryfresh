@@ -313,6 +313,9 @@ public class MainActivity extends AppCompatActivity {
     protected  void onPause(){
         super.onPause();
 
+        //setVisible(fals;e);
+
+
     }
 
     static int flag = 0;
@@ -327,6 +330,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         activityState.activityDestruction();
+
+
     }
     @Override
     protected void onStop(){
@@ -338,6 +343,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        finish();
+    }
+
+    public void startOnDestoroy(){
+        this.onDestroy();
+    }
 //
 //    @Override
 //    public void destroyItem(ViewGroup container, int position, Object object) {

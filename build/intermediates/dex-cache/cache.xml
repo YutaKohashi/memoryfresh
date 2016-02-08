@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.pavelsikun/material-seekbar-preference/0.12.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d185a6799552684d6884959f52aec029bdb55963">
+        <dex dex="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/pre-dexed/debug/classes-8e56a90d2c0cb018a232d94f99006411682c73e2.jar" />
+    </item>
+    <item
+        jar="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/pre-dexed/debug/classes-039d535a0572d810a347ad58aeddaee97c6f21ba.jar" />
+    </item>
+    <item
+        jar="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.github.d-max/spots-dialog/0.4/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f82b3f786bf4937ed1a1cc9a9a811e154813ba9a">
+        <dex dex="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/pre-dexed/debug/classes-3c6bfd9b9acbb0cc133c398d7c53a34c0ea06aed.jar" />
+    </item>
+    <item
+        jar="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1-130c8fc2da3bc142df399c7b9687c3518dfc0935.jar" />
+    </item>
+    <item
+        jar="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/pre-dexed/debug/classes-309e8c1c5284ed90ad2f86d65d8aac696ab1456e.jar" />
+    </item>
+    <item
+        jar="/Users/Yuta/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v2.1.5/34b9f39e5343d39e205fb7617e734601dc4868e7/MPAndroidChart-v2.1.5.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="34b9f39e5343d39e205fb7617e734601dc4868e7">
+        <dex dex="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/pre-dexed/debug/MPAndroidChart-v2.1.5-71757b0a327cac542eb7fad190c771215c817d24.jar" />
+    </item>
+    <item
+        jar="/Users/Yuta/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1-6375fffee77f230087084254bcfc2ba2162657cc.jar" />
+    </item>
+    <item
+        jar="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/pre-dexed/debug/classes-0644f3440c39af9833228b6b08e5a0a624ee1e9a.jar" />
+    </item>
+    <item
+        jar="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/pre-dexed/debug/classes-fd936ae276ba0d2da003a24b52b2f9a38756bf93.jar" />
+    </item>
+    <item
+        jar="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/exploded-aar/com.jaredrummler/android-processes/1.0.2/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="53d86d9b181f6369a4742a775bcf1c9458890737">
+        <dex dex="/Users/Yuta/AndroidStudioProjects/memoryfresh/app/build/intermediates/pre-dexed/debug/classes-f245239a6a503fd1219f3efbd394c8549273c2f5.jar" />
+    </item>
+
+</items>

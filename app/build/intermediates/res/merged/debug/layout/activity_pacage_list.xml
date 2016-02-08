@@ -30,4 +30,4 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>
-<!-- From: file:/Users/sakamotoyuuta/memoryfresh/app/src/main/res/layout/activity_pacage_list.xml -->
+<!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/src/main/res/layout/activity_pacage_list.xml -->

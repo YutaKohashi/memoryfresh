@@ -25,7 +25,6 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="enterAlways"
-                android:logo="@drawable/memorybutton"
                 />
 
 
@@ -59,14 +58,15 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/start_button"
-        android:layout_weight="1"
-        android:text="start"
-        android:padding="10dp"
-        android:layout_margin="20dp"/>
-
+            android:id="@+id/start_button"
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_margin="10sp"
+            android:layout_weight="1"
+            android:background="@drawable/button_background_state"
+            android:textColor="@android:color/white"
+            android:padding="10sp"
+            android:text="start" />
 
 
         <!--<android.support.design.widget.FloatingActionButton-->
@@ -83,4 +83,4 @@
     </LinearLayout>
 
 
-</android.support.v4.widget.DrawerLayout><!-- From: file:/Users/sakamotoyuuta/memoryfresh/app/src/main/res/layout/activity_main.xml -->
+</android.support.v4.widget.DrawerLayout><!-- From: file:/Users/Yuta/AndroidStudioProjects/memoryfresh/app/src/main/res/layout/activity_main.xml -->
