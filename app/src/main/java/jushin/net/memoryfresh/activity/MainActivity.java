@@ -346,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        finish();
+        //finish();
     }
 
     public void startOnDestoroy(){

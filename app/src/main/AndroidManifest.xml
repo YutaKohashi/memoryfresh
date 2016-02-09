@@ -103,11 +103,12 @@
                 android:resource="@xml/memory_fresh_widget_info" />
         </receiver>
 
-        <!-- appwidgetを押下した時に起動するActivity -->
+        <!-- appwidget notification を押下した時に起動するActivity -->
         <activity
             android:name=".activity.WidgetActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true">
 
         </activity>
 
