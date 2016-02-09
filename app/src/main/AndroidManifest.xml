@@ -12,12 +12,17 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- launchmodeにsingleTaskを入れることで、Activityがすでにタスクに入っている場合
+        新たにActivityを生成しない。
+        -->
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:finishOnTaskLaunch="true">
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -102,7 +107,7 @@
         <activity
             android:name=".activity.WidgetActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            >
+            android:launchMode="singleInstance">
 
         </activity>
 
