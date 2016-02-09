@@ -1,46 +1,36 @@
 package jushin.net.memoryfresh.fragment;
 
 
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jaredrummler.android.processes.ProcessManager;
 import com.jaredrummler.android.processes.models.AndroidAppProcess;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.IOException;
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Collections;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.regex.Pattern;
 
-import jushin.net.memoryfresh.activity.MainActivity;
 import jushin.net.memoryfresh.object.ListItem;
 import jushin.net.memoryfresh.util.ActivityState;
 import jushin.net.memoryfresh.util.ProcessListAdapter;
@@ -110,6 +100,8 @@ public class MainFragment extends Fragment implements
 
 
     ListItem listItem;
+   ProgressDialog progressDialog;
+    KProgressHUD prog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -119,88 +111,6 @@ public class MainFragment extends Fragment implements
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout);
 
 
-
-//
-//        listView = (ListView)v.findViewById(R.id.listview);
-//        processes = ProcessManager.getRunningAppProcesses();
-//
-//        items = new ArrayList<ListItem>();
-//
-//       icon = null;
-//        pm = getContext().getPackageManager();
-//
-//        new AsyncTask<Void, Void, List<ListItem>>() {
-//
-//            @Override
-//            protected List<ListItem> doInBackground(Void... params) {
-//                for (AndroidAppProcess process : processes) {
-//
-//                    listItem = new ListItem();
-//
-//                    processName = process.name;
-//                    long size = 0L;
-//                    try {
-//                        //getResidentSetSize()メソッドの処理
-//                        // 配列変数fieldsの０番目にはtotal program sizeが格納されていて
-//                        //１番目にはresident sizeが格納されている
-//
-//                        //size       プログラムサイズの総計
-//                        //            (/proc/[pid]/status の VmSize と同じ)
-//                        //resident   実メモリー上に存在するページ
-//                        //            (/proc/[pid]/status の VmRSS と同じ)
-//                        //share      共有ページ (ファイルと関連付けられているページ)
-//                        //           text       テキスト (コード)
-//                        //lib        ライブラリ (Linux 2.6 では未使用)
-//                        //data       データ + スタック
-//                        //dt         ダーティページ (Linux 2.6 では未使用)
-//
-//                        size = process.statm().getResidentSetSize();  //バイトで代入される
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    try {
-//                        //アプリのアイコン取得
-//                        icon = pm.getApplicationIcon(process.name);
-//                    } catch (PackageManager.NameNotFoundException e) {
-//
-//                        e.printStackTrace();
-//                        //例外が発生した場合デフォルトのアイコンを適用
-//                        icon = getContext().getDrawable(R.drawable.ic_launcher);
-//                    }
-//
-//                    double beforeSize = (double)size /1000 /1000;
-//
-//                    listItem.setText(processName,String.format("%.2f",beforeSize) +"MB");
-//                    listItem.setImageId(icon);
-//
-//                    items.add(listItem);
-//                }
-//
-//                //並び替え処理（メモリ使用順：降順）
-//                Collections.sort(items, new MemoryUsageSort());
-//
-//
-//
-//                return items;
-//            }
-//            protected void onPostExecute(List<ListItem> items) {
-//                // adapterのインスタンスを作成カスタムレイアウトを適用
-//                adapter =
-//                        new ProcessListAdapter(getContext(),R.layout.list_item, items);
-//
-//                listView.setAdapter(adapter);
-//
-//
-//            }
-//
-//        };
-//
-//
-
-//
-//
-//
         // 色設定
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
                 R.color.colorPrimary, R.color.colorPrimaryDeepDark,
@@ -208,10 +118,27 @@ public class MainFragment extends Fragment implements
 
         // Listenerをセット
         mSwipeRefreshLayout.setOnRefreshListener(this);
+
+//        progressDialog = new ProgressDialog(getActivity());
+//        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        progressDialog.setMessage("Loading...");
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.setIndeterminate(true);
+//
+//        progressDialog.setCancelable(false);
+//
+//        progressDialog.show();
+
+        prog = KProgressHUD.create(getActivity());
+
+        prog
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("お待ち下さい")
+                .setCancellable(false)
+                .setAnimationSpeed(1)
+                .setDimAmount(0.5f)
+                .show();
         onRefresh();
-
-
-
 
         return v;
     }
@@ -222,10 +149,11 @@ public class MainFragment extends Fragment implements
     @Override
     public void onRefresh() {
         // 更新処理を実装する
-        // ここでは単純に2秒後にインジケータ非表示
+        // ここでは単純に5秒後にインジケータ非表示
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 listView = (ListView) getActivity().findViewById(R.id.listview);
 
                 processes = ProcessManager.getRunningAppProcesses();
@@ -306,6 +234,8 @@ public class MainFragment extends Fragment implements
                 });
                 // 更新が終了したらインジケータ非表示
                 mSwipeRefreshLayout.setRefreshing(false);
+                //progressDialog.dismiss();
+                prog.dismiss();
             }
         }, 5000);
     }

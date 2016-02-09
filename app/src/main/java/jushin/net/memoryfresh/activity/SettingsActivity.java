@@ -51,26 +51,26 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    public void onUserLeaveHint(){
-        //ホームボタンが押された時や、他のアプリが起動した時に呼ばれる
-        //戻るボタンが押された場合には呼ばれない
-        Toast.makeText(getApplicationContext(), "Good bye!" , Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch(keyCode){
-
-            case KeyEvent.KEYCODE_BACK:
-                //戻るボタンが押された時の処理。
-                Toast.makeText(this, "back button!" , Toast.LENGTH_SHORT).show();
-                finish();
-                return true;
-        }
-        return false;
-    }
+//    @Override
+//    public void onUserLeaveHint(){
+//        //ホームボタンが押された時や、他のアプリが起動した時に呼ばれる
+//        //戻るボタンが押された場合には呼ばれない
+//        Toast.makeText(getApplicationContext(), "Good bye!" , Toast.LENGTH_SHORT).show();
+//        finish();
+//    }
+//
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        switch(keyCode){
+//
+//            case KeyEvent.KEYCODE_BACK:
+//                //戻るボタンが押された時の処理。
+//                Toast.makeText(this, "back button!" , Toast.LENGTH_SHORT).show();
+//                finish();
+//                return true;
+//        }
+//        return false;
+//    }
 
 
 }
