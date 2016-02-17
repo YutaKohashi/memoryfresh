@@ -236,7 +236,7 @@ public class MemoryFreshService extends Service {
                 .build();
 
         //常駐させる
-        notif.flags = Notification.FLAG_ONGOING_EVENT;
+        notif.flags = Notification.FLAG_NO_CLEAR;
         mNM.notify(1, notif);
     }
 }

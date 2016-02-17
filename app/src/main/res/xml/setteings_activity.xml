@@ -36,7 +36,8 @@
          android:key="freeRegularlytime"
          android:title="定期的に開放する間隔(時間)"
          speedreader:vnt_maxValue="24"
-         speedreader:vnt_minValue="0"/>
+         speedreader:vnt_minValue="0"
+         android:enabled="false"/>
 
      <!--<com.vanniktech.vntnumberpickerpreference.VNTNumberPickerPreference-->
          <!--android:defaultValue="100"-->
