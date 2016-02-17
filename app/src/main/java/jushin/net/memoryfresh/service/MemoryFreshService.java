@@ -49,6 +49,8 @@ public class MemoryFreshService extends Service {
     private MainTimerTask mainTimerTask;		//タイマタスククラスー
     private int count = 0;						//カウント
     private Handler mHandler = new Handler();   //UI Threadへのpost用ハンドラ
+    int time;
+
 
 
     NotificationManager mNM;
@@ -65,14 +67,21 @@ public class MemoryFreshService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
+
+
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        time = pref.getInt("freeRegularlytime", 0);
+
         //タイマーインスタンス生成
         this.mainTimer = new Timer();
         //タスククラスインスタンス生成
         this.mainTimerTask = new MainTimerTask();
         //タイマースケジュール設定＆開始
         try{
-            if(pref.getInt("timer_kill", 0) != 0){
-                this.mainTimer.schedule(mainTimerTask, 0,pref.getInt("timer_kill", 0));
+            if(time != 0){
+                //ミリ秒から時間に変換
+                time = time * 3600000;
+                this.mainTimer.schedule(mainTimerTask, time,time);
             }
 
         }catch (Exception e){
@@ -90,7 +99,7 @@ public class MemoryFreshService extends Service {
 
     public class MainTimerTask extends TimerTask {
 
-        MemoryKillerExecuteManager exec;
+        MemoryKillerExecuteManager exec = new MemoryKillerExecuteManager();
 
         @Override
         public void run() {
@@ -99,9 +108,7 @@ public class MemoryFreshService extends Service {
                 public void run() {
 
                     //メモリ解放処理
-
                     exec.killExe(getApplicationContext());
-
 
                 }
             });
