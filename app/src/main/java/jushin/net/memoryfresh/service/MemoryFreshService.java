@@ -60,14 +60,10 @@ public class MemoryFreshService extends Service {
         Log.d(TAG, "onCreate");
         mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         showNotification(getApplicationContext());
-
-
-
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         time = pref.getInt("freeRegularlytime", 0);
@@ -85,20 +81,16 @@ public class MemoryFreshService extends Service {
             }
 
         }catch (Exception e){
-
         }
 
         return START_STICKY;
     }
 
     public PreferenceScreen getPreferenceScreen() {
-
         return preferenceScreen;
     }
 
-
     public class MainTimerTask extends TimerTask {
-
         MemoryKillerExecuteManager exec = new MemoryKillerExecuteManager();
 
         @Override
@@ -106,10 +98,8 @@ public class MemoryFreshService extends Service {
             //ここに定周期で実行したい処理を記述します
             mHandler.post( new Runnable() {
                 public void run() {
-
                     //メモリ解放処理
                     exec.killExe(getApplicationContext());
-
                 }
             });
         }
@@ -184,23 +174,18 @@ public class MemoryFreshService extends Service {
             mainTimer = null;
         }
 
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //ユーザー操作により[設定 > アプリ > 実行中]から Service が停止された場合に再起動させる
         //設定画面で無効にしている場合はは再起動しない
         if (prefs.getBoolean("service_switch", true)) {
             startService(new Intent(this, MemoryFreshService.class));
         }
-
-
     }
-
 
     @Override
     public IBinder onBind(Intent arg0) {
         return null;
     }
-
 
     PreferenceScreen preferenceScreen;
     PendingIntent contentIntent;
@@ -209,7 +194,6 @@ public class MemoryFreshService extends Service {
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
         //第二引数にキーを入れる
         String str = sharedPreference.getString("list_pref","-1");
-
 
         Log.d("Debug TEST", "showNotification");
 
@@ -225,7 +209,6 @@ public class MemoryFreshService extends Service {
                     this, 0,
                     intent, 0);
         }
-
 
         //通知のカスタマイズ
         Notification notif = new Notification.Builder(this)

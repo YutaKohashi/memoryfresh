@@ -39,6 +39,12 @@
          speedreader:vnt_minValue="0"
          android:enabled="false"/>
 
+     <PreferenceScreen
+         android:title="共有をお願いします"
+         android:key="share_button"
+         android:summary="twitterで共有します"
+          />
+
      <!--<com.vanniktech.vntnumberpickerpreference.VNTNumberPickerPreference-->
          <!--android:defaultValue="100"-->
          <!--android:key="autoemmoryfresh"-->

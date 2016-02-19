@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
@@ -55,6 +56,16 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
         //ListFragmentのサマリーに現在の設定を表示
         ListPreference list_preference = (ListPreference)getPreferenceScreen().findPreference("list_pref");
         list_preference.setSummary(list_preference.getValue());
+
+        //共有ボタンの処理
+        Preference preference = (Preference)findPreference("share_button");
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                return true;
+            }
+        });
     }
 
     private SharedPreferences.OnSharedPreferenceChangeListener onPreferenceChangeListenter = new SharedPreferences.OnSharedPreferenceChangeListener() {
