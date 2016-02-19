@@ -368,3 +368,35 @@ public class MainActivity extends AppCompatActivity {
 
 }
 
+//
+//// Twitter連動機能
+//// 配信したいメッセージ
+//String message =
+//        "Android6.0対応、RowMemoryKillerを採用した" +
+//                "スマホを軽くアプリ　memoryfresh " +
+//                "https://play.google.com/store/apps/details?id=jushin.net.memoryfresh";
+//
+//
+//
+//Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//shareIntent.setType("text/plain");
+//        shareIntent.putExtra(Intent.EXTRA_TEXT, message);
+//        String appName = "twitter";
+//
+//        PackageManager pm = getPackageManager();
+//        List<?> activityList = pm.queryIntentActivities(shareIntent, 0);
+//        int len = activityList.size();
+//        for (int i = 0; i < len; i++)
+//        {
+//        ResolveInfo app = (ResolveInfo) activityList.get(i);
+//        if ((app.activityInfo.name.contains(appName)))
+//        {
+//        ActivityInfo activity = app.activityInfo;
+//        ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
+//        shareIntent.setComponent(name);
+//        startActivity(shareIntent);
+//        break;
+//        }
+//        }
+//
+
