@@ -62,13 +62,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolbar.setLogo(R.drawable.memorybutton);
 
         setSupportActionBar(toolbar);
 
-        startButton = (Button)findViewById(R.id.start_button);
+        startButton = (Button) findViewById(R.id.start_button);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,11 +119,11 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         adapter = new DesignPagerAdapter(getSupportFragmentManager());
-        ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
 
 //        //データーベースの作成オープン処理
@@ -134,11 +134,10 @@ public class MainActivity extends AppCompatActivity {
         //FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab) ;
 
 
-
         //サービスが起動指定で起動していない場合起動させる
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         //第二引数は初回起動時にサービスを起動させない設定するためfalseにする
-        Boolean isEnableService = preferences.getBoolean("service_switch",false);
+        Boolean isEnableService = preferences.getBoolean("service_switch", false);
 
 
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
@@ -217,17 +216,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-//
+    //
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main,menu);
+        inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings){
+        if (item.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             //設定画面遷移時はActivityを保持する
             activityState.activityKeep();
@@ -237,8 +235,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
     //pagerAdapterクラス
@@ -253,15 +249,12 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
 
             //case文で分岐
-            switch(position){
+            switch (position) {
                 case 0:
-                    fragment = MainFragment.newInstance(position);
-                    break;
-//                case 1:
-//                    fragment = new Fragment();
-//                    break;
-                case 1:
                     fragment = GraphFragment.newInstance(position);
+                    break;
+                case 1:
+                    fragment = MainFragment.newInstance(position);
                     break;
                 default:
                     fragment = new Fragment();
@@ -282,12 +275,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            SpannableStringBuilder sb;
             switch (position) {
                 case 0:
-                    return "TASKS";
-                case 1:
                     return "MEMORY";
+                case 1:
+                    return "TASKS";
                 default:
                     return "TAB";
             }
@@ -305,8 +297,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
-    protected  void onPause(){
+    protected void onPause() {
         super.onPause();
 
         //setVisible(fals;e);
@@ -315,84 +308,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     static int flag = 0;
+
     @Override
     protected void onStart() {
         super.onStart();
         activityState.activityDestruction();
-
-
     }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         activityState.activityDestruction();
 
 
     }
+
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
 
-        if(!activityState.getActivityState()){
+        if (!activityState.getActivityState()) {
             finish();
         }
 
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         //finish();
     }
-
-    public void startOnDestoroy(){
-        this.onDestroy();
-    }
-//
-//    @Override
-//    public void destroyItem(ViewGroup container, int position, Object object) {
-//        super.destroyItem(container, position, object);
-//
-//        if (position <= getCount()) {
-//            FragmentManager manager = ((Fragment) object).getFragmentManager();
-//            FragmentTransaction trans = manager.beginTransaction();
-//            trans.remove((Fragment) object);
-//            trans.commit();
-//        }
-//    }
-
-
 }
-
-
-//
-//// Twitter連動機能
-//// 配信したいメッセージ
-//String message =
-//        "Android6.0対応、RowMemoryKillerを採用した" +
-//                "スマホを軽くアプリ　memoryfresh " +
-//                "https://play.google.com/store/apps/details?id=jushin.net.memoryfresh";
-//
-//
-//
-//Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//shareIntent.setType("text/plain");
-//        shareIntent.putExtra(Intent.EXTRA_TEXT, message);
-//        String appName = "twitter";
-//
-//        PackageManager pm = getPackageManager();
-//        List<?> activityList = pm.queryIntentActivities(shareIntent, 0);
-//        int len = activityList.size();
-//        for (int i = 0; i < len; i++)
-//        {
-//        ResolveInfo app = (ResolveInfo) activityList.get(i);
-//        if ((app.activityInfo.name.contains(appName)))
-//        {
-//        ActivityInfo activity = app.activityInfo;
-//        ComponentName name = new ComponentName(activity.applicationInfo.packageName, activity.name);
-//        shareIntent.setComponent(name);
-//        startActivity(shareIntent);
-//        break;
-//        }
-//        }
-//

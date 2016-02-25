@@ -42,11 +42,30 @@ public class GraphFragment extends Fragment  {
     GraphManager graphs;
     View v;
 
+    int count;
+
+    float memoryinfo[];
 
     Handler mHandler;
     Timer mTimer;
 
-    String[] name = new String[]{"使用中", "未使用"};//項目(５つまで)
+    //実値
+    //フラグが  になった場合初期化する
+    static float total1 = 0;
+    static float free1 = 0;
+    static float use1 = 0;
+
+    //グラフの値
+    static float total2 =0 ;
+    static float free2 = 0;
+    static float use2 = 0;
+
+    //レート
+    static float rate = (float)0.02;
+
+
+
+    final String[] name = new String[]{"使用中", "未使用"};//項目(５つまで)
 
     public GraphFragment() {
         // Required empty public constructor
@@ -88,21 +107,65 @@ public class GraphFragment extends Fragment  {
 
         mHandler = new Handler();
         mTimer = new Timer();
+
+//         mTimer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//
+//                // mHandlerを通じてUI Threadへ処理をキューイング
+//                mHandler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        memView(false);
+//
+//                    }
+//                });
+//            }
+//        }, 500, 500);
+
+
+
+        //まず2回値を取得
+        //500ミリ秒ごと取得
+        //10ミリ秒ごと描画
+
+        //グラフ = グラフ * （1 - レート） + 実 * レート
+        //実メモリの値をフィールドでstaticで保持
+
+        //interpolation
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-
-                // mHandlerを通じてUI Threadへ処理をキューイング
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        //ここで補間で描画する
+                        //補間値を計算
 
-                        memView(false);
+                        total2 = total2 * (1 - rate) + total1 * rate;
+                        free2 =  free2 *(1 - rate) + free1 * rate;
+                        use2 = use2 * (1- rate) + use1 * rate;
 
+                        //描画処理
+                        drawGraph(total2,free2,use2);
+                        count += 1;
+
+                        if(count == 50){
+                            count = 1;
+
+                            //ここであたいを取得する
+                            memoryinfo = getMemoryInfo();
+                            //実値に代入
+                            total1 = memoryinfo[0];
+                            free1 = memoryinfo[1];
+                            use1 = memoryinfo[2];
+
+                        }
                     }
                 });
             }
-        }, 500, 500);
+        },500,10);
 
         return v;
     }
@@ -124,13 +187,49 @@ public class GraphFragment extends Fragment  {
                 , (free / total) * 100};
 
 
+        str = "全体メモリ(MB):" + Math.ceil((int)total) //グラフ情報
+                + "\n未使用(MB)" + Math.ceil(free)
+                + "\n使用(MB):" + Math.ceil((use));
+
+        graphs.strart(name, data, str, flg);//グラフ描画
+
+    }
+
+    //値取得メソッド
+    private float[] getMemoryInfo(){
+        float[] memoryinfo = new float[3];
+
+        manager = new MemoryManager();
+
+        total = manager.totalMemory();
+        free = manager.defaultFreeMem();
+        use = total-free;
+
+        memoryinfo[0] = total;
+        memoryinfo[1]= free;
+        memoryinfo[2]= use;
+
+        return memoryinfo;
+    }
+
+    //グラフ描画メソッド
+    //実メモリの値をフィールドでstaticで保持
+    //グラフの値を
+    private void drawGraph(float total, float free, float use){
+
+        //回転有無のフラグ
+        boolean flg = false;
+
+        float userate = (use / total) * 100;
+        float freerate = (free /total) * 100;
+
+        data = new float[]{userate, freerate};
+
         str = "全体メモリ(MB):" + Math.ceil(total) //グラフ情報
                 + "\n未使用(MB)" + Math.ceil(free)
                 + "\n使用(MB):" + Math.ceil((total - free));
 
         graphs.strart(name, data, str, flg);//グラフ描画
-
-
 
     }
 

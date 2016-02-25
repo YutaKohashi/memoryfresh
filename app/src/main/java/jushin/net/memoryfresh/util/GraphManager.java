@@ -37,7 +37,7 @@ public class GraphManager {
 
         pieChart.setHoleColorTransparent(false);
         pieChart.setTransparentCircleRadius(55f);
-        pieChart.setRotationAngle(270);          // 開始位置の調整
+       // pieChart.setRotationAngle(0);          // 開始位置の調整
         pieChart.setRotationEnabled(false);       // 回転可能かどうか
         pieChart.getLegend().setEnabled(false);   //
         pieChart.setDescription(str);
@@ -56,10 +56,10 @@ public class GraphManager {
         // 更新
         pieChart.invalidate();
 
-        // アニメーション
-        if(flg){
-            pieChart.animateXY(2000, 1000); // 表示アニメーション
-        }
+//        // アニメーション
+//        if(flg){
+//            pieChart.animateXY(2000, 1000); // 表示アニメーション
+//        }
 
     }
 
