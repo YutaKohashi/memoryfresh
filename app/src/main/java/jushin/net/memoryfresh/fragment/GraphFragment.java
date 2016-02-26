@@ -1,6 +1,7 @@
 package jushin.net.memoryfresh.fragment;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -42,7 +43,7 @@ public class GraphFragment extends Fragment  {
     GraphManager graphs;
     View v;
 
-    int count;
+    int count = 0;
 
     float memoryinfo[];
 
@@ -61,9 +62,9 @@ public class GraphFragment extends Fragment  {
     static float use2 = 0;
 
     //レート
-    static float rate = (float)0.02;
+    static float rate = (float)0.1;
 
-
+    float difference;
 
     final String[] name = new String[]{"使用中", "未使用"};//項目(５つまで)
 
@@ -100,9 +101,13 @@ public class GraphFragment extends Fragment  {
         graphs = new GraphManager(pieChart,true,40f);//グラフクラスのインスタンス化
         manager = new MemoryManager();//メモリクラスのインスタンス化
 
-        useText.setTextColor(ColorTemplate.JOYFUL_COLORS[0]);
-        freeText.setTextColor(ColorTemplate.JOYFUL_COLORS[1]);
+        //useText.setTextColor(ColorTemplate.JOYFUL_COLORS[0]);
+        //freeText.setTextColor(ColorTemplate.JOYFUL_COLORS[1]);
 
+//        colors.add(Color.rgb(29 ,32 ,136));
+//        colors.add(Color.rgb(0 ,155 ,107));
+        useText.setTextColor(Color.rgb(29 ,32 ,136));
+        freeText.setTextColor(Color.rgb(0 ,155 ,107));
         memView(true);
 
         mHandler = new Handler();
@@ -133,6 +138,13 @@ public class GraphFragment extends Fragment  {
         //グラフ = グラフ * （1 - レート） + 実 * レート
         //実メモリの値をフィールドでstaticで保持
 
+        //ここであたいを取得する
+        memoryinfo = getMemoryInfo();
+        //実値に代入
+        total1 = memoryinfo[0];
+        free1 = memoryinfo[1];
+        use1 = memoryinfo[2];
+
         //interpolation
         mTimer.schedule(new TimerTask() {
             @Override
@@ -144,6 +156,7 @@ public class GraphFragment extends Fragment  {
                         //補間値を計算
 
                         total2 = total2 * (1 - rate) + total1 * rate;
+                        //total2 = (total1 - total2)
                         free2 =  free2 *(1 - rate) + free1 * rate;
                         use2 = use2 * (1- rate) + use1 * rate;
 
@@ -151,8 +164,8 @@ public class GraphFragment extends Fragment  {
                         drawGraph(total2,free2,use2);
                         count += 1;
 
-                        if(count == 50){
-                            count = 1;
+                        if(count == 20){
+                            count = 0;
 
                             //ここであたいを取得する
                             memoryinfo = getMemoryInfo();
@@ -160,12 +173,11 @@ public class GraphFragment extends Fragment  {
                             total1 = memoryinfo[0];
                             free1 = memoryinfo[1];
                             use1 = memoryinfo[2];
-
                         }
                     }
                 });
             }
-        },500,10);
+        },500,25);
 
         return v;
     }

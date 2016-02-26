@@ -82,10 +82,15 @@ public class GraphManager {
 
         colors = new ArrayList<Integer>();//色
 
-        for (int i = 0;i < maxLength;i++ ){
-            colors.add(ColorTemplate.JOYFUL_COLORS[i]);
+//        for (int i = 0;i < maxLength;i++ ){
+//
+//            colors.add(ColorTemplate.COLORFUL_COLORS[i]);
+//
+//        }
 
-        }
+        colors.add(Color.rgb(29 ,32 ,136));
+        colors.add(Color.rgb(0 ,155 ,107));
+//        colors.add(Color.rgb(0 ,160 ,233));
 
         dataSet.setColors(colors);
 
