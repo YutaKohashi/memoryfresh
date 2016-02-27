@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:paddingLeft="5sp"
             android:layout_weight="20">
             <TextView
                 android:id="@+id/color2"
@@ -34,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="未使用"/>
-                :]vl[
+
 
             <TextView
                 android:id="@+id/color1"
@@ -46,9 +47,5 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="使用中"/>
-
-
-
         </LinearLayout>
-
 </LinearLayout>

@@ -2,6 +2,6 @@
 <resources>
     <string-array name="list_notifi">
         <item>アプリケーションを起動</item>
-        <item>memoryfreshを実行</item>
+        <item>メモリ開放</item>
     </string-array>
 </resources>

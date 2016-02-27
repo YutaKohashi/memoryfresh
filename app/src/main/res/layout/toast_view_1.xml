@@ -12,5 +12,7 @@
     android:gravity="center"
     android:textColor="@android:color/white"
     android:textSize="14sp"
+
     android:text="サービスが停止していたため起動しました"
-    android:background="@color/colorAccent"/>
+    android:background="@drawable/toast_shape1"
+    />

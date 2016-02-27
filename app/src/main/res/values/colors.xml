@@ -11,4 +11,7 @@
     <color name="green">#3DC83D</color>
     <color name="blue">#0400FF</color>
     <color name="yellow">#FFEB00</color>
+
+    <color name="darkGray">#505050</color>
+    <color name="lightGray">#868686</color>
 </resources>

@@ -13,5 +13,5 @@
     android:textColor="@android:color/white"
     android:textSize="14sp"
     android:text="サービス実行中"
-    android:background="@color/colorPrimaryDeepDark"/>
+    android:background="@drawable/toast_shape2"/>
 

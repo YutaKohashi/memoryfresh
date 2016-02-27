@@ -10,8 +10,8 @@ android {
         applicationId "jushin.net.memoryfresh"
         minSdkVersion 21
         targetSdkVersion 21
-        versionCode 3
-        versionName "1.2" +
+        versionCode 4
+        versionName "1.3" +
                 "" +
                 ""
     }
